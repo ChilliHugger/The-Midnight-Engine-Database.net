@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <RootNamespace>TME</RootNamespace>
+    <LangVersion>9</LangVersion>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Autofac" Version="5.2.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Scenario\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Types\" />
+    <Folder Include="Scenario\Default\" />
+    <Folder Include="Scenario\Default\Processors\" />
+    <Folder Include="Scenario\Default\Scenario\" />
+    <Folder Include="Serialize\" />
+    <Folder Include="Scenario\Default\Scenario\Actions\" />
+    <Folder Include="Scenario\Default\Scenario\Commands\" />
+  </ItemGroup>
+</Project>
