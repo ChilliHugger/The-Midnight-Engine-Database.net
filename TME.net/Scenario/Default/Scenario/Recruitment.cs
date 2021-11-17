@@ -1,13 +1,15 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using TME.Default.Interfaces;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class Recruitment : IRecruitment
     {
-        public uint Key { get; protected set; }
-        public uint By { get; protected set; }
+        public uint Key { get; internal set; }
+        public uint By { get; internal set; }
 
         #region Serialize
         public bool Load(ISerializeContext ctx)

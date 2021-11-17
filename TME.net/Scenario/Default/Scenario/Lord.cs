@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac.Features.AttributeFilters;
 using TME.Default.Interfaces;
@@ -10,38 +11,39 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Scenario
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class Lord : Item, ILord
     {
     #region "DI"
-        public IBattleInfo BattleInfo { get; protected set; }
-        public IRecruitment Recruitment { get; protected set; }
+        public IBattleInfo BattleInfo { get; private set; }
+        public IRecruitment Recruitment { get; private set; }
     #endregion
         
-        public Direction Looking { get; private set; } = Direction.None;
-        public Time Time { get; set; } = Time.None;
+        public Direction Looking { get; internal set; } = Direction.None;
+        public Time Time { get; internal set; } = Time.None;
         public Race Race { get; private set; } = Race.None;
         public Gender Gender { get; private set; } = Gender.None;
         public string LongName { get; private set; } = "";
         public string ShortName { get; private set; } = "";
-        public IList<IThing> Carrying { get; private set; }
-        public IThing? KilledBy { get; private set; }
-        public WaitStatus WaitStatus { get; private set; } = WaitStatus.None;
-        public MXId LastCommandId { get; protected set; } = MXId.None;
-        public Command LastCommand { get; protected set; } = Command.None;
-        public List<IUnit> Units { get; protected set; }
-        public ILord? Following { get; private set; }
-        public uint Energy { get; private set; } 
-        public uint Reckless { get; private set; } 
-        public uint Followers { get; private set; }
-        public uint Strength { get; private set; }
-        public uint Cowardly { get; private set; }
-        public uint Courage { get; private set; }
-        public uint Fear { get; private set; }
-        public Orders Orders { get; private set; } = Orders.None;
-        public Race Loyalty { get; private set; } = Race.None;
-        public ILord? Foe { get; private set; }
-        public ILord? Liege { get; private set; }
-        public uint Despondency { get; private set; }
+        public IList<IThing> Carrying { get; internal set; }
+        public IThing? KilledBy { get; internal set; }
+        public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
+        public MXId LastCommandId { get; internal set; } = MXId.None;
+        public Command LastCommand { get; internal set; } = Command.None;
+        public List<IUnit> Units { get; private set; }
+        public ILord? Following { get; internal set; }
+        public uint Energy { get; internal set; } 
+        public uint Reckless { get; internal set; } 
+        public uint Followers { get; internal set; }
+        public uint Strength { get; internal set; }
+        public uint Cowardly { get; internal set; }
+        public uint Courage { get; internal set; }
+        public uint Fear { get; internal set; }
+        public Orders Orders { get; internal set; } = Orders.None;
+        public Race Loyalty { get; internal set; } = Race.None;
+        public ILord? Foe { get; internal set; }
+        public ILord? Liege { get; internal set; }
+        public uint Despondency { get; internal set; }
         public uint Traits { get; private set; }
 
         public Lord(

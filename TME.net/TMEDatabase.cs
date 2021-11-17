@@ -14,7 +14,11 @@ namespace TME
     {
         //#define TME_MAGIC_NO		ID_4CC('T','M','E','!')
         private readonly IVariables _variables;
-
+        private readonly IContainer _container;
+        private readonly ISerializeContext _serializeContext;
+        private readonly IEntityResolver _entityResolver;
+        private readonly IEntityContainer _entityContainer;
+        
         public string Directory { get; set; } = "";
 
         public uint ScenarioId { get; private set; }
@@ -23,25 +27,19 @@ namespace TME
         public string Description { get; private set; } = "";
         public IMap GameMap { get; set; }
 
-        public IEnumerable<ILord> Lords { get; private set; }
-        public IEnumerable<IRouteNode> RouteNodes { get; private set; }
-        public IEnumerable<IRegiment> Regiments { get; private set; } 
-        public IEnumerable<IStronghold> Strongholds { get; private set; }
-
-        private readonly IContainer _container;
-        //private readonly IEntityResolver _entityResolver;
 
         public TMEDatabase(
-            IDependencyContainer container,
-            IVariables variables)
+            IVariables variables,
+            IEntityContainer entityContainer,
+            IEntityResolver entityResolver,
+            ISerializeContext serializeContext,
+            IDependencyContainer container)
         {
             _container = container.CurrentContainer;
             _variables = variables;
-
-            Lords = new List<ILord>();
-            Regiments = new List<IRegiment>();
-            Strongholds = new List<IStronghold>();
-            RouteNodes = new List<IRouteNode>();
+            _entityResolver = entityResolver;
+            _entityContainer = entityContainer;
+            _serializeContext = serializeContext;
             
             GameMap = _container.Resolve<IMap>();
         }
@@ -70,24 +68,29 @@ namespace TME
                     : "";
                 
                 // TODO: DI
-                var entityResolver = _container.Resolve<IEntityResolver>();
-
-                var context = new SerializeContext(Version, reader, entityResolver);
+                var context = _serializeContext;
+                context.Reader = reader;
+                context.Version = Version;
 
                 // Read objects
                 if (_variables is ISerializable variables)
                 {
-                    variables.Load(context);
+                    if (!variables.Load(context))
+                    {
+                        throw new FileLoadException("Error in variables");
+                    }
                 }
 
-                Lords = CreateCollection<ILord>(_variables.sv_characters);
-                Regiments = CreateCollection<IRegiment>(_variables.sv_regiments);
-                RouteNodes = CreateCollection<IRouteNode>(_variables.sv_routenodes);
-                //Strongholds = CreateCollection<IStronghold>(_variables.sv_strongholds);
+                if (_entityContainer is ISerializable entities)
+                {
+                    if (!entities.Load(context))
+                    {
+                        throw new FileLoadException("Error in Entities");
+                    }
+                }
 
-                ReadCollection(Lords, context);
-                ReadCollection(Regiments, context);
-                ReadCollection(RouteNodes, context);
+
+
             }
 
             return LoadMap();
@@ -107,31 +110,6 @@ namespace TME
         {
             throw new NotImplementedException();
         }
-
-        private IEnumerable<T> CreateCollection<T>(int count)
-            where T: IEntity
-        {
-            var result = new T[count];
-            for(var ii=0; ii<count; ii++)
-            {
-                result[ii] = _container.Resolve<T>();
-            }
-            return result;
-        }
-
-        private static void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)
-        {
-            var enumerable = list.ToArray();
-
-            for(var ii=0; ii<enumerable.Count(); ii++)
-            {
-                var index = context.Reader.PeekInt32()-1;
-                if ( enumerable.ElementAt(index) is ISerializable item )
-                {
-                    item.Load(context);
-                }
-                //_objectReader.Read(list.ElementAt(index), reader);
-            }
-        }
+        
     }
 }

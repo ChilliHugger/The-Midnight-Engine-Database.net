@@ -8,31 +8,55 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
+using TME.Serialize;
 
 namespace TME
 {
     public class TMEModule : Module
     {
+        private ContainerBuilder _builder;
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<TMEEngine>().As<IEngine>().SingleInstance();
-            builder.RegisterType<TMEDatabase>().As<IDatabase>().SingleInstance();
+            _builder = builder;
             
-            builder.RegisterType<TMEEntityResolver>().As<IEntityResolver>();
-            builder.RegisterType<TMEMap>().As<IMap>();
-            builder.RegisterType<Variables>().As<IVariables>().SingleInstance();
+            _builder.RegisterType<TMEEngine>().As<IEngine>().SingleInstance();
+            
+            RegisterDatabase();
+            RegisterHelpers();
+            RegisterEntities();
+            RegisterTypes();
+        }
 
-            builder.RegisterType<RouteNodes>().As<IRouteNodes>();
-            builder.RegisterType<RouteNode>().As<IRouteNode>();
-            builder.RegisterType<Regiment>().As<IRegiment>();
- 
-            builder.RegisterType<Lord>().As<ILord>().WithAttributeFiltering();
-            builder.RegisterType<BattleInfo>().As<IBattleInfo>();
-            builder.RegisterType<Recruitment>().As<IRecruitment>();
+        private void RegisterTypes()
+        {
+            _builder.RegisterType<BattleInfo>().As<IBattleInfo>();
+            _builder.RegisterType<Recruitment>().As<IRecruitment>();
+        }
 
-            builder.RegisterType<Warriors>().Keyed<IUnit>(UnitType.Warrior);
-            builder.RegisterType<Riders>().Keyed<IUnit>(UnitType.Rider);
+        private void RegisterDatabase()
+        {
+            _builder.RegisterType<TMEDatabase>().As<IDatabase>().SingleInstance();
+            _builder.RegisterType<TMEEntityContainer>().As<IEntityContainer>().SingleInstance();
+            _builder.RegisterType<Variables>().As<IVariables>().SingleInstance();
+            _builder.RegisterType<TMEMap>().As<IMap>();
+        }
 
+        private void RegisterEntities()
+        {
+            _builder.RegisterType<RouteNodes>().As<IRouteNodes>();
+            _builder.RegisterType<RouteNode>().As<IRouteNode>();
+            _builder.RegisterType<Regiment>().As<IRegiment>();
+            _builder.RegisterType<Stronghold>().As<IStronghold>();
+            _builder.RegisterType<Lord>().As<ILord>().WithAttributeFiltering();
+
+            _builder.RegisterType<Warriors>().Keyed<IUnit>(UnitType.Warrior);
+            _builder.RegisterType<Riders>().Keyed<IUnit>(UnitType.Rider);
+        }
+
+        private void RegisterHelpers()
+        {
+            _builder.RegisterType<TMEEntityResolver>().As<IEntityResolver>();
+            _builder.RegisterType<SerializeContext>().As<ISerializeContext>();
 
         }
     }

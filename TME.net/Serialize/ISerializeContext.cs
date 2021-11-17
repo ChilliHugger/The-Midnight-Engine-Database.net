@@ -6,8 +6,8 @@ namespace TME.Serialize
 {
     public interface ISerializeContext
     {
-        double Version { get; }
-        ISerializeReader Reader { get; }
+        double Version { get; set; }
+        ISerializeReader Reader { get; set; }
         
         T? ReadEntity<T>() where T : IEntity;
     }

@@ -12,10 +12,5 @@ namespace TME.Interfaces
 
         bool Load();
         bool Unload();
-        
-        IEnumerable<ILord> Lords { get; }
-        IEnumerable<IRouteNode> RouteNodes { get; }
-        IEnumerable<IRegiment> Regiments { get; } 
-        IEnumerable<IStronghold> Strongholds { get; }
     }
 }

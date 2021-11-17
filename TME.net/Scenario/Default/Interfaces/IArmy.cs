@@ -5,7 +5,7 @@ namespace TME.Scenario.Default.Interfaces
 {
     public interface IArmy
     {
-        IItem Parent { get; }
+        IItem? Parent { get; }
         ArmyType ArmyType { get; }
         UnitType UnitType { get; }
         Race Race { get; }

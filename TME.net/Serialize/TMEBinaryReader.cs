@@ -32,10 +32,8 @@ namespace TME.Serialize
         //
         public short ReadInt16() => _reader.ReadInt16();
         public ushort ReadUInt16() => _reader.ReadUInt16();
-
         public int ReadInt32() => _reader.ReadInt32();
         public uint ReadUInt32() => _reader.ReadUInt32();
-
         public ulong ReadUInt64() => _reader.ReadUInt64();
 
         public string ReadString()
@@ -65,28 +63,15 @@ namespace TME.Serialize
             return (MXId) id;
         }
         
-        public Time ReadTime() =>
-            (Time)_reader.ReadUInt32();
-
-        public Direction ReadDirection() =>
-            (Direction)_reader.ReadUInt32();
-
-        public Race ReadRace() =>
-            (Race)_reader.ReadUInt32();
-
-        public Gender ReadGender() =>
-            (Gender)_reader.ReadUInt32();
-
-        public WaitStatus ReadWaitStatus() =>
-            (WaitStatus)_reader.ReadUInt32();
-
-        public Orders ReadOrders() =>
-            (Orders)_reader.ReadUInt32();
-
-        public ArmyType ReadArmyType() =>
-            (ArmyType)_reader.ReadUInt32();
-        public UnitType ReadUnitType() =>
-            (UnitType)_reader.ReadUInt32();
+        public Time ReadTime() => _reader.ReadUInt32();
+        public Direction ReadDirection() => (Direction)_reader.ReadUInt32();
+        public Race ReadRace() => (Race)_reader.ReadUInt32();
+        public Gender ReadGender() => (Gender)_reader.ReadUInt32();
+        public WaitStatus ReadWaitStatus() => (WaitStatus)_reader.ReadUInt32();
+        public Orders ReadOrders() => (Orders)_reader.ReadUInt32();
+        public ArmyType ReadArmyType() => (ArmyType)_reader.ReadUInt32();
+        public UnitType ReadUnitType() => (UnitType)_reader.ReadUInt32();
+        public Terrain ReadTerrain() => (Terrain)_reader.ReadUInt32();
         
     }
 }

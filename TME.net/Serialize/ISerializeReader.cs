@@ -23,6 +23,7 @@ namespace TME.Serialize
         Orders ReadOrders();
         ArmyType ReadArmyType();
         UnitType ReadUnitType();
+        Terrain ReadTerrain();
         MXId ReadMXId();
     }
 }

@@ -18,18 +18,16 @@ namespace MidnightConsole
 
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
+            var entities = container.Resolve<IEntityContainer>();
 
+            database.Directory = "data/lom";
+            database.Load();
             
-            if (database is TMEDatabase db)
-            {
-                database.Directory = "data/lom";
-                database.Load();
-
-                OutputCollection("Lords", db.Lords);
-                OutputCollection("Route Nodes", db.RouteNodes);
-                OutputCollection("Regiments", db.Regiments);
-            }
-            
+            OutputCollection("Lords", entities.Lords);
+            OutputCollection("Route Nodes", entities.RouteNodes);
+            OutputCollection("Regiments", entities.Regiments);
+            OutputCollection("Strongholds", entities.Strongholds);
+        
         }
 
         private static void OutputCollection( string title, IEnumerable<IEntity> list)

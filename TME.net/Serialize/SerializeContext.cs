@@ -6,22 +6,21 @@ namespace TME.Serialize
 {
     public class SerializeContext : ISerializeContext
     {
-        public double Version { get; }
-        public ISerializeReader Reader { get; }
-        private IEntityResolver Resolver { get; }
+        public double Version { get; set; }
+        public ISerializeReader Reader { get; set; }
+        private readonly IEntityResolver _entityResolver;
 
-        public SerializeContext(double version, ISerializeReader reader, IEntityResolver resolver)
+        public SerializeContext(IEntityResolver entityResolver)
         {
-            Version = version;
-            Reader = reader;
-            Resolver = resolver;
+            _entityResolver = entityResolver;
+            Reader = new NullReader();
         }
 
         public T? ReadEntity<T>()
             where T : IEntity
         {
             var id = Reader.ReadUInt32();
-            return Resolver.EntityById<T>((int)id);
+            return _entityResolver.EntityById<T>((int)id);
         }
 
         //public void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)

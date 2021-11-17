@@ -9,11 +9,11 @@ namespace TME
 {
     public class TMEEntityResolver : IEntityResolver
     {
-        private readonly IDatabase _database;
+        private readonly IEntityContainer _entityContainer;
 
-        public TMEEntityResolver(IDatabase database)
+        public TMEEntityResolver(IEntityContainer entityContainer)
         {
-            _database = database;
+            _entityContainer = entityContainer;
         }
 
         public T? EntityById<T>(int id)
@@ -31,6 +31,10 @@ namespace TME
             {
                 return (T?) EntityById(EntityType.RouteNode, id);
             }
+            else if (typeof(T) == typeof(IStronghold))
+            {
+                return (T?) EntityById(EntityType.Stronghold, id);
+            }
 
             return default;
         }
@@ -47,13 +51,13 @@ namespace TME
             switch(type)
             {
                 case EntityType.Character:
-                    return _database.Lords.ElementAt(id);
-
+                    return _entityContainer.Lords.ElementAt(id);
                 case EntityType.RouteNode:
-                    return _database.RouteNodes.ElementAt(id);
-                
+                    return _entityContainer.RouteNodes.ElementAt(id);
                 case EntityType.Regiment:
-                    return _database.Regiments.ElementAt(id);
+                    return _entityContainer.Regiments.ElementAt(id);
+                case EntityType.Stronghold:
+                    return _entityContainer.Strongholds.ElementAt(id);
             }
 
             return null;
