@@ -29,6 +29,11 @@ namespace TME.Scenario.Default.Scenario
         public uint Turns { get; internal set; }
         public Loc LastLocation { get; internal set; } = Loc.Zero;
         public Loc TargetLocation { get; internal set; } = Loc.Zero;
+
+        public Regiment()
+        {
+            Type = EntityType.Regiment;
+        }
         
         #region Serialize
 

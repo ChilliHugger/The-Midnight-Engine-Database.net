@@ -16,8 +16,8 @@ namespace TME.Scenario.Default.Scenario
 
         public RouteNode(IRouteNodes routeNodes)
         {
-            RouteNodes = routeNodes;
             Type = EntityType.RouteNode;
+            RouteNodes = routeNodes;
         }
 
         public override bool Load(ISerializeContext ctx)

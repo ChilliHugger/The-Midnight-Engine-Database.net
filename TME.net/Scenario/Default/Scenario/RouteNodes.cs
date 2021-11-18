@@ -1,3 +1,5 @@
+using System;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 

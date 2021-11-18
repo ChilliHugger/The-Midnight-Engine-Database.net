@@ -6,6 +6,7 @@ using Autofac.Features.AttributeFilters;
 using TME.Default.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
 
@@ -15,12 +16,12 @@ namespace TME.Scenario.Default.Scenario
     public class Lord : Item, ILord
     {
     #region "DI"
-        public IBattleInfo BattleInfo { get; private set; }
+        public IBattleInfo BattleInfo { get; internal set; }
         public IRecruitment Recruitment { get; private set; }
     #endregion
         
         public Direction Looking { get; internal set; } = Direction.None;
-        public Time Time { get; internal set; } = Time.None;
+        public Time Time { get; internal set; }
         public Race Race { get; private set; } = Race.None;
         public Gender Gender { get; private set; } = Gender.None;
         public string LongName { get; private set; } = "";

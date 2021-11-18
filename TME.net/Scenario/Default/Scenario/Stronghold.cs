@@ -27,6 +27,11 @@ namespace TME.Scenario.Default.Scenario
         public Terrain Terrain { get; internal set; } = Terrain.None;
         public uint Killed { get; internal set; }
         public uint Lost { get; internal set; }
+
+        public Stronghold()
+        {
+            Type = EntityType.Stronghold;
+        }
         
         #region Serialize
         public override bool Load(ISerializeContext ctx)

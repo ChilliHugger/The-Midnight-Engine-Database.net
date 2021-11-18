@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 
 namespace TME.Default.Interfaces
 {

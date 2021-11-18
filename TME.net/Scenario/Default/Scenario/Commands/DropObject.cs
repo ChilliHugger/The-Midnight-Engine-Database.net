@@ -39,7 +39,7 @@ namespace TME.Scenario.Default.Scenario.Commands
             //
             // Lord is dropping a Thing
             //
-            if (args.FirstOrDefault() is ILord lord
+            if (args.FirstOrDefault() is Lord lord
                 && args.LastOrDefault() is IThing thing)
             {
                 if ( lord.Time + Duration <= _variables.sv_time_night)

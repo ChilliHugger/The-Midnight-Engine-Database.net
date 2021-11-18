@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
+using TME.Default.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Types;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
     public interface ILord : IItem
     {
         Direction Looking { get; }
-        Time Time { get; set; }
+        Time Time { get; }
         Race Race { get; }
         Gender Gender { get; }
 
