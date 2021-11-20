@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -164,6 +165,7 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_character_default),                "CHARACTER_DEFAULT",                "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON" ),
             new VariableDefinition(nameof(sv_guidance),                         "SEEK_MESSAGES",                    "" ),
 
+            // Not stored in the database
             new VariableDefinition(nameof(sv_characters),                       "CHARACTERS",                       "0" ),
             new VariableDefinition(nameof(sv_routenodes),                       "ROUTENODES",                       "0" ),
             new VariableDefinition(nameof(sv_strongholds),                      "STRONGHOLDS",                      "0" ),
@@ -196,6 +198,45 @@ namespace TME.Scenario.Default.Base
             {
                 SetValue(v.PropertyName, v.DefaultValue);
             }
+        }
+
+        private string GetValue(string propertyName)
+        {
+            var t = this.GetType();
+
+            var p = t.GetProperty(propertyName);
+
+            var valueType = p.PropertyType;
+            var value = p.GetValue(this);
+
+            if (value == null)
+            {
+                if (valueType == typeof(bool))
+                {
+                    return "No";
+                }
+                if (valueType == typeof(string))
+                {
+                    return "";
+                }
+                return "0";
+            }
+            
+            if (valueType == typeof(MXId))
+            {
+                return value.ToString();
+            }
+            else if (valueType == typeof(bool) && value is bool yesNo)
+            {
+                return yesNo ? "Yes" : "No" ;
+            }
+            else if (valueType == typeof(IEnumerable<MXId>) && value is IEnumerable<MXId> values)
+            {
+                return string.Join("|",value);
+            }
+
+            return value.ToString();
+
         }
 
         private void SetValue(string propertyName, string propertyValue)
@@ -286,6 +327,23 @@ namespace TME.Scenario.Default.Base
         public bool Save()
         {
             throw new NotImplementedException();
+        }
+
+        public List<KeyValuePair<string, string>> GetValues()
+        {
+            var vars = new VariableDefinition[]
+            {
+                new VariableDefinition(nameof(sv_character_friend), "CHARACTER_FRIEND", "CH_LUXOR"),
+                new VariableDefinition(nameof(sv_character_foe), "CHARACTER_FOE", "CH_DOOMDARK"),
+                new VariableDefinition(nameof(sv_character_default), "CHARACTER_DEFAULT",
+                    "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON"),
+            };
+            
+            return (
+                from v in vars 
+                let value = GetValue(v.PropertyName) 
+                select new KeyValuePair<string, string>(v.VariableName, value)
+                ).ToList();
         }
     }
 }

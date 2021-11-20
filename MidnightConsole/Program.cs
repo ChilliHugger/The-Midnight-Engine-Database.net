@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using Autofac;
 using TME;
-using TME.Default.Interfaces;
 using TME.Interfaces;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
+using TME.Types;
 
 namespace MidnightConsole
 {
@@ -14,7 +18,8 @@ namespace MidnightConsole
         static void Main(string[] args)
         {
             var dependencyContainer = new TMEDependencyContainer(new ContainerBuilder());
-            var container = dependencyContainer.CurrentContainer;
+            dependencyContainer.Build();
+            var container = dependencyContainer.CurrentContainer!;
 
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
@@ -27,7 +32,9 @@ namespace MidnightConsole
             OutputCollection("Route Nodes", entities.RouteNodes);
             OutputCollection("Regiments", entities.Regiments);
             OutputCollection("Strongholds", entities.Strongholds);
-        
+            OutputCollection("Waypoints", entities.Waypoints);
+            OutputCollection("Things", entities.Things);
+            
         }
 
         private static void OutputCollection( string title, IEnumerable<IEntity> list)

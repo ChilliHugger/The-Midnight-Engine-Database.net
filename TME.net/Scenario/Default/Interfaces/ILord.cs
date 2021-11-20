@@ -1,10 +1,16 @@
 ﻿using System.Collections.Generic;
-using TME.Default.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
+    internal interface ILordInternal : ILord
+    {
+        void UpdateTime(Time time);
+        void RemoveCarriedObject(IThing thing);
+        void SetCarrying(IEnumerable<IThing> carried);
+    }
+    
     public interface ILord : IItem
     {
         Direction Looking { get; }
@@ -20,7 +26,7 @@ namespace TME.Scenario.Default.Interfaces
         IBattleInfo BattleInfo { get; }
         IRecruitment Recruitment { get; }
 
-        IList<IThing> Carrying { get; }
+        IReadOnlyList<IThing> Carrying { get; }
         IThing? KilledBy { get; }
 
         WaitStatus WaitStatus { get; }

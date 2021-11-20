@@ -91,6 +91,11 @@ namespace TME.Serialize
             throw new System.NotImplementedException();
         }
 
+        public ThingType ReadThingType()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public Terrain ReadTerrain()
         {
             throw new System.NotImplementedException();

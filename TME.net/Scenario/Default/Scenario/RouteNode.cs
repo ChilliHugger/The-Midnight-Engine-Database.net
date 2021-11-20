@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using TME.Default;
-using TME.Default.Interfaces;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
@@ -14,9 +13,8 @@ namespace TME.Scenario.Default.Scenario
     {
         public IRouteNodes RouteNodes { get; }
 
-        public RouteNode(IRouteNodes routeNodes)
+        public RouteNode(IRouteNodes routeNodes) : base(EntityType.RouteNode)
         {
-            Type = EntityType.RouteNode;
             RouteNodes = routeNodes;
         }
 

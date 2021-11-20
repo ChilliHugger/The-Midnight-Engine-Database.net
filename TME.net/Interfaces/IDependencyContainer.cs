@@ -4,6 +4,10 @@ namespace TME.Interfaces
 {
     public interface IDependencyContainer
     {
-        public IContainer CurrentContainer { get; set; }
+        IContainer? CurrentContainer { get; set; }
+
+        IDependencyContainer RegisterModules();
+        IDependencyContainer Build();
+
     }
 }

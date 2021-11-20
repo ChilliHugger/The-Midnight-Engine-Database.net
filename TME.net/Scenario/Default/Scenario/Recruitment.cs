@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using TME.Default.Interfaces;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario

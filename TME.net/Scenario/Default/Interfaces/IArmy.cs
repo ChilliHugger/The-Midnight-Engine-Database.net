@@ -1,8 +1,11 @@
-﻿using TME.Default.Interfaces;
-using TME.Scenario.Default.Enums;
+﻿using TME.Scenario.Default.Enums;
 
 namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IArmyInternal
+    {
+    }
+    
     public interface IArmy
     {
         IItem? Parent { get; }

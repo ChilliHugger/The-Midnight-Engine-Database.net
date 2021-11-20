@@ -1,11 +1,14 @@
-﻿using System;
-using TME.Default;
-using TME.Scenario.Default.Base;
+﻿using TME.Scenario.Default.Base;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IMappableInternal : IMappable
+    {
+        void UpdateLocation(Loc location);
+    }
+    
     public interface IMappable
     {
-        Loc Location { get; set; }
+        Loc Location { get; }
     }
 }

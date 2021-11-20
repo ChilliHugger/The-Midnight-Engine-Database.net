@@ -1,14 +1,15 @@
 using System.Collections.Generic;
-using TME.Default.Interfaces;
 using TME.Scenario.Default.Interfaces;
 
 namespace TME.Interfaces
 {
     public interface IEntityContainer
     {
-        IEnumerable<ILord> Lords { get; }
-        IEnumerable<IRouteNode> RouteNodes { get; }
-        IEnumerable<IRegiment> Regiments { get; } 
-        IEnumerable<IStronghold> Strongholds { get; }
+        IReadOnlyList<ILord> Lords { get; }
+        IReadOnlyList<IRouteNode> RouteNodes { get; }
+        IReadOnlyList<IRegiment> Regiments { get; } 
+        IReadOnlyList<IStronghold> Strongholds { get; }
+        IReadOnlyList<IWaypoint> Waypoints { get; }
+        IReadOnlyList<IThing> Things { get; }
     }
 }

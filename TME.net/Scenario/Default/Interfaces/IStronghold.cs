@@ -1,8 +1,11 @@
-﻿using TME.Default.Interfaces;
-using TME.Scenario.Default.Enums;
+﻿using TME.Scenario.Default.Enums;
 
 namespace TME.Scenario.Default.Interfaces
 {
+	internal interface IStrongholdInternal : IStronghold, IItemInternal
+	{
+	}
+	
     public interface IStronghold : IItem
     {
 		Race OccupyingRace { get; }

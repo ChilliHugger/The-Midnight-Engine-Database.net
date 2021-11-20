@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
-using TME.Scenario.Default.Interfaces;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
     public interface ILocationInfo
     {

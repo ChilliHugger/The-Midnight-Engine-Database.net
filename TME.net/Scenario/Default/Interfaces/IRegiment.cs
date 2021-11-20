@@ -1,10 +1,13 @@
-﻿using TME.Default.Interfaces;
-using TME.Scenario.Default.Base;
+﻿using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IRegimentInternal : IRegiment, IArmyInternal, IEntityInternal
+    {
+    }
+    
     public interface IRegiment : IArmy, IEntity
     {
         MXId TargetId { get; }

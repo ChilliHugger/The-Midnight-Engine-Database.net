@@ -1,5 +1,4 @@
 using System.Linq;
-using TME.Default.Interfaces;
 using TME.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
@@ -35,7 +34,14 @@ namespace TME
             {
                 return (T?) EntityById(EntityType.Stronghold, id);
             }
-
+            else if (typeof(T) == typeof(IWaypoint))
+            {
+                return (T?) EntityById(EntityType.Waypoint, id);
+            }
+            else if (typeof(T) == typeof(IThing))
+            {
+                return (T?) EntityById(EntityType.Thing, id);
+            }
             return default;
         }
 
@@ -58,6 +64,10 @@ namespace TME
                     return _entityContainer.Regiments.ElementAt(id);
                 case EntityType.Stronghold:
                     return _entityContainer.Strongholds.ElementAt(id);
+                case EntityType.Waypoint:
+                    return _entityContainer.Waypoints.ElementAt(id);
+                case EntityType.Thing:
+                    return _entityContainer.Things.ElementAt(id);
             }
 
             return null;

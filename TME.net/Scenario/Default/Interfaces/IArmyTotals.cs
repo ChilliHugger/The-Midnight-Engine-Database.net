@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TME.Scenario.Default.Enums;
-using TME.Scenario.Default.Interfaces;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
     public interface IArmyTotals
     {

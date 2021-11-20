@@ -1,8 +1,13 @@
 ﻿using TME.Scenario.Default.Enums;
 using TME.Types;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IEntityInternal
+    {
+        void SetFlags(ulong flags, bool value);
+    }
+    
     public interface IEntity
     {
         ulong RawFlags { get; }

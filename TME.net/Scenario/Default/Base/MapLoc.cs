@@ -15,7 +15,7 @@ namespace TME.Scenario.Default.Base
         //                                |          |         |       |   |      Terrain (0:3)
         //                                |          |         |       |   |      |
         // 00000000 00000000 00000000 00000000 00000000 00000000 000000000 00000000
-        public ulong bits;
+        public ulong Bits;
 
         private const int TerrainPos = 0;
         private const int VariantPos = 7;
@@ -24,34 +24,50 @@ namespace TME.Scenario.Default.Base
         private const int AreaPos = 26;
         private const int FlagsPos = 36;
 
-        private const ulong TerrainMask = 0x7Fu        << TerrainPos;   //u64 terrain       :  7 ; // 128 ( 16x8 )
-        private const ulong VariantMask = 0x07u        << VariantPos;   //u64 variant       :  3 ; // 8 ( 8 )
-        private const ulong ClimateMask = 0x7Fu        << ClimatePos;   //u64 climate       :  7 ; // 128 ( 16x8 )
-        private const ulong ThingMask   = 0x1FFu       << ThingPos;     //u64 object        :  9 ; // 512 ( 16x8 )
-        private const ulong AreaMask    = 0x2FFu       << AreaPos;      //u64 area          : 10 ; // 1024 ( 64x16 )
-        private const ulong FlagsMask   = 0x0FFFFFFFu  << FlagsPos;     //u64 flags	        : 28 ; // 
-
-        public Terrain Terrain => (Terrain)(bits & TerrainMask);
-
-        public byte Variant => (byte)((bits&Variant) >> VariantPos);
-
-        public byte Climate => (byte)((bits&ClimateMask) >> ClimatePos);
+        private const ulong TerrainMask = 0x7Ful        << TerrainPos;   //u64 terrain       :  7 ; // 128 ( 16x8 )
+        private const ulong VariantMask = 0x07ul        << VariantPos;   //u64 variant       :  3 ; // 8 ( 8 )
+        private const ulong ClimateMask = 0x7Ful        << ClimatePos;   //u64 climate       :  7 ; // 128 ( 16x8 )
+        private const ulong ThingMask   = 0x1FFul       << ThingPos;     //u64 object        :  9 ; // 512 ( 16x8 )
+        private const ulong AreaMask    = 0x2FFul       << AreaPos;      //u64 area          : 10 ; // 1024 ( 64x16 )
+        private const ulong FlagsMask   = 0x0FFFFFFFul  << FlagsPos;     //u64 flags	     : 28 ; // 
+        
+        public Terrain Terrain
+        {
+            get => (Terrain) (Bits & TerrainMask); 
+            internal set => Bits = (Bits & ~TerrainMask) | (ulong)value;
+        }
+        
+        public byte Variant
+        {
+            get => (byte)((Bits&VariantMask) >> VariantPos); 
+            internal set => Bits = (Bits & ~VariantMask) | (ulong)value << VariantPos;
+        }
+        
+        public byte Climate
+        {
+            get => (byte)((Bits&ClimateMask) >> ClimatePos); 
+            internal set => Bits = (Bits & ~ClimateMask) | (ulong)value << ClimatePos;
+        }
 
         public ThingType Thing
         {
-            get => (ThingType)((bits&ThingMask) >> ThingPos);
-            set => bits = (bits & ~ThingMask) | (ulong)value;
+            get => (ThingType)((Bits&ThingMask) >> ThingPos);
+            internal set => Bits = (Bits & ~ThingMask) | (ulong)value << ThingPos;
         }
 
-        public UInt16 Area => (UInt16)((bits&AreaMask) >> AreaPos);
-
+        public ushort Area
+        {
+            get => (UInt16)((Bits&AreaMask) >> AreaPos); 
+            internal set => Bits = (Bits & ~AreaMask) | (ulong)value << AreaPos;
+        }
+        
         public LocationFlags Flags
         {
-            get => (LocationFlags)((UInt32)(bits >> 36) & (UInt32)0xFFFFFFF);
-            set => bits = (bits & ~FlagsMask) | (ulong)value;
+            get => (LocationFlags)((UInt32)(Bits >> 36) & (UInt32)0xFFFFFFF);
+            internal set => Bits = (Bits & ~FlagsMask) | (ulong)value << FlagsPos;
         }
 
-        public void RemoveObject() { Thing = ThingType.None; }
+        internal void RemoveObject() { Thing = ThingType.None; }
 
         public bool IsVisible => Flags.HasFlag(LocationFlags.Seen);
         public bool IsInDomain => Flags.HasFlag(LocationFlags.Domain);
@@ -79,7 +95,7 @@ namespace TME.Scenario.Default.Base
         public bool HasObject
         {
             get => Flags.HasFlag(LocationFlags.Object);
-            set => SetFlags(LocationFlags.Object, value);
+            internal set => SetFlags(LocationFlags.Object, value);
         }
     }
 }

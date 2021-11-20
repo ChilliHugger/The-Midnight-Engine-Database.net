@@ -3,10 +3,10 @@ using System.Linq;
 using Autofac;
 using NUnit.Framework;
 using TME;
-using TME.Default.Interfaces;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 
 namespace DatabaseTest
 {

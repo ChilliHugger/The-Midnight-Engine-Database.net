@@ -1,65 +1,56 @@
 ﻿using System;
-using TME.Default.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
 
 namespace TME.Scenario.Default.Base
 {
-    public class Entity : IEntity, ISerializable
+    public partial class Entity : IEntityInternal, ISerializable
     {
-        public Entity()
+        #region Properties
+        public ulong RawFlags { get; internal set; }
+
+        public EntityType Type { get; internal set; }
+        public uint RawId => (uint)Id.RawId;
+        public MXId Id { get; internal set; }
+        public object? UserData { get; internal set; }
+        public string Symbol { get; internal set; } = "";
+        public bool IsFlags(EntityFlags mask) => HasFlags((ulong)mask);
+        public bool HasFlags(ulong mask) => (RawFlags & mask) == mask;
+        public bool IsSymbol(string value) => Symbol.Equals(value, StringComparison.OrdinalIgnoreCase);
+        public bool IsDisabled => IsFlags(EntityFlags.Disabled);
+        #endregion
+        
+        internal Entity()
         {
             Id = 0;
+            Type = EntityType.None;
         }
 
-        public Entity(EntityType type)
+        internal Entity(EntityType type)
         {
+            Id = 0;
             Type = type;
         }
-
-        public ulong RawFlags { get; protected set; }
-
-        public EntityType Type { get; protected set; } = EntityType.None;
-
-        public uint RawId => (uint)Id.RawId;
-
-        public MXId Id { get; protected set; }
-
-        public object? UserData { get; protected set; }
-
-        public string Symbol { get; protected set; } = "";
-
-
-        public bool IsFlags(EntityFlags mask) => HasFlags((ulong)mask);
-
-        public bool HasFlags(ulong mask) => (RawFlags & mask) == mask;
-
-        public bool IsSymbol(string value) => Symbol.Equals(value, StringComparison.OrdinalIgnoreCase);
-
-        public bool IsDisabled => IsFlags(EntityFlags.Disabled);
-
-#region Serialize
-        public virtual bool Load(ISerializeContext ctx)
-        {
-            Id = new MXId(Type,(uint)ctx.Reader.ReadInt32());
-            Symbol = ctx.Reader.ReadString();
-            RawFlags = ctx.Reader.ReadUInt32();
-
-            return true;
-        }
-
-        public virtual bool Save()
-        {
-            throw new NotImplementedException();
-        }
-#endregion
-
+        
         public override string ToString()
         {
             var idx = Id.RawId.ToString("0000");
             return $"{idx} : '{Symbol}'";
+        }
+        
+        public void SetFlags(ulong flags,bool value)
+        {
+            if (value)
+            {
+                RawFlags |= flags;
+            }
+            else
+            {
+                RawFlags &= ~flags;
+            }
         }
     }
 }

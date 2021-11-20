@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using TME.Serialize;
 using TME.Types;
-// ReSharper disable UnusedMemberInSuper.Global
 
+// ReSharper disable UnusedMemberInSuper.Global
+// ReSharper disable InconsistentNaming
 namespace TME.Scenario.Default.Interfaces
 {
     public interface IVariables
     {
         void Initialise();
-
+        List<KeyValuePair<string, string>> GetValues();
+        
         double sv_database_version { get; set; }
         double sv_battle_default_energy_drain { get; set; }
         double sv_battle_default_char_energy_drain { get; set; }

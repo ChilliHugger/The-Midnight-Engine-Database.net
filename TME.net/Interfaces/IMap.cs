@@ -1,5 +1,5 @@
-﻿using TME.Default.Interfaces;
-using TME.Scenario.Default.Base;
+﻿using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
 namespace TME.Interfaces
@@ -9,7 +9,8 @@ namespace TME.Interfaces
         bool LoadSaveMapFromStream(TMEBinaryReader stream);
         bool LoadFullMapFromStream(TMEBinaryReader stream);
 
-        MapLoc GetAt(Loc loc);
+        MapLoc GetAt(Loc location);
+        void SetAt(Loc location, ref MapLoc mapLoc);
         void SetThing(Loc location, IThing thing);
     }
 }

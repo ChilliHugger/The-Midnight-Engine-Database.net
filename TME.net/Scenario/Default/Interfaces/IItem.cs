@@ -1,6 +1,10 @@
-﻿using System;
-namespace TME.Default.Interfaces
+﻿namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IItemInternal : IItem, IEntityInternal, IMappableInternal
+    {
+        
+    }
+    
     public interface IItem : IEntity, IMappable
     {
         

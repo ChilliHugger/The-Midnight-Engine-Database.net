@@ -4,6 +4,6 @@ namespace TME.Scenario.Default.Interfaces
 {
     public interface IAction
     {
-        Task<IResult> Run(params object[] args);
+        Task<IResult> Execute(params object[] args);
     }
 }

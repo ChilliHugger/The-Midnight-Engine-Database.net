@@ -6,14 +6,27 @@ namespace TME
 {
     public class TMEDependencyContainer : IDependencyContainer
     {
-        public IContainer CurrentContainer { get; set; }
+        private readonly ContainerBuilder _containerBuilder;
+        public IContainer? CurrentContainer { get; set; }
+
 
         public TMEDependencyContainer(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterModule(new TMEModule());
-            containerBuilder.RegisterInstance<IDependencyContainer>(this).SingleInstance();
+            _containerBuilder = containerBuilder;
+        }
 
-            CurrentContainer = containerBuilder.Build();
+        public IDependencyContainer Build()
+        {
+            RegisterModules();
+            _containerBuilder.RegisterInstance<IDependencyContainer>(this).SingleInstance();
+            CurrentContainer = _containerBuilder.Build();
+            return this;
+        }
+
+        public IDependencyContainer RegisterModules()
+        {
+            _containerBuilder.RegisterModule(new TMEModule());
+            return this;
         }
 
     }

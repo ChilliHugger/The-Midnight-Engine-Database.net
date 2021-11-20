@@ -1,5 +1,4 @@
-﻿using System;
-namespace TME.Default.Interfaces
+﻿namespace TME.Scenario.Default.Interfaces
 {
     public interface IInfo : IEntity
     {

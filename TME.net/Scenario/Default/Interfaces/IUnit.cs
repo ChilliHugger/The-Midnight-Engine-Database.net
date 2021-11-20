@@ -1,8 +1,7 @@
-﻿using System;
-using TME.Scenario.Default.Enums;
+﻿using TME.Scenario.Default.Enums;
 using TME.Serialize;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
     public interface IUnit: ISerializable
     {

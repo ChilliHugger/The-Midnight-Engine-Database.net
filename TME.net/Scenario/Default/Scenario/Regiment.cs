@@ -1,6 +1,5 @@
 using System;
 using System.Diagnostics.CodeAnalysis;
-using TME.Default.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
@@ -11,7 +10,7 @@ namespace TME.Scenario.Default.Scenario
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class Regiment : Item, IRegiment
+    public partial class Regiment : Item, IRegiment
     {
         public IItem? Parent { get; internal set; } 
         public ArmyType ArmyType { get; private set; } = ArmyType.Regiment;
@@ -30,43 +29,8 @@ namespace TME.Scenario.Default.Scenario
         public Loc LastLocation { get; internal set; } = Loc.Zero;
         public Loc TargetLocation { get; internal set; } = Loc.Zero;
 
-        public Regiment()
+        public Regiment() : base(EntityType.Regiment)
         {
-            Type = EntityType.Regiment;
         }
-        
-        #region Serialize
-
-        public override bool Load(ISerializeContext ctx)
-        {
-            if (!base.Load(ctx)) return false;
-            
-            Race = ctx.Reader.ReadRace();
-            UnitType = ctx.Reader.ReadUnitType();
-            Total = ctx.Reader.ReadUInt32();
-            TargetId = ctx.Reader.ReadMXId();
-            Orders = ctx.Reader.ReadOrders();
-            Success = ctx.Reader.ReadUInt32();
-            LoyaltyLord = ctx.ReadEntity<ILord>();
-            Killed = ctx.Reader.ReadUInt32();
-            LastLocation = (ctx.Version > 3)
-                ? ctx.Reader.ReadLoc()
-                : Loc.Zero;
-            Delay = (ctx.Version > 6)
-                ? ctx.Reader.ReadUInt32()
-                : 0;
-            
-            Lost = 0;
-            TargetLocation = Loc.Zero;
-
-            return true;
-        }
-        
-        public override bool Save()
-        {
-            throw new NotImplementedException();
-        }
-        
-        #endregion
     }
 }

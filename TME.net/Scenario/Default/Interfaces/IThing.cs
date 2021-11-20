@@ -1,16 +1,19 @@
-﻿using System;
-using TME.Scenario.Default.Enums;
+﻿using TME.Scenario.Default.Enums;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
+    internal interface IThingInternal : IThing, IItemInternal
+    {
+        void UpdateCarriedBy(IItem? carriedBy);
+    }
+    
     public interface IThing : IItem
     {
         ThingType Kills { get; }
         string Name { get; }
         string Description { get; }
         uint UseDescription { get; }
-        IThing CarriedBy { get; set; }
-
+        IItem? CarriedBy { get; }
         bool IsUnique { get; }
     }
 }

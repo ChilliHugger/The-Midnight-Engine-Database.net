@@ -1,8 +1,8 @@
 ﻿using System;
-using TME.Default.Interfaces;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
 
@@ -10,28 +10,27 @@ namespace TME
 {
     public class TMEMap : IMap
     {
-        private readonly static ID_4CC TME_MAGIC_NO = ID_4CC.FromSig('T', 'M', 'E', '!');
+        private static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
+        private const string MapHeader = "MidnightEngineMap";
+        private const uint MapVersion = 2;
 
-        private const string MAPHEADER = "MidnightEngineMap";
-        private const uint MAPVERSION = 2;
+        public static MapLoc Zero = new();
 
-        public static MapLoc ZERO = new MapLoc();
+        private MapLoc[]? _data;
+        private Size _size;
+        private int _totalSize;
 
-        private MapLoc[] _data;
-        private Size _size = new Size(0, 0);
-        private int _totalSize = 0;
-
-        private Loc _topVisible = new Loc();
-        private Loc _bottomVisible = new Loc();
+        private Loc _topVisible;
+        private Loc _bottomVisible;
 
         public bool LoadFullMapFromStream(TMEBinaryReader stream)
         {
             var magicNo = stream.ReadUInt32();
 
-            if (magicNo == TME_MAGIC_NO)
+            if (magicNo == TMEMagicNo)
             {
             }
-            else if (magicNo == TME_MAGIC_NO.Reverse())
+            else if (magicNo == TMEMagicNo.Reverse())
             {
             }
             else
@@ -40,13 +39,13 @@ namespace TME
             }
 
             var version = stream.ReadUInt32();
-            if (version != MAPVERSION)
+            if (version != MapVersion)
             {
                 return false;
             }
 
             var header = stream.ReadString();
-            if (header != MAPHEADER)
+            if (header != MapHeader)
             {
                 return false;
             }
@@ -62,9 +61,9 @@ namespace TME
 
             _data = new MapLoc[_totalSize];
 
-            for (int ii = 0; ii < _totalSize; ii++)
+            for (var ii = 0; ii < _totalSize; ii++)
             {
-                _data[ii].bits = stream.ReadUInt64();
+                _data[ii].Bits = stream.ReadUInt64();
             }
 
             CalculateVisibleArea();
@@ -79,9 +78,9 @@ namespace TME
 
             var loc = new Loc();
 
-            for (int y = 0; y < _size.Height; y++)
+            for (var y = 0; y < _size.Height; y++)
             {
-                for (int x = 0; x < _size.Width; x++)
+                for (var x = 0; x < _size.Width; x++)
                 {
                     loc.X = x;
                     loc.Y = y;
@@ -113,14 +112,15 @@ namespace TME
             }
         }
 
-        bool IsLocationVisible(Loc loc)
+        public bool IsLocationVisible(Loc loc)
         {
             return GetAt(loc).IsVisible;
         }
 
         public bool IsLocOnMap(Loc loc)
         {
-            return (loc.X >= 0 && loc.X < _size.Width) && (loc.Y >= 0 && loc.Y < _size.Height);
+            return loc.X >= 0 && loc.X < _size.Width 
+                && loc.Y >= 0 && loc.Y < _size.Height;
         }
 
         public void SetThing(Loc location, IThing thing)
@@ -129,24 +129,47 @@ namespace TME
 
             loc.Thing = (ThingType)thing.RawId;
 
-            if (thing.IsUnique)
+            if (thing.IsUnique && thing is IMappableInternal mappable )
             {
                 loc.HasObject = true;
-                thing.Location = location;
+                mappable.UpdateLocation(location);
             }
         }
 
         public MapLoc GetAt(Loc loc)
         {
+            if (_data == null)
+            {
+                return Zero;
+            }
+            
             // out of bounds map reference
             if (!IsLocOnMap(loc))
             {
-                return ZERO;
+                return Zero;
             }
 
-            int offset = ((loc.Y) * _size.Width) + (loc.X);
+            var offset = loc.Y * _size.Width + loc.X;
 
             return _data[offset];
+        }
+        
+        public void SetAt(Loc loc, ref MapLoc mapLoc)
+        {
+            if (_data == null)
+            {
+                return;
+            }
+            
+            // out of bounds map reference
+            if (!IsLocOnMap(loc))
+            {
+                return ;
+            }
+
+            var offset = loc.Y * _size.Width + loc.X;
+
+            _data[offset] = mapLoc;
         }
     }
 }

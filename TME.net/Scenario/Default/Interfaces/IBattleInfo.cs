@@ -1,8 +1,7 @@
-﻿using System;
-using TME.Scenario.Default.Base;
+﻿using TME.Scenario.Default.Base;
 using TME.Serialize;
 
-namespace TME.Default.Interfaces
+namespace TME.Scenario.Default.Interfaces
 {
     public interface IBattleInfo : ISerializable
     {

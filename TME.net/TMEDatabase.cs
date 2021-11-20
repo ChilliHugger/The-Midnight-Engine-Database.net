@@ -3,16 +3,17 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using Autofac;
-using TME.Default.Interfaces;
 using TME.Interfaces;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
+using TME.Types;
 
 namespace TME
 {
     public class TMEDatabase : IDatabase
     {
-        //#define TME_MAGIC_NO		ID_4CC('T','M','E','!')
+        private static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
+
         private readonly IVariables _variables;
         private readonly IContainer _container;
         private readonly ISerializeContext _serializeContext;
@@ -35,7 +36,7 @@ namespace TME
             ISerializeContext serializeContext,
             IDependencyContainer container)
         {
-            _container = container.CurrentContainer;
+            _container = container.CurrentContainer!;
             _variables = variables;
             _entityResolver = entityResolver;
             _entityContainer = entityContainer;

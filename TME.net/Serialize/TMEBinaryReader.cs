@@ -72,6 +72,7 @@ namespace TME.Serialize
         public ArmyType ReadArmyType() => (ArmyType)_reader.ReadUInt32();
         public UnitType ReadUnitType() => (UnitType)_reader.ReadUInt32();
         public Terrain ReadTerrain() => (Terrain)_reader.ReadUInt32();
+        public ThingType ReadThingType() => (ThingType)_reader.ReadUInt32();
         
     }
 }
