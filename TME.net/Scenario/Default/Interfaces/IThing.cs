@@ -15,5 +15,6 @@ namespace TME.Scenario.Default.Interfaces
         uint UseDescription { get; }
         IItem? CarriedBy { get; }
         bool IsUnique { get; }
+        bool IsCarried { get; }
     }
 }

@@ -5,7 +5,7 @@ using TME;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 
-namespace DatabaseTest
+namespace TME.UnitTests
 {
     public class BaseTestClass
     {   

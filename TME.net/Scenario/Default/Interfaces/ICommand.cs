@@ -6,5 +6,6 @@ namespace TME.Scenario.Default.Interfaces
     public interface ICommand
     {
         Task<IResult> Execute(params object[] args);
+        Task<IResult> CanExecute(params object[] args);
     }
 }

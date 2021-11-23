@@ -8,7 +8,7 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 
-namespace DatabaseTest
+namespace TME.UnitTests
 {
     [TestFixture]
     public class DatabaseLoadingTests
@@ -19,6 +19,7 @@ namespace DatabaseTest
         public void Setup()
         {
             var dependencyContainer = new TMEDependencyContainer(new ContainerBuilder());
+            dependencyContainer.Build();
             _container= dependencyContainer.CurrentContainer;
             
             var database = _container.Resolve<IDatabase>();

@@ -1,0 +1,24 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netcoreapp3.1</TargetFramework>
+        <LangVersion>9</LangVersion>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+        <PackageReference Include="Moq" Version="4.16.1" />
+        <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.35" />
+        <PackageReference Include="SpecFlow.NUnit" Version="3.9.40" />
+        <PackageReference Include="nunit" Version="3.13.1" />
+        <PackageReference Include="NUnit3TestAdapter" Version="3.17.0" />
+        <PackageReference Include="FluentAssertions" Version="5.10.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\TME.net\TME.net.csproj" />
+    </ItemGroup>
+
+</Project>

@@ -1,8 +1,6 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Autofac.Features.AttributeFilters;
-using TME.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario.Actions;
@@ -14,18 +12,15 @@ namespace TME.Scenario.Default.Scenario.Commands
     {
         private static readonly Time Duration = Time.None;
 
-        private readonly IDatabase _database;
         private readonly ICommandHistory _commandHistory;
         private readonly IVariables _variables;
         private readonly IAction _objectDropped;
 
         public DropObject(
-            IDatabase database,
             ICommandHistory commandHistory,
             IVariables variables,
             [KeyFilter(nameof(ObjectDropped))] IAction objectDropped)
         {
-            _database = database;
             _commandHistory = commandHistory;
             _variables = variables;
             _objectDropped = objectDropped;
@@ -43,36 +38,38 @@ namespace TME.Scenario.Default.Scenario.Commands
             if (args.FirstOrDefault() is ILordInternal lord
                 && args.LastOrDefault() is IThing thing)
             {
-                    var dropped = await _objectDropped.Execute(thing);
+                var dropped = await _objectDropped.Execute(thing);
 
-                    if (dropped is Success)
+                if (dropped is Success)
+                {
+                    var result = await _commandHistory.Save(Command.DropObject, Duration, lord, thing);
+                    if (result)
                     {
-                        var result = await _commandHistory.Save(Command.DropObject, Duration, lord, thing);
-                        if (result)
-                        {
-                            // Commands take time
-                            lord.UpdateTime(lord.Time + Duration);
+                        // Commands take time
+                        lord.UpdateTime(lord.Time + Duration);
 
-                            // lord no longer has the object
-                            lord.RemoveCarriedObject(thing);
+                        // lord no longer has the object
+                        lord.RemoveCarriedObject(thing);
 
-                            return Success.Default;
-                        }
+                        return Success.Default;
                     }
+                }
             }
 
             return Failure.Default;
         }
 
-        protected override Task<IResult> CanExecute(params object[] args)
+        public override Task<IResult> CanExecute(params object[] args)
         {
-            return args.FirstOrDefault() switch
+            if (args.FirstOrDefault() is ILord lord &&
+                args.LastOrDefault() is IThing thing &&
+                lord.Time + Duration > _variables.sv_time_night &&
+                lord.Carrying.Contains(thing))
             {
-                ILord lord when args.LastOrDefault() is IThing  
-                                && lord.Time + Duration <= _variables.sv_time_night
-                    => Task.FromResult(Success.Default),
-                    _ => Task.FromResult(Failure.Default)
-            };
+                return Task.FromResult(Success.Default);
+            }
+
+            return Task.FromResult(Failure.Default);
         }
     }
 }

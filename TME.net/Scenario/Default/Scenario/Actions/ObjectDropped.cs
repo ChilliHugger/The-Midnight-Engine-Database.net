@@ -8,11 +8,11 @@ namespace TME.Scenario.Default.Scenario.Actions
 {
     public class ObjectDropped : BaseAction
     {
-        private readonly IDatabase _database;
+        private readonly IMap _map;
      
-        public ObjectDropped(IDatabase database)
+        public ObjectDropped(IMap map)
         {
-            _database = database;
+            _map = map;
         }
 
         //
@@ -20,11 +20,11 @@ namespace TME.Scenario.Default.Scenario.Actions
         //
         protected override Task<IResult> OnExecute(params object[] args)
         {
-            if (args.FirstOrDefault() is IThingInternal {CarriedBy: IMappable carrier} thing)
+            if (args.FirstOrDefault() is IThingInternal {IsCarried: true} thing)
             {
                 // get the location details
-                var currentLocation = carrier.Location;
-                var loc = _database.GameMap.GetAt(currentLocation);
+                var currentLocation = thing.CarriedBy!.Location;
+                var loc = _map.GetAt(currentLocation);
 
                 // this object is no longer being carried
                 thing.UpdateCarriedBy(null);
@@ -39,7 +39,7 @@ namespace TME.Scenario.Default.Scenario.Actions
                     mappable.UpdateLocation(currentLocation);
                 }
 
-                _database.GameMap.SetAt(currentLocation, ref loc);
+                _map.SetAt(currentLocation, ref loc);
                 
                 return Task.FromResult(Success.Default);
             }
@@ -47,9 +47,9 @@ namespace TME.Scenario.Default.Scenario.Actions
             return Task.FromResult(Failure.Default);
         }
 
-        protected override Task<IResult> CanExecute(params object[] args)
+        public override Task<IResult> CanExecute(params object[] args)
         {
-            return Task.FromResult(args.FirstOrDefault() is IThingInternal {CarriedBy: IMappable carrier} 
+            return Task.FromResult(args.FirstOrDefault() is IThingInternal {IsCarried: true}
                 ? Success.Default 
                 : Failure.Default);
         }

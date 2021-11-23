@@ -2,7 +2,8 @@
 using System.Runtime.CompilerServices;
 using TME.Interfaces;
 
-[assembly:InternalsVisibleTo("DatabaseTest")]
+[assembly:InternalsVisibleTo("TME.UnitTests")]
+[assembly:InternalsVisibleTo("TME.SpecTests")]
 
 namespace TME
 {

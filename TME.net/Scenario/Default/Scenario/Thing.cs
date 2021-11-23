@@ -1,14 +1,13 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
-using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario
 {
     [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public partial class Thing : Item, IThingInternal
     {
         public ThingType Kills { get; internal set; } = ThingType.None;
@@ -18,6 +17,7 @@ namespace TME.Scenario.Default.Scenario
         public IItem? CarriedBy { get; internal set; }
         
         public bool IsUnique => HasFlags((ulong)ThingFlags.Unique);
+        public bool IsCarried => CarriedBy != null;
 
         public Thing() : base(EntityType.Thing)
         {

@@ -15,7 +15,7 @@ namespace TME.Scenario.Default.Scenario.Actions
             return await OnExecute(args);
         }
 
-        protected virtual Task<IResult> CanExecute(params object[] args)
+        public virtual Task<IResult> CanExecute(params object[] args)
         {
             return Task.FromResult(Success.Default);
         }

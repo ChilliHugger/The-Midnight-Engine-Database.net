@@ -1,16 +1,20 @@
 using System;
-using Autofac;
 using TME.Interfaces;
+using Autofac;
+using IContainer = Autofac.IContainer;
+using ContainerBuilder = Autofac.ContainerBuilder;
 
-namespace DatabaseTest
+namespace TME.SpecTests
 {
-    public class TestDependencyContainer : IDependencyContainer
+
+    public class SpecTestDependencyContainer : IDependencyContainer
     {
         private readonly ContainerBuilder _containerBuilder;
         private readonly Action<ContainerBuilder> _register;
-        public IContainer CurrentContainer { get; set; }
+        public IContainer CurrentContainer { get; private set; } = null!;
         
-        public TestDependencyContainer(ContainerBuilder containerBuilder, Action<ContainerBuilder> register)
+        public SpecTestDependencyContainer(
+            ContainerBuilder containerBuilder, Action<ContainerBuilder> register)
         {
             _containerBuilder = containerBuilder;
             _register = register;
@@ -24,6 +28,7 @@ namespace DatabaseTest
             CurrentContainer = _containerBuilder.Build();
             return this;
         }
+
 
         public IDependencyContainer RegisterModules()
         {

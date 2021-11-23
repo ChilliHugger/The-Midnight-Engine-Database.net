@@ -5,5 +5,6 @@ namespace TME.Scenario.Default.Interfaces
     public interface IAction
     {
         Task<IResult> Execute(params object[] args);
+        Task<IResult> CanExecute(params object[] args);
     }
 }

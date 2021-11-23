@@ -40,7 +40,7 @@ namespace TME.Scenario.Default.Base
         public double sv_success_riders_energy_other { get; set; }
         public bool sv_always_attempt_recruit { get; set; }
 
-        public string sv_map_file { get; set; }
+        public string sv_map_file { get; set; } = "";
         public double sv_map_width { get; set; }
         public double sv_map_height { get; set; }
         public bool sv_auto_unhide { get; set; }
@@ -59,10 +59,10 @@ namespace TME.Scenario.Default.Base
 
         public bool sv_collate_battle_areas { get; set; }
 
-        public MXId sv_character_friend { get; set; }
-        public MXId sv_character_foe { get; set; }
-        public IEnumerable<MXId> sv_character_default { get; set; }
-        public IEnumerable<MXId> sv_guidance { get; set; }
+        public MXId sv_character_friend { get; set; } = MXId.None;
+        public MXId sv_character_foe { get; set; } = MXId.None;
+        public IEnumerable<MXId> sv_character_default { get; set; } = new List<MXId>();
+        public IEnumerable<MXId> sv_guidance { get; set; } = new List<MXId>();
 
         public int sv_characters { get; set; }
         public int sv_routenodes { get; set; }

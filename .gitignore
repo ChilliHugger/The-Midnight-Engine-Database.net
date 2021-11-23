@@ -288,3 +288,4 @@ __pycache__/
 *.xsd.cs
 TME.net/.DS_Store
 .DS_Store
+*.feature.cs

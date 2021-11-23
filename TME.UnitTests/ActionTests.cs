@@ -12,7 +12,7 @@ using TME.Scenario.Default.Scenario;
 using TME.Scenario.Default.Scenario.Actions;
 using TME.Types;
 
-namespace DatabaseTest
+namespace TME.UnitTests
 {
     [TestFixture]
     public class ActionTests : BaseTestClass
