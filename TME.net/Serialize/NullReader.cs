@@ -11,6 +11,11 @@ namespace TME.Serialize
             throw new System.NotImplementedException();
         }
 
+        public T ReadEnum<T>()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public short ReadInt16()
         {
             throw new System.NotImplementedException();

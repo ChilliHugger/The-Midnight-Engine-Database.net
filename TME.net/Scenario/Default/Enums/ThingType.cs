@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum ThingType
+    public enum ThingType : uint
     {
         None = 0,
         Wolves,

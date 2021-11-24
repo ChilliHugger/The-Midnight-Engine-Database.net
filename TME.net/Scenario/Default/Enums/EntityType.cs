@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum EntityType
+    public enum EntityType : uint
     {
         None = 0,
         AreaInfo = 1,

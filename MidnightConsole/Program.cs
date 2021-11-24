@@ -34,7 +34,8 @@ namespace MidnightConsole
             OutputCollection("Strongholds", entities.Strongholds);
             OutputCollection("Waypoints", entities.Waypoints);
             OutputCollection("Things", entities.Things);
-            
+            OutputCollection("Missions", entities.Missions);
+            OutputCollection("Victories", entities.Victories);
         }
 
         private static void OutputCollection( string title, IEnumerable<IEntity> list)

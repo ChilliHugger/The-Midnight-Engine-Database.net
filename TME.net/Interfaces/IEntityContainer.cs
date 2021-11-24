@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using TME.Scenario.Default.Entities;
 using TME.Scenario.Default.Interfaces;
 
 namespace TME.Interfaces
@@ -11,5 +12,8 @@ namespace TME.Interfaces
         IReadOnlyList<IStronghold> Strongholds { get; }
         IReadOnlyList<IWaypoint> Waypoints { get; }
         IReadOnlyList<IThing> Things { get; }
+        IReadOnlyList<IMission> Missions { get; }
+        IReadOnlyList<IVictory> Victories { get; }
+
     }
 }

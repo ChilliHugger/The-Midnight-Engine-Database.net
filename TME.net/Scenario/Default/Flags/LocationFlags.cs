@@ -3,7 +3,7 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum LocationFlags : UInt32
+    public enum LocationFlags : uint
     {
         Mist            = 1 << (0),     // DDR Scenario, currently not used
         Tunnel          = 1 << (1),     // DDR Scenario, currently not used

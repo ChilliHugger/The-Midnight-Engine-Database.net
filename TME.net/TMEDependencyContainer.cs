@@ -1,5 +1,4 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using TME.Interfaces;
 
 namespace TME
@@ -7,7 +6,7 @@ namespace TME
     public class TMEDependencyContainer : IDependencyContainer
     {
         private readonly ContainerBuilder _containerBuilder;
-        public IContainer? CurrentContainer { get; set; }
+        public IContainer CurrentContainer { get; private set; } = null!;
 
 
         public TMEDependencyContainer(ContainerBuilder containerBuilder)

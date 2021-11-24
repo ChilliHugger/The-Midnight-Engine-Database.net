@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac;
 using TME.Interfaces;
@@ -7,23 +8,26 @@ using TME.Serialize;
 
 namespace TME
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class TMEEntityContainer : IEntityContainer, ISerializable
     {
         private readonly IContainer _container;
         private readonly IVariables _variables;
         
-        public IReadOnlyList<ILord> Lords { get; private set; }
-        public IReadOnlyList<IRouteNode> RouteNodes { get; private set; }
-        public IReadOnlyList<IRegiment> Regiments { get; private set; } 
-        public IReadOnlyList<IStronghold> Strongholds { get; private set; }
-        public IReadOnlyList<IWaypoint> Waypoints { get; private set; }
-        public IReadOnlyList<IThing> Things { get; private set; }
+        public IReadOnlyList<ILord> Lords { get; internal set; }
+        public IReadOnlyList<IRouteNode> RouteNodes { get; internal set; }
+        public IReadOnlyList<IRegiment> Regiments { get; internal set; } 
+        public IReadOnlyList<IStronghold> Strongholds { get; internal set; }
+        public IReadOnlyList<IWaypoint> Waypoints { get; internal set; }
+        public IReadOnlyList<IThing> Things { get; internal set; }
+        public IReadOnlyList<IMission> Missions { get; internal set; }
+        public IReadOnlyList<IVictory> Victories { get; internal set; }
         
         public TMEEntityContainer(
             IVariables variables,
             IDependencyContainer container)
         {
-            _container = container.CurrentContainer!;
+            _container = container.CurrentContainer;
             _variables = variables;
             
             Lords = new List<ILord>().AsReadOnly();
@@ -32,6 +36,17 @@ namespace TME
             RouteNodes = new List<IRouteNode>().AsReadOnly();
             Waypoints = new List<IWaypoint>().AsReadOnly();
             Things = new List<IThing>().AsReadOnly();
+            Missions = new List<IMission>().AsReadOnly();
+            Victories = new List<IVictory>().AsReadOnly();
+            // TODO:
+            // directions
+            // units
+            // races
+            // gender
+            // terrain
+            // areas
+            // commands
+            // variables
         }
 
 
@@ -43,13 +58,17 @@ namespace TME
             Strongholds = CreateCollection<IStronghold>(_variables.sv_strongholds).ToList().AsReadOnly();
             Waypoints = CreateCollection<IWaypoint>(_variables.sv_places).ToList().AsReadOnly();
             Things = CreateCollection<IThing>(_variables.sv_objects).ToList().AsReadOnly();
-            
+            Missions = CreateCollection<IMission>(_variables.sv_missions).ToList().AsReadOnly();
+            Victories = CreateCollection<IVictory>(_variables.sv_victories).ToList().AsReadOnly();
+
             ReadCollection(Lords, context);
             ReadCollection(Regiments, context);
             ReadCollection(RouteNodes, context);
             ReadCollection(Strongholds,context);
             ReadCollection(Waypoints,context);
             ReadCollection(Things,context);
+            ReadCollection(Missions,context);
+            ReadCollection(Victories,context);
             
             return true;
         }

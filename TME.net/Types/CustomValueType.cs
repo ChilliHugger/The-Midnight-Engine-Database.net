@@ -12,7 +12,7 @@ namespace TME.Types
             Value = value;
         }
 
-        public override string ToString()
+        public override string? ToString()
         {
             return Value.ToString();
         }
@@ -62,9 +62,9 @@ namespace TME.Types
             return EqualityComparer<TValue>.Default.Equals(Value, other.Value);
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            //if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
             return Equals((CustomValueType<TCustom, TValue>)obj);

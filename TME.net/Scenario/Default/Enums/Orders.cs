@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum Orders
+    public enum Orders : uint
     {
         None = 0,
         Regiment,

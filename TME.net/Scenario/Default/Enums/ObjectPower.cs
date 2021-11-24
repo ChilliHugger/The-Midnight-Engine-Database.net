@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum ObjectPower
+    public enum ObjectPower : uint
     {
         None = 0,
         Persuasion = 1,

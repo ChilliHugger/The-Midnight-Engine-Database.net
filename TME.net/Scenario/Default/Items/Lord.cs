@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac.Features.AttributeFilters;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
-using TME.Serialize;
 using TME.Types;
 
-namespace TME.Scenario.Default.Scenario
+namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public partial class Lord : Item, ILordInternal

@@ -3,7 +3,7 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum SelectionFlags : UInt32
+    public enum SelectionFlags : uint
     {
         None        = 1 << 0,
         All         = 1 << 1,

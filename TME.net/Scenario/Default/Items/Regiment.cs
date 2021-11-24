@@ -1,12 +1,10 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
-using TME.Serialize;
 using TME.Types;
 
-namespace TME.Scenario.Default.Scenario
+namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]

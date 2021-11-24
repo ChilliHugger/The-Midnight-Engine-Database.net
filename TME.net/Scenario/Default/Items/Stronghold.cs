@@ -1,13 +1,13 @@
-using System;
 using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
-using TME.Serialize;
 
-namespace TME.Scenario.Default.Scenario
+namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Local")]
     public partial class Stronghold : Item, IStronghold
     {
         public Race OccupyingRace { get; internal set; } = Race.None;

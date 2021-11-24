@@ -2,7 +2,7 @@ using System;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
-namespace TME.Scenario.Default.Scenario
+namespace TME.Scenario.Default.Items
 {
     public partial class Stronghold
     {

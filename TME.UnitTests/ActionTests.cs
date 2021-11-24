@@ -3,14 +3,16 @@ using System.Threading.Tasks;
 using Autofac;
 using Moq;
 using NUnit.Framework;
+using TME.Extensions;
 using TME.Interfaces;
+using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
-using TME.Scenario.Default.Scenario.Actions;
 using TME.Types;
+using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME.UnitTests
 {
@@ -107,11 +109,11 @@ namespace TME.UnitTests
                 item.Id = new MXId(EntityType.Thing,(uint)thingType);
                 if (unique)
                 {
-                    item.SetFlags((ulong) ThingFlags.Unique, true);
+                    item.SetFlags(ThingFlags.Unique.Raw(), true);
                 }
                 else
                 {
-                    item.SetFlags((ulong) ThingFlags.Unique, false);
+                    item.SetFlags(ThingFlags.Unique.Raw(), false);
                 }
                 internalThing.UpdateCarriedBy(lord);
             }

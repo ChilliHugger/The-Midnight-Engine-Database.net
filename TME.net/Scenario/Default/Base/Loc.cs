@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 
 namespace TME.Scenario.Default.Base
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public struct Loc : IEquatable<Loc>, IMappable
     {
         public static readonly Loc Zero = new Loc(0,0);
@@ -22,9 +24,9 @@ namespace TME.Scenario.Default.Base
             new Loc(-1,-1)       // DR_NORTHWEST,
         };
 
-        public Loc Location { get => this; set { } }
+        public Loc Location => this;
 
-        public Loc( Int32 x, Int32 y )
+        public Loc( int x, int y )
         {
             this.X = x;
             this.Y = y;
@@ -53,9 +55,9 @@ namespace TME.Scenario.Default.Base
             return base.GetHashCode();
         }
 
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
-            return this.Equals( (Loc) obj  );
+            return obj != null && this.Equals( (Loc) obj  );
         }
 
         public bool Equals(Loc other)

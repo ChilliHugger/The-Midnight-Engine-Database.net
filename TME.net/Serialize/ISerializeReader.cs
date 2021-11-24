@@ -7,6 +7,8 @@ namespace TME.Serialize
     public interface ISerializeReader
     {
         int PeekInt32();
+        T ReadEnum<T>();
+
         short ReadInt16();
         ushort ReadUInt16();
         int ReadInt32();

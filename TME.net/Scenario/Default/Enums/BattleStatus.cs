@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum BattleStatus
+    public enum BattleStatus : uint
     {
         None,
         Continues,

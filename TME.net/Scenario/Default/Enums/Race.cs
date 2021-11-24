@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum Race
+    public enum Race : uint
     {
         None = 0,
         Doomguard,

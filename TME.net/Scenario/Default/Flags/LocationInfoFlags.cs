@@ -3,7 +3,7 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum LocationInfoFlags : UInt32
+    public enum LocationInfoFlags : uint
     {
         MoveForward     = 1 << 0,   // can we move into the location we are looking at?
         Seek            = 1 << 1,   // can we do a search - always true at present

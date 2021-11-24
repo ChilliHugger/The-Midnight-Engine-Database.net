@@ -2,7 +2,6 @@ using Autofac;
 using Moq;
 using TechTalk.SpecFlow;
 using TME.Scenario.Default.Interfaces;
-using TME.Scenario.Default.Scenario.Actions;
 using TME.SpecTests.Context;
 using TME.SpecTests.Mocks;
 

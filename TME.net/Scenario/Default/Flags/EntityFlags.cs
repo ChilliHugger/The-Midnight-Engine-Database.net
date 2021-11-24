@@ -3,8 +3,8 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum EntityFlags : UInt32
+    public enum EntityFlags : uint
     {
-        Disabled = (UInt32)1 << 31
+        Disabled = (uint)1 << 31
     }
 }

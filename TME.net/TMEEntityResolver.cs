@@ -22,25 +22,40 @@ namespace TME
             {
                 return (T?) EntityById(EntityType.Character, id);
             }
-            else if (typeof(T) == typeof(IRegiment))
+
+            if (typeof(T) == typeof(IRegiment))
             {
                 return (T?) EntityById(EntityType.Regiment, id);
             }
-            else if (typeof(T) == typeof(IRouteNode))
+
+            if (typeof(T) == typeof(IRouteNode))
             {
                 return (T?) EntityById(EntityType.RouteNode, id);
             }
-            else if (typeof(T) == typeof(IStronghold))
+
+            if (typeof(T) == typeof(IStronghold))
             {
                 return (T?) EntityById(EntityType.Stronghold, id);
             }
-            else if (typeof(T) == typeof(IWaypoint))
+
+            if (typeof(T) == typeof(IWaypoint))
             {
                 return (T?) EntityById(EntityType.Waypoint, id);
             }
-            else if (typeof(T) == typeof(IThing))
+
+            if (typeof(T) == typeof(IThing))
             {
                 return (T?) EntityById(EntityType.Thing, id);
+            }
+
+            if (typeof(T) == typeof(IMission))
+            {
+                return (T?) EntityById(EntityType.Mission, id);
+            }
+
+            if (typeof(T) == typeof(IVictory))
+            {
+                return (T?) EntityById(EntityType.Victory, id);
             }
             return default;
         }
@@ -68,6 +83,10 @@ namespace TME
                     return _entityContainer.Waypoints.ElementAt(id);
                 case EntityType.Thing:
                     return _entityContainer.Things.ElementAt(id);
+                case EntityType.Mission:
+                    return _entityContainer.Missions.ElementAt(id);
+                case EntityType.Victory:
+                    return _entityContainer.Victories.ElementAt(id);
             }
 
             return null;

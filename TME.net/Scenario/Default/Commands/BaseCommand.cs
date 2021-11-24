@@ -1,7 +1,9 @@
 using System.Threading.Tasks;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Scenario;
+using TME.Types;
 
-namespace TME.Scenario.Default.Scenario.Commands
+namespace TME.Scenario.Default.Commands
 {
     public class BaseCommand : ICommand
     {

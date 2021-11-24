@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum UnitType
+    public enum UnitType : uint
     {
         None,
         Warrior,

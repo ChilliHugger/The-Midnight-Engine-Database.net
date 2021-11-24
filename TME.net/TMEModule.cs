@@ -1,21 +1,25 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
-using TME.Default;
 using TME.Interfaces;
-using TME.Scenario;
+using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Commands;
+using TME.Scenario.Default.Entities;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Scenario.Default.Scenario;
-using TME.Scenario.Default.Scenario.Actions;
-using TME.Scenario.Default.Scenario.Commands;
 using TME.Serialize;
+using Lord = TME.Scenario.Default.Items.Lord;
+using Regiment = TME.Scenario.Default.Items.Regiment;
+using Stronghold = TME.Scenario.Default.Items.Stronghold;
+using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME
 {
     public class TMEModule : Module
     {
-        private ContainerBuilder _builder;
+        private ContainerBuilder _builder = null!;
         protected override void Load(ContainerBuilder builder)
         {
             _builder = builder;
@@ -52,6 +56,10 @@ namespace TME
             _builder.RegisterType<Stronghold>().As<IStronghold>();
             _builder.RegisterType<Waypoint>().As<IWaypoint>();
             _builder.RegisterType<Thing>().As<IThing>();
+
+            _builder.RegisterType<Mission>().As<IMission>();
+            _builder.RegisterType<Victory>().As<IVictory>();
+            
             _builder.RegisterType<Lord>().As<ILord>().WithAttributeFiltering();
 
             _builder.RegisterType<Warriors>().Keyed<IUnit>(UnitType.Warrior);

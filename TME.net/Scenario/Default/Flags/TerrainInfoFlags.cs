@@ -3,7 +3,7 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum TerrainInfoFlags : UInt32
+    public enum TerrainInfoFlags : uint
     {
         Plural      = 1 << 0,   // terrain has plural
         Block       = 1 << 1,   // terrain blocks movement? ( not implemented )

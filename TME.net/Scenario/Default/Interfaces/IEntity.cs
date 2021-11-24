@@ -1,16 +1,17 @@
-﻿using TME.Scenario.Default.Enums;
+﻿using System;
+using TME.Scenario.Default.Enums;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
     internal interface IEntityInternal
     {
-        void SetFlags(ulong flags, bool value);
+        void SetFlags(uint flags, bool value);
     }
     
     public interface IEntity
     {
-        ulong RawFlags { get; }
+        uint RawFlags { get; }
         uint RawId { get; }
 
         EntityType Type { get; }
@@ -19,6 +20,7 @@ namespace TME.Scenario.Default.Interfaces
         string Symbol { get; }
 
         bool IsSymbol(string value);
-        bool HasFlags(ulong mask);
+        bool HasFlags(uint mask);
+        bool IsFlags<T>(T mask) where T : Enum;
     }
 }

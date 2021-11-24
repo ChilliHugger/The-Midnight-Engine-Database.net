@@ -163,7 +163,7 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_character_friend),                 "CHARACTER_FRIEND",                 "CH_LUXOR" ),
             new VariableDefinition(nameof(sv_character_foe),                    "CHARACTER_FOE",                    "CH_DOOMDARK" ),
             new VariableDefinition(nameof(sv_character_default),                "CHARACTER_DEFAULT",                "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON" ),
-            new VariableDefinition(nameof(sv_guidance),                         "SEEK_MESSAGES",                    "" ),
+            new VariableDefinition(nameof(sv_guidance),                         "SEEK_MESSAGES" ),
 
             // Not stored in the database
             new VariableDefinition(nameof(sv_characters),                       "CHARACTERS",                       "0" ),
@@ -206,8 +206,8 @@ namespace TME.Scenario.Default.Base
 
             var p = t.GetProperty(propertyName);
 
-            var valueType = p.PropertyType;
-            var value = p.GetValue(this);
+            var valueType = p?.PropertyType;
+            var value = p?.GetValue(this);
 
             if (value == null)
             {
@@ -224,18 +224,20 @@ namespace TME.Scenario.Default.Base
             
             if (valueType == typeof(MXId))
             {
-                return value.ToString();
+                return value.ToString() ?? "";
             }
-            else if (valueType == typeof(bool) && value is bool yesNo)
+
+            if (valueType == typeof(bool) && value is bool yesNo)
             {
                 return yesNo ? "Yes" : "No" ;
             }
-            else if (valueType == typeof(IEnumerable<MXId>) && value is IEnumerable<MXId> values)
+
+            if (valueType == typeof(IEnumerable<MXId>) && value is IEnumerable<MXId>)
             {
                 return string.Join("|",value);
             }
 
-            return value.ToString();
+            return value.ToString() ?? "";
 
         }
 
@@ -244,6 +246,10 @@ namespace TME.Scenario.Default.Base
             var t = this.GetType();
 
             var p = t.GetProperty(propertyName);
+            if (p == null)
+            {
+                return;
+            }
 
             //object valueType = p.GetValue(this, null);
 
@@ -266,25 +272,11 @@ namespace TME.Scenario.Default.Base
             }
             else if (valueType == typeof(double))
             {
-                if (double.TryParse(propertyValue, out double value))
-                {
-                    p.SetValue(this, value);
-                }
-                else
-                {
-                    p.SetValue(this, default(double));
-                }
+                p.SetValue(this, double.TryParse(propertyValue, out var value) ? value : default);
             }
             else if (valueType == typeof(int))
             {
-                if (int.TryParse(propertyValue, out int value))
-                {
-                    p.SetValue(this, value);
-                }
-                else
-                {
-                    p.SetValue(this, default(int));
-                }
+                p.SetValue(this, int.TryParse(propertyValue, out var value) ? value : default);
             }
             else if (valueType == typeof(string))
             {
@@ -331,7 +323,7 @@ namespace TME.Scenario.Default.Base
 
         public List<KeyValuePair<string, string>> GetValues()
         {
-            var vars = new VariableDefinition[]
+            var vars = new[]
             {
                 new VariableDefinition(nameof(sv_character_friend), "CHARACTER_FRIEND", "CH_LUXOR"),
                 new VariableDefinition(nameof(sv_character_foe), "CHARACTER_FOE", "CH_DOOMDARK"),

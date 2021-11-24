@@ -2,13 +2,14 @@ using System.Threading.Tasks;
 using Autofac;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
-using TME.Scenario.Default.Scenario.Actions;
 using TME.SpecTests.Context;
 using TME.SpecTests.Drivers;
 using TME.SpecTests.Hooks;
+using TME.Types;
 
 namespace TME.SpecTests.Steps
 {

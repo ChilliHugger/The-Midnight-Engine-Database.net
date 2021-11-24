@@ -1,9 +1,7 @@
-using System;
-using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
-namespace TME.Scenario.Default.Scenario
+namespace TME.Scenario.Default.Items
 {
     public class RouteNodes : IRouteNodes
     {

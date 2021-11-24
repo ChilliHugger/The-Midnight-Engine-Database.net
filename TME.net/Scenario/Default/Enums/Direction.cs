@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum Direction
+    public enum Direction : uint
     {
         North = 0,
         NorthEast,

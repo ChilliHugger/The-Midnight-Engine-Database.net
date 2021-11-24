@@ -62,6 +62,8 @@ namespace TME.Serialize
             var id = _reader.ReadUInt32();
             return (MXId) id;
         }
+
+        public T ReadEnum<T>() => (T)(object)_reader.ReadUInt32();
         
         public Time ReadTime() => _reader.ReadUInt32();
         public Direction ReadDirection() => (Direction)_reader.ReadUInt32();

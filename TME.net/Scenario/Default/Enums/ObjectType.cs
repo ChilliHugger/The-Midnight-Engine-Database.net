@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum ObjectType
+    public enum ObjectType : uint
     {
         None = 0,
         Crown,

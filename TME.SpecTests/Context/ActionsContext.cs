@@ -1,6 +1,7 @@
 using TechTalk.SpecFlow;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
+using TME.Types;
 
 namespace TME.SpecTests.Context
 {

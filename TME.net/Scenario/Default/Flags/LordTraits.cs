@@ -1,23 +1,24 @@
 ﻿namespace TME.Scenario.Default.Flags
 {
-    public enum LordTraits
+    public enum LordTraits : uint
     {
-        ct_good = 1 << 0,
-        ct_strong = 1 << (1),
-        ct_forceful = 1 << (2),
-        ct_generous = 1 << (3),
-        ct_stubborn = 1 << (4),
-        ct_brave = 1 << (5),
-        ct_swift = 1 << (6),
-        ct_loyal = 1 << (7),
-
-        ct_evil = 1 << (8),
-        ct_weak = 1 << (9),
-        ct_reticent = 1 << (10),
-        ct_greedy = 1 << (11),
-        ct_fawning = 1 << (12),
-        ct_coward = 1 << (13),
-        ct_slow = 1 << (14),
-        ct_treacherous = 1 << (15),
+// +ve
+        Good             = 1 << 0,
+        Strong           = 1 << (1),
+        Forceful         = 1 << (2),
+        Generous         = 1 << (3),
+        Stubborn         = 1 << (4),
+        Brave            = 1 << (5),
+        Swift            = 1 << (6),
+        Loyal            = 1 << (7),
+// -ve
+        Evil             = 1 << (8),
+        Weak             = 1 << (9),
+        Reticent         = 1 << (10),
+        Greedy           = 1 << (11),
+        Fawning          = 1 << (12),
+        Coward           = 1 << (13),
+        Slow             = 1 << (14),
+        Treacherous      = 1 << (15),
     }
 }

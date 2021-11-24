@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum Terrain
+    public enum Terrain : uint
     {
         // lom
         Plains = 0,

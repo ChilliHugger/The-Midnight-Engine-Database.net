@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum WaitStatus
+    public enum WaitStatus : uint
     {
         None,
         Overnight,

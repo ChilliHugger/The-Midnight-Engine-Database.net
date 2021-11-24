@@ -1,6 +1,6 @@
 ﻿namespace TME.Scenario.Default.Enums
 {
-    public enum Commanding
+    public enum Commanding : uint
     {
         All,
         Available,

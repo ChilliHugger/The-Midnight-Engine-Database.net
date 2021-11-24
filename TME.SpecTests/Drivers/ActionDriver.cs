@@ -3,15 +3,17 @@ using System.Threading.Tasks;
 using Autofac;
 using Moq;
 using TechTalk.SpecFlow;
+using TME.Extensions;
+using TME.Scenario.Default.Commands;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
-using TME.Scenario.Default.Scenario.Commands;
 using TME.SpecTests.Context;
 using TME.SpecTests.Hooks;
 using TME.SpecTests.Mocks;
 using TME.Types;
+using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME.SpecTests.Drivers
 {
@@ -59,7 +61,7 @@ namespace TME.SpecTests.Drivers
             if (thing is Thing item)
             {
                 item.Id = new MXId(EntityType.Thing,(uint)thingType);
-                item.SetFlags((ulong) ThingFlags.Unique, unique);
+                item.SetFlags(ThingFlags.Unique.Raw(), unique);
             }
 
             return thing;
