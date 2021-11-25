@@ -35,7 +35,7 @@ namespace TME.SpecTests.Context
         public double sv_object_energy_shelter { get; set; }
         public double sv_object_energy_shadowsofdeath { get; set; }
         public double sv_object_energy_watersoflife { get; set; }
-        public double sv_lookforwarddistance { get; set; }
+        public double sv_look_forward_distance { get; set; }
         public double sv_regiment_default_moves { get; set; }
         public double sv_stronghold_default_empty { get; set; }
         public double sv_stronghold_default_min { get; set; }
@@ -86,12 +86,12 @@ namespace TME.SpecTests.Context
         public int sv_days { get; set; }
         public int sv_attributes { get; set; }
         public int sv_variables { get; set; }
-        public int sv_strongholdadjuster { get; set; }
+        public int sv_stronghold_adjuster { get; set; }
         public int sv_controlled_character { get; set; }
         public int sv_energy_max { get; set; }
         public int sv_strength_max { get; set; }
-        public bool sv_cheat_armies_noblock { get; set; }
-        public bool sv_cheat_nasties_noblock { get; set; }
+        public bool sv_cheat_army_no_block { get; set; }
+        public bool sv_cheat_nasty_no_block { get; set; }
         public bool sv_cheat_movement_free { get; set; }
         public bool sv_cheat_movement_cheap { get; set; }
         public bool sv_cheat_commands_free { get; set; }

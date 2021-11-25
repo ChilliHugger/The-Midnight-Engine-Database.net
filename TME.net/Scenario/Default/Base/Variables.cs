@@ -9,6 +9,8 @@ namespace TME.Scenario.Default.Base
 {
     public class Variables : IVariables, ISerializable
     {
+        private readonly Dictionary<string, string> _propertyMapping;
+
         public double sv_database_version { get; set; }
         public double sv_battle_default_energy_drain { get; set; }
         public double sv_battle_default_char_energy_drain { get; set; }
@@ -27,7 +29,7 @@ namespace TME.Scenario.Default.Base
         public double sv_object_energy_shelter { get; set; }
         public double sv_object_energy_shadowsofdeath { get; set; }
         public double sv_object_energy_watersoflife { get; set; }
-        public double sv_lookforwarddistance { get; set; }
+        public double sv_look_forward_distance { get; set; }
         public double sv_regiment_default_moves { get; set; }
         public double sv_stronghold_default_empty { get; set; }
         public double sv_stronghold_default_min { get; set; }
@@ -86,17 +88,14 @@ namespace TME.Scenario.Default.Base
         public int sv_days { get; set; }
         public int sv_attributes { get; set; }
         public int sv_variables { get; set; }
-        public int sv_strongholdadjuster { get; set; }
+        public int sv_stronghold_adjuster { get; set; }
         public int sv_controlled_character { get; set; }
-
-        //		bool	sv_failed_approach_battle  {get;set;}
-        //		bool	sv_use_cowardess  {get;set;}
-        //		bool	sv_use_despondency  {get;set;}
+        
         public int sv_energy_max { get; set; }
         public int sv_strength_max { get; set; }
 
-        public bool sv_cheat_armies_noblock { get; set; }
-        public bool sv_cheat_nasties_noblock { get; set; }
+        public bool sv_cheat_army_no_block { get; set; }
+        public bool sv_cheat_nasty_no_block { get; set; }
         public bool sv_cheat_movement_free { get; set; }
         public bool sv_cheat_movement_cheap { get; set; }
         public bool sv_cheat_commands_free { get; set; }
@@ -104,7 +103,7 @@ namespace TME.Scenario.Default.Base
 
         public int sv_energy_cannot_continue { get; set; }
 
-        static readonly VariableDefinition[] VariableDefinitions = new VariableDefinition[]
+        private static readonly VariableDefinition[] VariableDefinitions = new[]
         {
             new VariableDefinition(nameof(sv_database_version),                 "DATABASE_VERSION",                 "1.00" ),
             new VariableDefinition(nameof(sv_battle_default_energy_drain),      "BATTLE_DEFAULT_ENERGY_DRAIN",      "24" ),
@@ -124,7 +123,8 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_object_energy_shelter),            "OBJECT_ENERGY_SHELTER",            "10" ),
             new VariableDefinition(nameof(sv_object_energy_shadowsofdeath),     "OBJECT_ENERGY_SHADOWSOFDEATH",     "0" ),
             new VariableDefinition(nameof(sv_object_energy_watersoflife),       "OBJECT_ENERGY_WATERSOFLIFE",       "120" ),
-            new VariableDefinition(nameof(sv_lookforwarddistance),              "LOOKFORWARDDISTANCE",              "3" ),
+            // ReSharper disable once StringLiteralTypo
+            new VariableDefinition(nameof(sv_look_forward_distance),            "LOOKFORWARDDISTANCE",              "3" ),
             new VariableDefinition(nameof(sv_regiment_default_moves),           "REGIMENT_DEFAULT_MOVES",           "6" ),
             new VariableDefinition(nameof(sv_stronghold_default_empty),         "STRONGHOLD_DEFAULT_EMPTY",         "20" ),
             new VariableDefinition(nameof(sv_stronghold_default_min),           "STRONGHOLD_DEFAULT_MIN",           "100" ),
@@ -184,7 +184,7 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_attributes),                       "ATTRIBUTES",                       "0" ),
             new VariableDefinition(nameof(sv_variables),                        "VARIABLES",                        "0" ),
             new VariableDefinition(nameof(sv_days),                             "DAYS",                             "0" ),
-            new VariableDefinition(nameof(sv_strongholdadjuster),               "STRONGHOLD_ADJUSTER",              "0" ),
+            new VariableDefinition(nameof(sv_stronghold_adjuster),              "STRONGHOLD_ADJUSTER",              "0" ),
             new VariableDefinition(nameof(sv_controlled_character),             "CONTROLLED_CHARACTER",             "0" ),
             new VariableDefinition(nameof(sv_energy_cannot_continue),           "ENERGY_CANNOT_CONTINUE",           "0" ),
             new VariableDefinition(nameof(sv_object_powers),                    "OBJECT_POWERS",                    "0" ),
@@ -192,11 +192,17 @@ namespace TME.Scenario.Default.Base
 
         };
 
+        public Variables()
+        {
+            _propertyMapping = VariableDefinitions
+                .ToDictionary(v => v.VariableName, v => v.PropertyName);
+        }
+        
         public void Initialise()
         {
-            foreach (var v in VariableDefinitions)
+            foreach (var (propertyName, _, defaultValue) in VariableDefinitions)
             {
-                SetValue(v.PropertyName, v.DefaultValue);
+                SetValue(propertyName, defaultValue);
             }
         }
 
@@ -261,7 +267,7 @@ namespace TME.Scenario.Default.Base
                 {
                     p.SetValue(this, true);
                 }
-                else if (bool.TryParse(propertyValue, out bool value))
+                else if (bool.TryParse(propertyValue, out var value))
                 {
                     p.SetValue(this, value);
                 }
@@ -316,6 +322,23 @@ namespace TME.Scenario.Default.Base
             return true;
         }
 
+        public bool LoadVariables(ISerializeContext context)
+        {
+            for ( var ii=0; ii<sv_variables; ii++ ) {
+
+                var name = context.Reader.ReadString();
+                var value = context.Reader.ReadString();
+                _ = context.Reader.ReadInt32();
+
+                if (_propertyMapping.TryGetValue(name, out var propertyName))
+                {
+                    SetValue(propertyName,value);
+                }
+            }
+
+            return true;
+        }
+        
         public bool Save()
         {
             throw new NotImplementedException();

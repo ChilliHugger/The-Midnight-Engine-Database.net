@@ -1,8 +1,7 @@
-﻿using System;
-using TME.Scenario.Default.Base;
+﻿using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 
-namespace TME.Default.info
+namespace TME.Scenario.Default.info
 {
     public class ObjectTypeInfo : Info
     {

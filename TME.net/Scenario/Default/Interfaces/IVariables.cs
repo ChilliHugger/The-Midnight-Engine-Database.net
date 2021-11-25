@@ -30,7 +30,7 @@ namespace TME.Scenario.Default.Interfaces
         double sv_object_energy_shelter { get; set; }
         double sv_object_energy_shadowsofdeath { get; set; }
         double sv_object_energy_watersoflife { get; set; }
-        double sv_lookforwarddistance { get; set; }
+        double sv_look_forward_distance { get; set; }
         double sv_regiment_default_moves { get; set; }
         double sv_stronghold_default_empty { get; set; }
         double sv_stronghold_default_min { get; set; }
@@ -89,7 +89,7 @@ namespace TME.Scenario.Default.Interfaces
         int sv_days { get; set; }
         int sv_attributes { get; set; }
         int sv_variables { get; set; }
-        int sv_strongholdadjuster { get; set; }
+        int sv_stronghold_adjuster { get; set; }
         int sv_controlled_character { get; set; }
 
         //bool	sv_failed_approach_battle  {get;set;}
@@ -99,8 +99,8 @@ namespace TME.Scenario.Default.Interfaces
         int sv_energy_max { get; set; }
         int sv_strength_max { get; set; }
 
-        bool sv_cheat_armies_noblock { get; set; }
-        bool sv_cheat_nasties_noblock { get; set; }
+        bool sv_cheat_army_no_block { get; set; }
+        bool sv_cheat_nasty_no_block { get; set; }
         bool sv_cheat_movement_free { get; set; }
         bool sv_cheat_movement_cheap { get; set; }
         bool sv_cheat_commands_free { get; set; }

@@ -6,7 +6,7 @@ namespace TME.Scenario.Default.Interfaces
     {
         int Priority { get; }
         uint String { get; }
-        MXId Mission { get; }
+        IMission? Mission { get; }
         bool IsComplete { get; }
         bool IsGameOver { get; }
     }

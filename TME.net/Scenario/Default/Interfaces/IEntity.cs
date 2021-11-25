@@ -4,7 +4,7 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IEntityInternal
+    internal interface IEntityInternal : IEntity
     {
         void SetFlags(uint flags, bool value);
     }

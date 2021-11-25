@@ -68,15 +68,15 @@ namespace TME
                     ? reader.ReadString() 
                     : "";
                 
-                // TODO: DI
-                var context = _serializeContext;
-                context.Reader = reader;
-                context.Version = Version;
+                _serializeContext.Reader = reader;
+                _serializeContext.Version = Version;
+                _serializeContext.IsDatabase = true;
+                _serializeContext.IsSaveGame = false;
 
                 // Read objects
                 if (_variables is ISerializable variables)
                 {
-                    if (!variables.Load(context))
+                    if (!variables.Load(_serializeContext))
                     {
                         throw new FileLoadException("Error in variables");
                     }
@@ -84,13 +84,17 @@ namespace TME
 
                 if (_entityContainer is ISerializable entities)
                 {
-                    if (!entities.Load(context))
+                    if (!entities.Load(_serializeContext))
                     {
                         throw new FileLoadException("Error in Entities");
                     }
                 }
 
-
+                // Load Text
+                
+                // load variables
+                
+                // load Version 10 extras ** DDR **
 
             }
 

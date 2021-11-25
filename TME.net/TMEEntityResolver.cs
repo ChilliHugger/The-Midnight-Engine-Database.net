@@ -1,6 +1,9 @@
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using TME.Interfaces;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Types;
 
@@ -10,6 +13,26 @@ namespace TME
     {
         private readonly IEntityContainer _entityContainer;
 
+        private readonly Dictionary<Type, EntityType> _typeMappings = new()
+        {
+            { typeof(ILord), EntityType.Character },
+            { typeof(IRegiment), EntityType.Regiment },
+            { typeof(IRouteNode), EntityType.RouteNode },
+            { typeof(IStronghold), EntityType.Stronghold },                
+            { typeof(IWaypoint), EntityType.Waypoint },
+            { typeof(IThing), EntityType.Thing },
+            { typeof(IMission), EntityType.Mission },
+            { typeof(IVictory), EntityType.Victory },
+            
+            { typeof(DirectionInfo), EntityType.DirectionInfo },
+            { typeof(UnitInfo), EntityType.UnitInfo },
+            { typeof(RaceInfo), EntityType.RaceInfo },                
+            { typeof(GenderInfo), EntityType.GenderInfo },
+            { typeof(TerrainInfo), EntityType.TerrainInfo },
+            { typeof(AreaInfo), EntityType.AreaInfo },
+            { typeof(CommandInfo), EntityType.CommandInfo },
+        };
+        
         public TMEEntityResolver(IEntityContainer entityContainer)
         {
             _entityContainer = entityContainer;
@@ -18,44 +41,9 @@ namespace TME
         public T? EntityById<T>(int id)
             where T : IEntity
         {
-            if (typeof(T) == typeof(ILord))
+            if (_typeMappings.TryGetValue(typeof(T), out var entityType))
             {
-                return (T?) EntityById(EntityType.Character, id);
-            }
-
-            if (typeof(T) == typeof(IRegiment))
-            {
-                return (T?) EntityById(EntityType.Regiment, id);
-            }
-
-            if (typeof(T) == typeof(IRouteNode))
-            {
-                return (T?) EntityById(EntityType.RouteNode, id);
-            }
-
-            if (typeof(T) == typeof(IStronghold))
-            {
-                return (T?) EntityById(EntityType.Stronghold, id);
-            }
-
-            if (typeof(T) == typeof(IWaypoint))
-            {
-                return (T?) EntityById(EntityType.Waypoint, id);
-            }
-
-            if (typeof(T) == typeof(IThing))
-            {
-                return (T?) EntityById(EntityType.Thing, id);
-            }
-
-            if (typeof(T) == typeof(IMission))
-            {
-                return (T?) EntityById(EntityType.Mission, id);
-            }
-
-            if (typeof(T) == typeof(IVictory))
-            {
-                return (T?) EntityById(EntityType.Victory, id);
+                return (T?) EntityById(entityType, id);
             }
             return default;
         }
@@ -69,27 +57,25 @@ namespace TME
             if (index == 0) return null;
             
             var id = index - 1;
-            switch(type)
+            return type switch
             {
-                case EntityType.Character:
-                    return _entityContainer.Lords.ElementAt(id);
-                case EntityType.RouteNode:
-                    return _entityContainer.RouteNodes.ElementAt(id);
-                case EntityType.Regiment:
-                    return _entityContainer.Regiments.ElementAt(id);
-                case EntityType.Stronghold:
-                    return _entityContainer.Strongholds.ElementAt(id);
-                case EntityType.Waypoint:
-                    return _entityContainer.Waypoints.ElementAt(id);
-                case EntityType.Thing:
-                    return _entityContainer.Things.ElementAt(id);
-                case EntityType.Mission:
-                    return _entityContainer.Missions.ElementAt(id);
-                case EntityType.Victory:
-                    return _entityContainer.Victories.ElementAt(id);
-            }
-
-            return null;
+                EntityType.Character => _entityContainer.Lords.ElementAt(id),
+                EntityType.RouteNode => _entityContainer.RouteNodes.ElementAt(id),
+                EntityType.Regiment => _entityContainer.Regiments.ElementAt(id),
+                EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(id),
+                EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(id),
+                EntityType.Thing => _entityContainer.Things.ElementAt(id),
+                EntityType.Mission => _entityContainer.Missions.ElementAt(id),
+                EntityType.Victory => _entityContainer.Victories.ElementAt(id),
+                EntityType.DirectionInfo => _entityContainer.Directions.ElementAt(id),
+                EntityType.UnitInfo => _entityContainer.Units.ElementAt(id),
+                EntityType.RaceInfo => _entityContainer.Races.ElementAt(id),
+                EntityType.GenderInfo => _entityContainer.Genders.ElementAt(id),
+                EntityType.TerrainInfo => _entityContainer.Terrains.ElementAt(id),
+                EntityType.AreaInfo => _entityContainer.Areas.ElementAt(id),
+                EntityType.CommandInfo => _entityContainer.Commands.ElementAt(id),
+                _ => null
+            };
         }
     }
 

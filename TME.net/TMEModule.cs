@@ -6,6 +6,7 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Commands;
 using TME.Scenario.Default.Entities;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.Scenario.Default.Scenario;
@@ -29,6 +30,7 @@ namespace TME
             RegisterDatabase();
             RegisterHelpers();
             RegisterEntities();
+            RegisterInfo();
             RegisterActions();
             RegisterCommands();
             RegisterTypes();
@@ -66,6 +68,17 @@ namespace TME
             _builder.RegisterType<Riders>().Keyed<IUnit>(UnitType.Rider);
         }
 
+        private void RegisterInfo()
+        {
+            _builder.RegisterType<DirectionInfo>();
+            _builder.RegisterType<UnitInfo>();
+            _builder.RegisterType<RaceInfo>();
+            _builder.RegisterType<GenderInfo>();
+            _builder.RegisterType<TerrainInfo>();
+            _builder.RegisterType<AreaInfo>();
+            _builder.RegisterType<CommandInfo>();
+        }
+        
         private void RegisterHelpers()
         {
             _builder.RegisterType<TMEEntityResolver>().As<IEntityResolver>();

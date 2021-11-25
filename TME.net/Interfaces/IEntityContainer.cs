@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using TME.Scenario.Default.Entities;
+using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 
 namespace TME.Interfaces
@@ -14,6 +14,17 @@ namespace TME.Interfaces
         IReadOnlyList<IThing> Things { get; }
         IReadOnlyList<IMission> Missions { get; }
         IReadOnlyList<IVictory> Victories { get; }
+        
+        IReadOnlyList<DirectionInfo> Directions { get; }
+        IReadOnlyList<UnitInfo> Units { get; }
+        IReadOnlyList<RaceInfo> Races { get; }
+        IReadOnlyList<GenderInfo> Genders { get; }
+        IReadOnlyList<TerrainInfo> Terrains { get; }
+        IReadOnlyList<AreaInfo> Areas { get; }
+        IReadOnlyList<CommandInfo> Commands { get; }
+        IReadOnlyList<ObjectTypeInfo> ObjectTypes { get; }
+        IReadOnlyList<ObjectPowerInfo> ObjectPowers { get; }
+
 
     }
 }

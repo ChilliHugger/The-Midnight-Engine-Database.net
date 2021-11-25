@@ -27,6 +27,10 @@ namespace TME.Scenario.Default.Entities
         public bool IsComplete => HasFlags(MissionFlags.Complete.Raw());
         public bool IsAny => HasFlags(MissionFlags.Any.Raw());
 
+        public Mission() : base(EntityType.Mission)
+        {
+        }
+
         public override bool Load(ISerializeContext ctx)
         {
             if (!base.Load(ctx)) return false;

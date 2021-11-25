@@ -7,6 +7,8 @@ namespace TME.Serialize
     public class SerializeContext : ISerializeContext
     {
         public double Version { get; set; }
+        public bool IsSaveGame { get; set; }
+        public bool IsDatabase { get; set; }
         public ISerializeReader Reader { get; set; }
         private readonly IEntityResolver _entityResolver;
 

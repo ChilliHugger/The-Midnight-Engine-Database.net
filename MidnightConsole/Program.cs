@@ -36,6 +36,14 @@ namespace MidnightConsole
             OutputCollection("Things", entities.Things);
             OutputCollection("Missions", entities.Missions);
             OutputCollection("Victories", entities.Victories);
+            
+            OutputCollection("Directions", entities.Directions);
+            OutputCollection("Units", entities.Units);
+            OutputCollection("Races", entities.Races);
+            OutputCollection("Genders", entities.Genders);
+            OutputCollection("Terrains", entities.Terrains);
+            OutputCollection("Areas", entities.Areas);
+            OutputCollection("Commands", entities.Commands);
         }
 
         private static void OutputCollection( string title, IEnumerable<IEntity> list)
