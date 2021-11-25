@@ -10,10 +10,9 @@ namespace TME.Scenario.Default.Base
 
         public virtual bool Load(ISerializeContext ctx)
         {
-            Id = new MXId(Type, (uint) ctx.Reader.ReadInt32());
+            Id = ctx.Reader.ReadMXId(Type);
             Symbol = ctx.Reader.ReadString();
             RawFlags = ctx.Reader.ReadUInt32();
-
             return true;
         }
 

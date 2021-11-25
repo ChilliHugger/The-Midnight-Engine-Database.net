@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TME.Serialize;
+﻿using System.Collections.Generic;
 using TME.Types;
 
 // ReSharper disable UnusedMemberInSuper.Global
@@ -91,11 +89,7 @@ namespace TME.Scenario.Default.Interfaces
         int sv_variables { get; set; }
         int sv_stronghold_adjuster { get; set; }
         int sv_controlled_character { get; set; }
-
-        //bool	sv_failed_approach_battle  {get;set;}
-        //bool	sv_use_cowardess  {get;set;}
-        //bool	sv_use_despondency  {get;set;}
-
+        
         int sv_energy_max { get; set; }
         int sv_strength_max { get; set; }
 

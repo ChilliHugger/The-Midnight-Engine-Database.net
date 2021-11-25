@@ -15,6 +15,6 @@ namespace TME.Types
 
         public MXId(EntityType type, uint id) : base((((uint)(type) << 24) | id)) { }
 
-        public override string ToString() => $"{Type}({(int)Type}):{RawId} - {Value:x}";
+        public override string ToString() => $"{Type}:{RawId} - {Value:x}";
     }
 }

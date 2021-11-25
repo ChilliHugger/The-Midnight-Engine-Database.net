@@ -110,5 +110,10 @@ namespace TME.Serialize
         {
             throw new System.NotImplementedException();
         }
+
+        public MXId ReadMXId(EntityType type)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

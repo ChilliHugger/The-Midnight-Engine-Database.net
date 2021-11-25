@@ -165,6 +165,13 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_character_default),                "CHARACTER_DEFAULT",                "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON" ),
             new VariableDefinition(nameof(sv_guidance),                         "SEEK_MESSAGES" ),
 
+            new VariableDefinition(nameof(sv_days),                             "DAYS",                             "0" ),
+            new VariableDefinition(nameof(sv_stronghold_adjuster),              "STRONGHOLD_ADJUSTER",              "0" ),
+            new VariableDefinition(nameof(sv_controlled_character),             "CONTROLLED_CHARACTER",             "0" ),
+            new VariableDefinition(nameof(sv_energy_cannot_continue),           "ENERGY_CANNOT_CONTINUE",           "0" ),
+            new VariableDefinition(nameof(sv_object_powers),                    "OBJECT_POWERS",                    "0" ),
+            new VariableDefinition(nameof(sv_object_types),                     "OBJECT_TYPES",                     "0" ),
+            
             // Not stored in the database
             new VariableDefinition(nameof(sv_characters),                       "CHARACTERS",                       "0" ),
             new VariableDefinition(nameof(sv_routenodes),                       "ROUTENODES",                       "0" ),
@@ -181,15 +188,8 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_commands),                         "COMMANDS",                         "0" ),
             new VariableDefinition(nameof(sv_missions),                         "MISSIONS",                         "0" ),
             new VariableDefinition(nameof(sv_victories),                        "VICTORIES",                        "0" ),
-            new VariableDefinition(nameof(sv_attributes),                       "ATTRIBUTES",                       "0" ),
             new VariableDefinition(nameof(sv_variables),                        "VARIABLES",                        "0" ),
-            new VariableDefinition(nameof(sv_days),                             "DAYS",                             "0" ),
-            new VariableDefinition(nameof(sv_stronghold_adjuster),              "STRONGHOLD_ADJUSTER",              "0" ),
-            new VariableDefinition(nameof(sv_controlled_character),             "CONTROLLED_CHARACTER",             "0" ),
-            new VariableDefinition(nameof(sv_energy_cannot_continue),           "ENERGY_CANNOT_CONTINUE",           "0" ),
-            new VariableDefinition(nameof(sv_object_powers),                    "OBJECT_POWERS",                    "0" ),
-            new VariableDefinition(nameof(sv_object_types),                     "OBJECT_TYPES",                     "0" ),
-
+            
         };
 
         public Variables()
@@ -322,6 +322,8 @@ namespace TME.Scenario.Default.Base
             return true;
         }
 
+        // TODO: Move to VariableSerializer
+        // Or move entity counts to database
         public bool LoadVariables(ISerializeContext context)
         {
             for ( var ii=0; ii<sv_variables; ii++ ) {

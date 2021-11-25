@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using Autofac;
@@ -10,14 +11,16 @@ using TME.Types;
 
 namespace TME
 {
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public class TMEDatabase : IDatabase
     {
         private static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
 
         private readonly IVariables _variables;
+        private readonly IStrings _strings;
         private readonly IContainer _container;
         private readonly ISerializeContext _serializeContext;
-        private readonly IEntityResolver _entityResolver;
         private readonly IEntityContainer _entityContainer;
         
         public string Directory { get; set; } = "";
@@ -31,14 +34,14 @@ namespace TME
 
         public TMEDatabase(
             IVariables variables,
+            IStrings strings,
             IEntityContainer entityContainer,
-            IEntityResolver entityResolver,
             ISerializeContext serializeContext,
             IDependencyContainer container)
         {
-            _container = container.CurrentContainer!;
+            _container = container.CurrentContainer;
             _variables = variables;
-            _entityResolver = entityResolver;
+            _strings = strings;
             _entityContainer = entityContainer;
             _serializeContext = serializeContext;
             
@@ -91,6 +94,13 @@ namespace TME
                 }
 
                 // Load Text
+                if (_strings is ISerializable strings)
+                {
+                    if (!strings.Load(_serializeContext))
+                    {
+                        throw new FileLoadException("Error in Strings");
+                    }
+                }
                 
                 // load variables
                 

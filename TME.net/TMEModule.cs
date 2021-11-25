@@ -47,6 +47,7 @@ namespace TME
             _builder.RegisterType<TMEDatabase>().As<IDatabase>().SingleInstance();
             _builder.RegisterType<TMEEntityContainer>().As<IEntityContainer>().SingleInstance();
             _builder.RegisterType<Variables>().As<IVariables>().SingleInstance();
+            _builder.RegisterType<TMEStrings>().As<IStrings>().SingleInstance();
             _builder.RegisterType<TMEMap>().As<IMap>();
         }
 

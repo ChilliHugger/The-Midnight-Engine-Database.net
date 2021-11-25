@@ -59,8 +59,12 @@ namespace TME.Serialize
 
         public MXId ReadMXId()
         {
+            return _reader.ReadUInt32();
+        }
+        public MXId ReadMXId(EntityType type)
+        {
             var id = _reader.ReadUInt32();
-            return (MXId) id;
+            return new MXId(type,id);
         }
 
         public T ReadEnum<T>() => (T)(object)_reader.ReadUInt32();

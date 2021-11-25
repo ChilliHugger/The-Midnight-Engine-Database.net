@@ -28,5 +28,6 @@ namespace TME.Serialize
         ThingType ReadThingType();
         Terrain ReadTerrain();
         MXId ReadMXId();
+        MXId ReadMXId(EntityType type);
     }
 }

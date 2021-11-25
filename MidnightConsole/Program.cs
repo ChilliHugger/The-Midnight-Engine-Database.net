@@ -24,6 +24,7 @@ namespace MidnightConsole
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
             var entities = container.Resolve<IEntityContainer>();
+            var strings = container.Resolve<IStrings>();
 
             database.Directory = "data/lom";
             database.Load();
@@ -44,21 +45,18 @@ namespace MidnightConsole
             OutputCollection("Terrains", entities.Terrains);
             OutputCollection("Areas", entities.Areas);
             OutputCollection("Commands", entities.Commands);
+            
+            OutputCollection("Strings", strings.Entries);
         }
 
-        private static void OutputCollection( string title, IEnumerable<IEntity> list)
+        private static void OutputCollection( string title, IEnumerable<object> list)
         {
             Console.WriteLine($"{title}\n{new string('=', title.Length)}");
             foreach (var item in list)
             {
-                OutputSymbol(item);
+                Console.WriteLine(item);
             }
             Console.WriteLine();
-        }
-        
-        private static void OutputSymbol(IEntity item)
-        {
-            Console.WriteLine(item);
         }
         
     }
