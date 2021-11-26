@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using TME.Interfaces;
+using TME.Scenario;
 
 namespace TME
 {
@@ -7,6 +8,7 @@ namespace TME
     {
         private readonly ContainerBuilder _containerBuilder;
         public IContainer CurrentContainer { get; private set; } = null!;
+        public ILifetimeScope? CurrentScope { get; set; } 
 
 
         public TMEDependencyContainer(ContainerBuilder containerBuilder)
@@ -25,6 +27,7 @@ namespace TME
         public IDependencyContainer RegisterModules()
         {
             _containerBuilder.RegisterModule(new TMEModule());
+            _containerBuilder.RegisterModule(new ScenarioModule());
             return this;
         }
 

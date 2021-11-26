@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Buffers.Binary;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using Autofac;
+using Microsoft.Extensions.Logging;
 using TME.Interfaces;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
@@ -17,6 +20,8 @@ namespace TME
     {
         private static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
 
+        private readonly ILogger _logger;
+        private readonly IEngine _engine;
         private readonly IVariables _variables;
         private readonly IStrings _strings;
         private readonly IContainer _container;
@@ -33,6 +38,8 @@ namespace TME
 
 
         public TMEDatabase(
+            ILogger<TMEDatabase> logger,
+            IEngine engine,
             IVariables variables,
             IStrings strings,
             IEntityContainer entityContainer,
@@ -40,6 +47,8 @@ namespace TME
             IDependencyContainer container)
         {
             _container = container.CurrentContainer;
+            _logger = logger;
+            _engine = engine;
             _variables = variables;
             _strings = strings;
             _entityContainer = entityContainer;
@@ -50,6 +59,9 @@ namespace TME
 
         public bool Load()
         {
+            var scenario = _engine.Scenario;
+            var scenarioInfo = scenario.Info;
+            
             _variables.Initialise();
 
             var path = Path.Combine(Directory, "database");
@@ -58,33 +70,47 @@ namespace TME
             using (var reader = new TMEBinaryReader(File.Open(path, FileMode.Open)))
             {
                 var magicNo = reader.ReadUInt32();
-                // TODO: Check magic no and set endianess
-
-                ScenarioId = reader.ReadUInt32();
-                // TODO: Check against current scenario
-
-                Version = reader.ReadUInt32();
-
-                Header = reader.ReadString();
-
-                Description = Version > 8 
-                    ? reader.ReadString() 
-                    : "";
+                if (magicNo != TMEMagicNo)
+                {
+                    var number = BinaryPrimitives.ReverseEndianness(TMEMagicNo);
+                    if (magicNo != number)
+                    {
+                        _logger.LogError($"Database MagicNo '{magicNo}' does not match '{TMEMagicNo}'");
+                        return false;
+                    }
+                    reader.EnableByteSwap = true;
+                }
                 
+                ScenarioId = reader.ReadUInt32();
+                if (ScenarioId != scenarioInfo.Id)
+                {
+                    _logger.LogError($"Database ScenarioId '{ScenarioId}' does not match '{scenarioInfo.Id}'");
+                    return false;
+                }
+                
+                Version = reader.ReadUInt32();
+                if (Version < scenarioInfo.DatabaseVersion)
+                {
+                    _logger.LogError($"Database Version '{Version}' is less than scenario version '{scenarioInfo.DatabaseVersion}'");
+                    return false;
+                }
+                
+                Header = reader.ReadString();
+                Description = "";
+                
+                if (_serializeContext.IsSaveGame)
+                {
+                    Description = Version > 8
+                        ? reader.ReadString()
+                        : "";
+                }
+
                 _serializeContext.Reader = reader;
                 _serializeContext.Version = Version;
                 _serializeContext.IsDatabase = true;
                 _serializeContext.IsSaveGame = false;
 
                 // Read objects
-                if (_variables is ISerializable variables)
-                {
-                    if (!variables.Load(_serializeContext))
-                    {
-                        throw new FileLoadException("Error in variables");
-                    }
-                }
-
                 if (_entityContainer is ISerializable entities)
                 {
                     if (!entities.Load(_serializeContext))
@@ -103,6 +129,13 @@ namespace TME
                 }
                 
                 // load variables
+                if (_variables is ISerializable variables)
+                {
+                    if (!variables.Load(_serializeContext))
+                    {
+                        throw new FileLoadException("Error in variables");
+                    }
+                }
                 
                 // load Version 10 extras ** DDR **
 

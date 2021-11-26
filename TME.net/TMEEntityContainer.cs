@@ -3,16 +3,18 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac;
 using TME.Interfaces;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
+using TME.Types;
 
 namespace TME
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class TMEEntityContainer : IEntityContainer, ISerializable
     {
-        private readonly IContainer _container;
+        private readonly IDependencyContainer _container;
         private readonly IVariables _variables;
         
         public IReadOnlyList<ILord> Lords { get; internal set; }
@@ -38,7 +40,7 @@ namespace TME
             IVariables variables,
             IDependencyContainer container)
         {
-            _container = container.CurrentContainer;
+            _container = container;
             _variables = variables;
             
             // Items
@@ -66,25 +68,44 @@ namespace TME
 
         public bool Load(ISerializeContext context)
         {
-            Lords = CreateCollection<ILord>(_variables.sv_characters).ToList().AsReadOnly();
-            Regiments = CreateCollection<IRegiment>(_variables.sv_regiments).ToList().AsReadOnly();
-            RouteNodes = CreateCollection<IRouteNode>(_variables.sv_routenodes).ToList().AsReadOnly();
-            Strongholds = CreateCollection<IStronghold>(_variables.sv_strongholds).ToList().AsReadOnly();
-            Waypoints = CreateCollection<IWaypoint>(_variables.sv_places).ToList().AsReadOnly();
-            Things = CreateCollection<IThing>(_variables.sv_objects).ToList().AsReadOnly();
-            Missions = CreateCollection<IMission>(_variables.sv_missions).ToList().AsReadOnly();
-            Victories = CreateCollection<IVictory>(_variables.sv_victories).ToList().AsReadOnly();
+            var characters = context.Reader.ReadInt32();
+            var regiments = context.Reader.ReadInt32();
+            var routenodes = context.Reader.ReadInt32();
+            var strongholds = context.Reader.ReadInt32();
+            var places = context.Reader.ReadInt32();
+            var objects = context.Reader.ReadInt32();
+            var missions = context.Reader.ReadInt32();
+            var victories = context.Reader.ReadInt32();
+            var directions = context.Reader.ReadInt32();
+            var units = context.Reader.ReadInt32();
+            var races = context.Reader.ReadInt32();
+            var genders = context.Reader.ReadInt32();
+            var terrains = context.Reader.ReadInt32();
+            var areas = context.Reader.ReadInt32();
+            var commands = context.Reader.ReadInt32();
+            var variables = context.Reader.ReadInt32();
 
-            Directions = CreateCollection<DirectionInfo>(_variables.sv_directions).ToList().AsReadOnly();
-            Units = CreateCollection<UnitInfo>(_variables.sv_units).ToList().AsReadOnly();
-            Races = CreateCollection<RaceInfo>(_variables.sv_races).ToList().AsReadOnly();
-            Genders = CreateCollection<GenderInfo>(_variables.sv_genders).ToList().AsReadOnly();
-            Terrains = CreateCollection<TerrainInfo>(_variables.sv_terrains).ToList().AsReadOnly();
-            Areas = CreateCollection<AreaInfo>(_variables.sv_areas).ToList().AsReadOnly();
-            Commands = CreateCollection<CommandInfo>(_variables.sv_commands).ToList().AsReadOnly();
+            _variables.sv_variables = variables;
             
-            ObjectTypes = CreateCollection<ObjectTypeInfo>(_variables.sv_object_types).ToList().AsReadOnly();
-            ObjectPowers = CreateCollection<ObjectPowerInfo>(_variables.sv_object_powers).ToList().AsReadOnly();
+            Lords = CreateCollection<ILord>(characters).ToList().AsReadOnly();
+            Regiments = CreateCollection<IRegiment>(regiments).ToList().AsReadOnly();
+            RouteNodes = CreateCollection<IRouteNode>(routenodes).ToList().AsReadOnly();
+            Strongholds = CreateCollection<IStronghold>(strongholds).ToList().AsReadOnly();
+            Waypoints = CreateCollection<IWaypoint>(places).ToList().AsReadOnly();
+            Things = CreateCollection<IThing>(objects).ToList().AsReadOnly();
+            Missions = CreateCollection<IMission>(missions).ToList().AsReadOnly();
+            Victories = CreateCollection<IVictory>(victories).ToList().AsReadOnly();
+
+            Directions = CreateCollection<DirectionInfo>(directions).ToList().AsReadOnly();
+            Units = CreateCollection<UnitInfo>(units).ToList().AsReadOnly();
+            Races = CreateCollection<RaceInfo>(races).ToList().AsReadOnly();
+            Genders = CreateCollection<GenderInfo>(genders).ToList().AsReadOnly();
+            Terrains = CreateCollection<TerrainInfo>(terrains).ToList().AsReadOnly();
+            Areas = CreateCollection<AreaInfo>(areas).ToList().AsReadOnly();
+            Commands = CreateCollection<CommandInfo>(commands).ToList().AsReadOnly();
+            
+            //ObjectTypes = CreateCollection<ObjectTypeInfo>(object_types).ToList().AsReadOnly();
+            //ObjectPowers = CreateCollection<ObjectPowerInfo>(object_powers).ToList().AsReadOnly();
             
             ReadCollection(Lords, context);
             ReadCollection(Regiments, context);
@@ -123,7 +144,16 @@ namespace TME
             var result = new T[count];
             for(var ii=0; ii<count; ii++)
             {
-                result[ii] = _container.Resolve<T>();
+                var entity = _container.CurrentScope != null
+                    ? _container.CurrentScope.Resolve<T>()
+                    : _container.CurrentContainer.Resolve<T>();
+
+                if (entity is IEntityInternal entityInternal)
+                {
+                    entityInternal.SetId( new MXId(entityInternal.Type, (uint)ii + 1));
+                }
+                
+                result[ii] = entity;
             }
             return result;
         }

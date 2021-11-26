@@ -88,8 +88,9 @@
     <ItemGroup>
         <Compile Include="ActionTests.cs" />
         <Compile Include="BaseTestClass.cs" />
-        <Compile Include="DatabaseLoadingTests.cs" />
+        <Compile Include="MidnightLoadingTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
+        <Compile Include="RevengeLoadingTests.cs" />
         <Compile Include="TestDependencyContainer.cs" />
     </ItemGroup>
     <ItemGroup>

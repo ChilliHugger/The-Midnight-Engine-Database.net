@@ -6,13 +6,13 @@ using ContainerBuilder = Autofac.ContainerBuilder;
 
 namespace TME.SpecTests
 {
-
     public class SpecTestDependencyContainer : IDependencyContainer
     {
         private readonly ContainerBuilder _containerBuilder;
         private readonly Action<ContainerBuilder> _register;
         public IContainer CurrentContainer { get; private set; } = null!;
-        
+        public ILifetimeScope? CurrentScope { get; set; }
+
         public SpecTestDependencyContainer(
             ContainerBuilder containerBuilder, Action<ContainerBuilder> register)
         {
@@ -28,8 +28,7 @@ namespace TME.SpecTests
             CurrentContainer = _containerBuilder.Build();
             return this;
         }
-
-
+        
         public IDependencyContainer RegisterModules()
         {
             return this;

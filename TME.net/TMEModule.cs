@@ -1,5 +1,7 @@
 ﻿using Autofac;
 using Autofac.Features.AttributeFilters;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Debug;
 using TME.Interfaces;
 using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Base;
@@ -34,6 +36,8 @@ namespace TME
             RegisterActions();
             RegisterCommands();
             RegisterTypes();
+
+            RegisterLogger();
         }
 
         private void RegisterTypes()
@@ -99,6 +103,26 @@ namespace TME
                 .RegisterType<DropObject>()
                 .Keyed<ICommand>(nameof(DropObject))
                 .WithAttributeFiltering();
+        }
+
+        private static void ConfigureLogging(ILoggingBuilder log)
+        {
+            log.ClearProviders();
+            log.SetMinimumLevel(LogLevel.Debug);
+            log.AddProvider(new DebugLoggerProvider());
+        }
+        
+        private void RegisterLogger()
+        {
+ 
+            _builder.Register(handler => LoggerFactory.Create(ConfigureLogging))
+                .As<ILoggerFactory>()
+                .SingleInstance()
+                .AutoActivate();
+
+            _builder.RegisterGeneric(typeof(Logger<>))
+                .As(typeof(ILogger<>))
+                .SingleInstance();
         }
     }
 }

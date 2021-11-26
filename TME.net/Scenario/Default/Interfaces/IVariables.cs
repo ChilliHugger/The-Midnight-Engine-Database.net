@@ -64,28 +64,8 @@ namespace TME.Scenario.Default.Interfaces
         MXId sv_character_foe { get; set; }
         IEnumerable<MXId> sv_character_default { get; set; }
         IEnumerable<MXId> sv_guidance { get; set; }
-
-        int sv_characters { get; set; }
-        int sv_routenodes { get; set; }
-        int sv_strongholds { get; set; }
-        int sv_regiments { get; set; }
-        int sv_places { get; set; }
-        int sv_directions { get; set; }
-        int sv_objects { get; set; }
-        int sv_units { get; set; }
-        int sv_races { get; set; }
-        int sv_genders { get; set; }
-        int sv_terrains { get; set; }
-        int sv_areas { get; set; }
-        int sv_commands { get; set; }
-        int sv_missions { get; set; }
-        int sv_victories { get; set; }
-
-        int sv_object_powers { get; set; }
-        int sv_object_types { get; set; }
-
+        
         int sv_days { get; set; }
-        int sv_attributes { get; set; }
         int sv_variables { get; set; }
         int sv_stronghold_adjuster { get; set; }
         int sv_controlled_character { get; set; }

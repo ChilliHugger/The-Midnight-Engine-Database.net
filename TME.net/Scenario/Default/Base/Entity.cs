@@ -56,5 +56,10 @@ namespace TME.Scenario.Default.Base
                 RawFlags &= ~flags;
             }
         }
+
+        public void SetId(MXId id)
+        {
+            Id = id;
+        }
     }
 }

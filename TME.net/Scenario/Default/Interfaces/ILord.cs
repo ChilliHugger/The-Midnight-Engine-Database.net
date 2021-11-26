@@ -45,7 +45,8 @@ namespace TME.Scenario.Default.Interfaces
         uint Courage { get; }
         uint Fear { get; }
 
-        // ddr
+        // These are only initially used for DDR but are
+        // supported in default characters
         Orders Orders { get; }
         Race Loyalty { get; }
         ILord? Foe { get; }

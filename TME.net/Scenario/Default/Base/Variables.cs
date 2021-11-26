@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.Logging;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -9,6 +10,7 @@ namespace TME.Scenario.Default.Base
 {
     public class Variables : IVariables, ISerializable
     {
+        private readonly ILogger _logger;
         private readonly Dictionary<string, string> _propertyMapping;
 
         public double sv_database_version { get; set; }
@@ -65,28 +67,8 @@ namespace TME.Scenario.Default.Base
         public MXId sv_character_foe { get; set; } = MXId.None;
         public IEnumerable<MXId> sv_character_default { get; set; } = new List<MXId>();
         public IEnumerable<MXId> sv_guidance { get; set; } = new List<MXId>();
-
-        public int sv_characters { get; set; }
-        public int sv_routenodes { get; set; }
-        public int sv_strongholds { get; set; }
-        public int sv_regiments { get; set; }
-        public int sv_places { get; set; }
-        public int sv_directions { get; set; }
-        public int sv_objects { get; set; }
-        public int sv_units { get; set; }
-        public int sv_races { get; set; }
-        public int sv_genders { get; set; }
-        public int sv_terrains { get; set; }
-        public int sv_areas { get; set; }
-        public int sv_commands { get; set; }
-        public int sv_missions { get; set; }
-        public int sv_victories { get; set; }
-
-        public int sv_object_powers { get; set; }
-        public int sv_object_types { get; set; }
-
+        
         public int sv_days { get; set; }
-        public int sv_attributes { get; set; }
         public int sv_variables { get; set; }
         public int sv_stronghold_adjuster { get; set; }
         public int sv_controlled_character { get; set; }
@@ -169,31 +151,11 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_stronghold_adjuster),              "STRONGHOLD_ADJUSTER",              "0" ),
             new VariableDefinition(nameof(sv_controlled_character),             "CONTROLLED_CHARACTER",             "0" ),
             new VariableDefinition(nameof(sv_energy_cannot_continue),           "ENERGY_CANNOT_CONTINUE",           "0" ),
-            new VariableDefinition(nameof(sv_object_powers),                    "OBJECT_POWERS",                    "0" ),
-            new VariableDefinition(nameof(sv_object_types),                     "OBJECT_TYPES",                     "0" ),
-            
-            // Not stored in the database
-            new VariableDefinition(nameof(sv_characters),                       "CHARACTERS",                       "0" ),
-            new VariableDefinition(nameof(sv_routenodes),                       "ROUTENODES",                       "0" ),
-            new VariableDefinition(nameof(sv_strongholds),                      "STRONGHOLDS",                      "0" ),
-            new VariableDefinition(nameof(sv_regiments),                        "REGIMENTS",                        "0" ),
-            new VariableDefinition(nameof(sv_places),                           "PLACES",                           "0" ),
-            new VariableDefinition(nameof(sv_directions),                       "DIRECTIONS",                       "0" ),
-            new VariableDefinition(nameof(sv_objects),                          "OBJECTS",                          "0" ),
-            new VariableDefinition(nameof(sv_units),                            "UNITS",                            "0" ),
-            new VariableDefinition(nameof(sv_races),                            "RACES",                            "0" ),
-            new VariableDefinition(nameof(sv_genders),                          "GENDERS",                          "0" ),
-            new VariableDefinition(nameof(sv_terrains),                         "TERRAINS",                         "0" ),
-            new VariableDefinition(nameof(sv_areas),                            "AREAS",                            "0" ),
-            new VariableDefinition(nameof(sv_commands),                         "COMMANDS",                         "0" ),
-            new VariableDefinition(nameof(sv_missions),                         "MISSIONS",                         "0" ),
-            new VariableDefinition(nameof(sv_victories),                        "VICTORIES",                        "0" ),
-            new VariableDefinition(nameof(sv_variables),                        "VARIABLES",                        "0" ),
-            
         };
 
-        public Variables()
+        public Variables(ILogger<Variables> logger)
         {
+            _logger = logger;
             _propertyMapping = VariableDefinitions
                 .ToDictionary(v => v.VariableName, v => v.PropertyName);
         }
@@ -300,31 +262,7 @@ namespace TME.Scenario.Default.Base
 
         }
 
-
         public bool Load(ISerializeContext context)
-        {
-            sv_characters = context.Reader.ReadInt32();
-            sv_regiments = context.Reader.ReadInt32();
-            sv_routenodes = context.Reader.ReadInt32();
-            sv_strongholds = context.Reader.ReadInt32();
-            sv_places = context.Reader.ReadInt32();
-            sv_objects = context.Reader.ReadInt32();
-            sv_missions = context.Reader.ReadInt32();
-            sv_victories = context.Reader.ReadInt32();
-            sv_directions = context.Reader.ReadInt32();
-            sv_units = context.Reader.ReadInt32();
-            sv_races = context.Reader.ReadInt32();
-            sv_genders = context.Reader.ReadInt32();
-            sv_terrains = context.Reader.ReadInt32();
-            sv_areas = context.Reader.ReadInt32();
-            sv_commands = context.Reader.ReadInt32();
-            sv_variables = context.Reader.ReadInt32();
-            return true;
-        }
-
-        // TODO: Move to VariableSerializer
-        // Or move entity counts to database
-        public bool LoadVariables(ISerializeContext context)
         {
             for ( var ii=0; ii<sv_variables; ii++ ) {
 
@@ -334,7 +272,12 @@ namespace TME.Scenario.Default.Base
 
                 if (_propertyMapping.TryGetValue(name, out var propertyName))
                 {
+                    Console.WriteLine($"Variable['{name}']={value}");
                     SetValue(propertyName,value);
+                }
+                else
+                {
+                    _logger.LogWarning($"Unsupported Variable['{name}']={value}");
                 }
             }
 
@@ -348,16 +291,8 @@ namespace TME.Scenario.Default.Base
 
         public List<KeyValuePair<string, string>> GetValues()
         {
-            var vars = new[]
-            {
-                new VariableDefinition(nameof(sv_character_friend), "CHARACTER_FRIEND", "CH_LUXOR"),
-                new VariableDefinition(nameof(sv_character_foe), "CHARACTER_FOE", "CH_DOOMDARK"),
-                new VariableDefinition(nameof(sv_character_default), "CHARACTER_DEFAULT",
-                    "CH_LUXOR|CH_MORKIN|CH_CORLETH|CH_RORTHRON"),
-            };
-            
             return (
-                from v in vars 
+                from v in VariableDefinitions 
                 let value = GetValue(v.PropertyName) 
                 select new KeyValuePair<string, string>(v.VariableName, value)
                 ).ToList();

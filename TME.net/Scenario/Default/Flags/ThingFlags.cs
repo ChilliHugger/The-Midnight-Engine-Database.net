@@ -15,5 +15,6 @@ namespace TME.Scenario.Default.Flags
         Enabled     = 1 << 7,   // object is enabled
         Recruitment = 1 << 8,   // object can help with recruitment
         RandomStart = 1 << 9,   // object starts randomly on map
+        Special     = 1 << 10,  // object is special (Extra code processing)
     }
 }

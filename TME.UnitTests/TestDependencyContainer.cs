@@ -1,3 +1,4 @@
+#nullable enable
 using System;
 using Autofac;
 using TME.Interfaces;
@@ -8,8 +9,9 @@ namespace TME.UnitTests
     {
         private readonly ContainerBuilder _containerBuilder;
         private readonly Action<ContainerBuilder> _register;
-        public IContainer CurrentContainer { get; set; }
-        
+        public IContainer CurrentContainer { get; set; } = null!;
+        public ILifetimeScope? CurrentScope { get; set; }
+
         public TestDependencyContainer(ContainerBuilder containerBuilder, Action<ContainerBuilder> register)
         {
             _containerBuilder = containerBuilder;

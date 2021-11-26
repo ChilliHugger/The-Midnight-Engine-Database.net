@@ -3,17 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
 using Autofac;
+using Microsoft.Extensions.Logging;
 using TME;
 using TME.Interfaces;
+using TME.Scenario.ddr;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
+using TME.Scenario.lom;
 using TME.Types;
 
 namespace MidnightConsole
 {
-    internal static class Program
+    internal class Program
     {
         static void Main(string[] args)
         {
@@ -25,9 +28,15 @@ namespace MidnightConsole
             var database = container.Resolve<IDatabase>();
             var entities = container.Resolve<IEntityContainer>();
             var strings = container.Resolve<IStrings>();
-
-            database.Directory = "data/lom";
-            database.Load();
+            var variables = container.Resolve<IVariables>();
+     
+            engine.SetScenario(RevengeScenario.Tag);
+            database.Directory = "data/ddr";
+            if (!database.Load())
+            {
+                Console.WriteLine("Unable to load Database");
+                return;
+            }
             
             OutputCollection("Lords", entities.Lords);
             OutputCollection("Route Nodes", entities.RouteNodes);
@@ -47,6 +56,15 @@ namespace MidnightConsole
             OutputCollection("Commands", entities.Commands);
             
             OutputCollection("Strings", strings.Entries);
+            
+            
+            Console.WriteLine($"Variables\n{new string('=', 9)}");
+            foreach (var (key, value) in variables.GetValues())
+            {
+                Console.WriteLine($"{key}='{value}'");
+            }
+            Console.WriteLine();
+            
         }
 
         private static void OutputCollection( string title, IEnumerable<object> list)
