@@ -27,8 +27,21 @@ namespace TME.Scenario.ddr.Items
             ObjectPower = (ctx.Version > 10)
                 ? ctx.Reader.ReadEnum<ObjectPower>()
                 : ObjectPower.None;
+
+            // TODO: This should be actual entry in the database
+            SetFlags(ThingFlags.Special, CheckIsSpecial());
             
             return true;
         }
+
+        private bool CheckIsSpecial()
+        {
+            return IsSymbol("OB_CROWN_VARENAND") ||
+                   IsSymbol("OB_CROWN_CARUDRIUM") ||
+                   IsSymbol("OB_SPELL_THIGRORN") ||
+                   IsSymbol("OB_RUNES_FINORN") ||
+                   IsSymbol("OB_CROWN_IMIRIEL");
+        }
+        
     }
 }

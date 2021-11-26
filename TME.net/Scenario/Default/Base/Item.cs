@@ -6,12 +6,15 @@ namespace TME.Scenario.Default.Base
 {
     public class Item : Entity, IMappableInternal
     {
+        #region Properties
         public Loc Location { get; private set; } = Loc.Zero;
+        #endregion
 
         internal Item(EntityType type) : base(type)
         {
         }
-        
+
+        #region Serialize
         public override bool Load(ISerializeContext ctx)
         {
             if (!base.Load(ctx))
@@ -23,10 +26,10 @@ namespace TME.Scenario.Default.Base
 
             return true;
         }
+        #endregion
 
-        void IMappableInternal.UpdateLocation(Loc location)
-        {
-            Location = location;
-        }
+        #region Internal Helpers
+        void IMappableInternal.UpdateLocation(Loc location) => Location = location;
+        #endregion
     }
 }

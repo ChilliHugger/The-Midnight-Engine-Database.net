@@ -3,6 +3,7 @@ using Autofac.Features.AttributeFilters;
 using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.Serialize;
@@ -21,6 +22,22 @@ namespace TME.Scenario.ddr.Items
         public uint BattleLost { get; internal set; }
         public MXId TargetId { get; internal set; } = MXId.None;
         public Loc TargetLocation { get; internal set; } = Loc.Zero;
+        
+        public IUnit? Unit =>
+            ArmyType switch
+            {
+                UnitType.Rider => Units[1],
+                UnitType.Warrior => Units[0],
+                _ => null
+            };
+
+        public UnitType ArmyType =>
+            IsFlags(LordFlags.AllowedRiders) 
+                ? UnitType.Rider : IsFlags(LordFlags.AllowedWarriors) 
+                    ? UnitType.Warrior 
+                    : UnitType.None;
+
+        public uint ArmySize => Unit?.Total ?? 0;
         
         public RevengeLord(
             IBattleInfo battleInfo,

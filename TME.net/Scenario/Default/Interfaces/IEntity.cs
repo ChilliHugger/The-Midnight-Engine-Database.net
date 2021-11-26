@@ -6,7 +6,7 @@ namespace TME.Scenario.Default.Interfaces
 {
     internal interface IEntityInternal : IEntity
     {
-        void SetFlags(uint flags, bool value);
+        void SetFlags<T>(T flags, bool value)  where T : Enum;
         void SetId(MXId id);
     }
     

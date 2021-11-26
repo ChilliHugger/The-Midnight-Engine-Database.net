@@ -30,12 +30,14 @@ namespace TME.Scenario.Default.Base
         internal Entity()
         {
             Id = 0;
+            RawFlags = 0;
             Type = EntityType.None;
         }
 
         internal Entity(EntityType type)
         {
             Id = 0;
+            RawFlags = 0;
             Type = type;
         }
         
@@ -45,21 +47,22 @@ namespace TME.Scenario.Default.Base
             return $"{idx} : '{Symbol}'";
         }
         
-        public void SetFlags(uint flags,bool value)
+        #region Internal Helpers
+        public void SetFlags<T>(T flags,bool value)
+            where T : Enum
         {
             if (value)
             {
-                RawFlags |= flags;
+                RawFlags |= flags.Raw();
             }
             else
             {
-                RawFlags &= ~flags;
+                RawFlags &= ~flags.Raw();
             }
         }
 
-        public void SetId(MXId id)
-        {
-            Id = id;
-        }
+        public void SetId(MXId id) => Id = id;
+
+        #endregion
     }
 }
