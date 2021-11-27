@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
+using TME.Extensions;
 using TME.Interfaces;
-using TME.Scenario.ddr;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
@@ -18,6 +19,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private readonly IEntityContainer _entityContainer;
         private readonly IEntityResolver _entityResolver;
         private readonly IEngine _engine;
+        private readonly ILocationArmyCountInfoBuilder _locationArmyCountInfoBuilder;
         private readonly IMapQueryService _mapQueryService;
         
         private Loc _location = Loc.Zero;
@@ -26,6 +28,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private bool _tunnel;
 
         public LocationInfoBuilder(
+            ILocationArmyCountInfoBuilder locationArmyCountInfoBuilder,
             IMapQueryService mapQueryService,
             IEngine engine,
             IEntityResolver entityResolver,
@@ -33,6 +36,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             IMap map,
             IVariables variables)
         {
+            _locationArmyCountInfoBuilder = locationArmyCountInfoBuilder;
             _mapQueryService = mapQueryService;
             _engine = engine;
             _entityResolver = entityResolver;
@@ -74,10 +78,34 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                 ? _mapQueryService.RouteNodesAtLocation(_location)
                 : new List<IRouteNode>().AsReadOnly();
 
-            var objectToTake = _engine.Scenario is RevengeScenario && mapLoc.HasObject && !_tunnel
+            //
+            var objectToTake = _engine.Scenario.Info.IsFeature(FeatureFlags.Take) && mapLoc.HasObject && !_tunnel
                 ? FindObjectAtLocation(_location)
                 : null;
- 
+
+            // fight
+            var thingToFight = (mapLoc.HasTunnelPassage && !_tunnel) 
+                ? ThingType.None
+                : mapLoc.Thing;
+
+            var fightThing = CheckFightThing(thingToFight);
+            
+            // calculate number of friends and foe armies
+            var countInfo = _locationArmyCountInfoBuilder
+                .Location(_location)
+                .Tunnel(_tunnel)
+                .Build();
+
+            // Calculate Ice Fear 
+            if (_lord != null)
+            {
+                // TODO: Calc Ice Fear
+                //fear = info->adj_fear ;
+                //s32 temp  = cowardess-(fear/7);
+                //temp = std::max<int>( temp, 0 ) / 8 ;
+                //courage = std::min<int>( temp, 7 ) ;
+            }
+            
             return new LocationInfo()
             {
                 Location = _location,
@@ -89,11 +117,44 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                 ObjectToTake = objectToTake,
                 Routenodes = routenodes,
                 Owner = _lord,
-                
+                //OwnerCourage = 0,
+                FightThing = fightThing,
+                FriendArmies = countInfo.Friends,
+                FoeArmies = countInfo.Foes,
+                FearAdjuster = 0,
+                MoralAdjuster = 0,
+                StubbornFollowerBattle = CheckStubbornFollowerBattle(),
+                StubbornFollowerMove = CheckStubbornMove(),
                 // the engine stores last nights adj_stronghold
                 // the scenario holds current, thus we get from the variables
                 StrongholdAdjuster = _variables.sv_stronghold_adjuster
             };
+        }
+
+        private ICharacter? CheckStubbornFollowerBattle()
+        {
+            return _lord?.HasFollowers == true
+                ? _entityContainer.Lords.FirstOrDefault(l => l.Following == _lord && l.IsCoward)
+                : null;
+        }
+        
+        private ICharacter? CheckStubbornMove()
+        {
+            return _lord?.HasFollowers == true
+                ? _entityContainer.Lords.FirstOrDefault(l => l.Following == _lord && !l.CanWalkForward)
+                : null;
+        }
+
+        private ThingType CheckFightThing(ThingType thingType)
+        {
+            if (thingType == ThingType.None)
+            {
+                return thingType;
+            }
+            var thing = _entityResolver.EntityById<IObject>((int)thingType)!;
+            return thing.CanFight 
+                ? thingType 
+                : ThingType.None ;
         }
         
         private TerrainInfo GetTerrainInfo(Terrain terrain)
@@ -129,7 +190,6 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                     .FirstOrDefault(t => !t.IsCarried && t.Location == location);
         }
         
-
         // private static ILord? WhoHasObject(IThing thing)
         // {
         //     return thing.IsCarried 

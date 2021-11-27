@@ -1,37 +1,24 @@
 using System.Collections.Generic;
 using System.Linq;
 using TME.Interfaces;
-using TME.Scenario.ddr;
-using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.Default.Base;
-using TME.Scenario.Default.Enums;
-using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 
 namespace TME.Scenario.Default.LocationInfoBuilders
 {
-    public class LocationArmyInfoBuilder : ILocationArmyInfoBuilder
+    public class LocationArmyInfoBuilder : BaseLocationArmyBuilder, ILocationArmyInfoBuilder
     {
-        private readonly IEngine _engine;
-        private readonly IEntityResolver _entityResolver;
         private readonly IMap _map;
         private readonly IArmyQueryService _armyQueryService;
         private readonly IMapQueryService _mapQueryService;
-
-        private Loc _location = Loc.Zero;
-        private bool _tunnel;
-        private ICharacter _doomdark = null!;
-        private ICharacter _luxor = null!;
-
+        
         public LocationArmyInfoBuilder(
             IEngine engine,
             IEntityResolver entityResolver,
             IMap map,
             IArmyQueryService armyQueryService,
-            IMapQueryService mapQueryService)
+            IMapQueryService mapQueryService) : base(engine,entityResolver)
         {
-            _engine = engine;
-            _entityResolver = entityResolver;
             _map = map;
             _armyQueryService = armyQueryService;
             _mapQueryService = mapQueryService;
@@ -39,13 +26,13 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
         public ILocationArmyInfoBuilder Location(Loc location)
         {
-            _location = location;
+            CurrentLocation = location;
             return this;
         }
 
         public ILocationArmyInfoBuilder Tunnel(bool tunnel)
         {
-            _tunnel = tunnel;
+            CurrentTunnel = tunnel;
             return this;
         }
 
@@ -60,18 +47,16 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         {
             var armies = new List<IArmy>();
 
-            var mapLoc = _map.GetAt(_location);
-            _doomdark = _entityResolver.EntityBySymbol<ICharacter>("CH_DOOMDARK")!;
-            _luxor = _entityResolver.EntityBySymbol<ICharacter>("CH_LUXOR")!;
-
-            var regiments = _mapQueryService.RegimentsAtLocation(_location, _tunnel);
-            var strongholds = _tunnel
+            var mapLoc = _map.GetAt(CurrentLocation);
+            
+            var regiments = _mapQueryService.RegimentsAtLocation(CurrentLocation, CurrentTunnel);
+            var strongholds = CurrentTunnel
                 ? new List<IStronghold>().AsReadOnly()
-                : _mapQueryService.StrongholdsAtLocation(_location);
+                : _mapQueryService.StrongholdsAtLocation(CurrentLocation);
 
-            var lords = _mapQueryService.LordsAtLocation(_location, _tunnel);
+            var lords = _mapQueryService.LordsAtLocation(CurrentLocation, CurrentTunnel);
 
-            // TODO all these need to be governed by "friend or foe"
+            // TODO all these need to be governed by proper "friend or foe"
 
             var strongholdAdjustment = 0u;
             var isStrongholdFriendly = false;
@@ -87,18 +72,18 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             var foeTotals = new ArmyTotals
             {
                 Adjustment = !isStrongholdFriendly ? strongholdAdjustment : 0,
-                Lord = _doomdark,
+                Lord = Doomdark,
             };
 
             var doomdarkTotals = new ArmyTotals
             {
-                Lord = _doomdark,
+                Lord = Doomdark,
             };
 
             var friendTotal = new ArmyTotals
             {
                 Adjustment = isStrongholdFriendly ? strongholdAdjustment : 0,
-                Lord = _luxor,
+                Lord = Luxor,
             };
 
             var regimentArmies = _armyQueryService.GetRegimentsAsArmies(regiments, _ => false).ToList();
@@ -120,8 +105,8 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
             return new LocationArmyInfo
             {
-                Location = _location,
-                Tunnel = _tunnel,
+                Location = CurrentLocation,
+                Tunnel = CurrentTunnel,
                 Foe = foeTotals,
                 Friends = friendTotal,
                 Doomdark = doomdarkTotals,
@@ -130,25 +115,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                 Regiments = regiments
             };
         }
-
-        private bool IsFriendlyTo(ICharacter lord)
-        {
-            return _engine.Scenario is not RevengeScenario || lord.IsFriendlyTo(_luxor);
-        }
-
-        private bool IsStrongholdFriendly(IStronghold stronghold)
-        {
-            var isLoyal = stronghold.OccupyingRace != Race.Doomguard;
-
-            if (_engine.Scenario is RevengeScenario)
-            {
-                var ddrStronghold = stronghold as IRevengeStronghold;
-                isLoyal = ddrStronghold!.Loyalty == _luxor.Loyalty;
-            }
-
-            return isLoyal;
-        }
-
+        
         private static void UpdateFriendFoeArmy(IArmy army, ArmyTotals friends, ArmyTotals foe)
         {
             if (army.Friendly)
@@ -163,9 +130,6 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             }
         }
 
-        private TerrainInfo GetTerrainInfo(Terrain terrain)
-        {
-            return _entityResolver.EntityById<TerrainInfo>((int) terrain)!;
-        }
+
     }
 }

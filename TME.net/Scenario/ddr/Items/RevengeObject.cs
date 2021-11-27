@@ -13,10 +13,7 @@ namespace TME.Scenario.ddr.Items
     {
         public ObjectPower ObjectPower { get; internal set; }
         public ObjectType ObjectType { get; internal set; }
-        public bool IsSpecial => IsFlags(ThingFlags.Special);
-        public bool IsRandomStart => IsFlags(ThingFlags.RandomStart);
-        public bool CanHelpRecruitment => IsFlags(ThingFlags.Recruitment);
-
+        
         public override bool Load(ISerializeContext ctx)
         {
             if (!base.Load(ctx)) return false;

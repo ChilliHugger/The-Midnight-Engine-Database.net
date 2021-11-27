@@ -40,10 +40,11 @@ namespace TME.Scenario.ddr.Items
         public uint ArmySize => Unit?.Total ?? 0;
         
         public RevengeLord(
+            IVariables variables,
             IBattleInfo battleInfo,
             IRecruitment recruitment,
             [KeyFilter(UnitType.Warrior)] IUnit warriors,
-            [KeyFilter(UnitType.Rider)] IUnit riders) : base(battleInfo, recruitment, warriors, riders)
+            [KeyFilter(UnitType.Rider)] IUnit riders) : base(variables, battleInfo, recruitment, warriors, riders)
         {
         }
 

@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
@@ -56,7 +57,7 @@ namespace TME.Scenario.Default.Items
 
             Despondency = ctx.Reader.ReadUInt32();
 
-            Traits = ctx.Reader.ReadUInt32();
+            Traits = ctx.Reader.ReadEnum<LordTraits>();
 
             Following = ctx.Version > 2
                 ? ctx.ReadEntity<ICharacter>()

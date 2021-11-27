@@ -21,10 +21,12 @@ namespace TME.Scenario.ddr
         public string Support => "rorthron@doomdarksrevenge.com";
         public string Author => "Chris Wild";
         public string Copyright => "Copyright 1985 - 2021 Mike Singleton & Chris Wild";
-        
-        private const FeatureFlags Features = FeatureFlags.Approach | 
-                                              FeatureFlags.Recruit | 
-                                              FeatureFlags.RecruitTime;
+
+        private const FeatureFlags Features = FeatureFlags.Approach |
+                                              FeatureFlags.Recruit |
+                                              FeatureFlags.RecruitTime |
+                                              FeatureFlags.Take |
+                                              FeatureFlags.Give;
         public bool IsFeature(FeatureFlags flags) => (Features & flags) == flags;
         
         public IScenarioInfo Info => this;

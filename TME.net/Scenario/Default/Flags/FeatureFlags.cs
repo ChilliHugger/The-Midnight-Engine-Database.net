@@ -12,6 +12,8 @@ namespace TME.Scenario.Default.Flags
         Recruit         = 1 << 3,
         RecruitTime     = 1 << 4,
         Tunnels         = 1 << 5,
-        Mist            = 1 << 6
+        Mist            = 1 << 6,
+        Take            = 1 << 7,
+        Give            = 1 << 8
     }
 }

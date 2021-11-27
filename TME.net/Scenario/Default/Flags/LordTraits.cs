@@ -1,5 +1,8 @@
-﻿namespace TME.Scenario.Default.Flags
+﻿using System;
+
+namespace TME.Scenario.Default.Flags
 {
+    [Flags]
     public enum LordTraits : uint
     {
 // +ve

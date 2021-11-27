@@ -10,6 +10,18 @@ namespace TME.QueryServices
 {
     public class ArmyQueryService : IArmyQueryService
     {
+        public uint CountLordArmies(
+            IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo ) =>
+            (uint)lords.Count(isFriendlyTo);
+
+        public uint CountRegimentsArmies(
+            IEnumerable<IRegiment> regiments, Func<IRegiment,bool> isFriendlyTo ) =>
+            (uint)regiments.Count(isFriendlyTo);
+        
+        public uint CountStrongholdArmies(
+            IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo) =>
+            (uint)strongholds.Count(isFriendlyTo);
+        
         public IEnumerable<IArmy> GetLordWarriorsAsArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {

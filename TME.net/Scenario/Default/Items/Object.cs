@@ -18,9 +18,20 @@ namespace TME.Scenario.Default.Items
         public uint UseDescription { get; internal set;  }
         public IItem? CarriedBy { get; internal set; }
         
-        public bool IsUnique => HasFlags(ThingFlags.Unique.Raw());
+        #region Flags
+        public bool CanDrop => IsFlags(ThingFlags.Drop);
+        public bool CanFight => IsFlags(ThingFlags.Fight);
+        public bool CanPickup => IsFlags(ThingFlags.Pickup);
+        public bool CanRemove => IsFlags(ThingFlags.Remove);
+        public bool CanSee => IsFlags(ThingFlags.See);
+        public bool HelpsRecruitment => IsFlags(ThingFlags.Recruitment);
         public bool IsCarried => CarriedBy != null;
-
+        public bool IsRandomStart => IsFlags(ThingFlags.RandomStart);
+        public bool IsSpecial => IsFlags(ThingFlags.Special);
+        public bool IsUnique => IsFlags(ThingFlags.Unique);
+        public bool IsWeapon => IsFlags(ThingFlags.Weapon);
+        #endregion
+        
         public Object() : base(EntityType.Thing)
         {
         }

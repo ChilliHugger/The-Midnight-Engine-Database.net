@@ -69,6 +69,7 @@ namespace TME
             _builder.RegisterType<LocationActionBuilder>().As<ILocationActionBuilder>();
             _builder.RegisterType<LocationLordInfoBuilder>().As<ILocationLordInfoBuilder>();
             _builder.RegisterType<LocationArmyInfoBuilder>().As<ILocationArmyInfoBuilder>();
+            _builder.RegisterType<LocationArmyCountInfoBuilder>().As<ILocationArmyCountInfoBuilder>();
         }
         
         

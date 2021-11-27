@@ -7,8 +7,5 @@ namespace TME.Scenario.ddr.Interfaces
     {
         ObjectPower ObjectPower { get; }
         ObjectType ObjectType { get; }
-        bool IsSpecial { get; }
-        bool IsRandomStart { get; }
-        bool CanHelpRecruitment { get; }
     }
 }

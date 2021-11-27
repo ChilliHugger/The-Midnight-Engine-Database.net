@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
@@ -52,17 +53,45 @@ namespace TME.Scenario.Default.Interfaces
         ICharacter? Foe { get; }
         ICharacter? Liege { get; }
         uint Despondency { get; }
-        uint Traits { get; }
+        LordTraits Traits { get; }
+        bool HasTrait(LordTraits mask);
 
         bool IsFriendlyTo(ICharacter lord);
         bool IsOnSameSide(ICharacter lord);
         ICharacter? CommanderInChief { get; }
         
-        // flags
+        #region Flags Helpers
+        bool CanDestroyIceCrown { get; }
+        bool CanWalkForward { get; }
+        bool HasArmy { get; }
+        bool HasFollowers { get; }
+        bool HasUsedObject { get; }
+        bool HasWonBattle { get; }
+        bool IsAiControlled { get; }
         bool IsAlive { get; }
+        bool IsAllowedArmy { get; }
+        bool IsAllowedHide { get; }
+        bool IsAllowedHorse { get; }
+        bool IsAllowedIceCrown { get; }
+        bool IsAllowedMoonRing { get; }
+        bool IsAllowedRiders { get; }
+        bool IsAllowedWarriors { get; }
+        bool IsApproaching { get; }
+        bool IsCoward { get; }
+        bool IsDead { get; }
+        bool IsDawn { get; }
+        bool IsFollowing { get; }
         bool IsHidden { get; }
-        bool IsRecruited { get; }
+        bool IsInBattle{ get; }
         bool IsInTunnel { get; }
+        bool IsNight { get; }
+        bool IsPreparingForBattle { get; }
+        bool IsRecruited { get; }
+        bool IsResting { get; }
+        bool IsRiding { get; }
+        bool KilledFoe { get; }
+        #endregion
+
         
     }
 }
