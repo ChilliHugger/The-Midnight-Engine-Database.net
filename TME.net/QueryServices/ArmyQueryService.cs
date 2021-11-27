@@ -11,7 +11,7 @@ namespace TME.QueryServices
     public class ArmyQueryService : IArmyQueryService
     {
         public IEnumerable<IArmy> GetLordWarriorsAsArmies(
-            IEnumerable<ILord> lords, Func<ILord,bool> isFriendlyTo )
+            IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
             return lords.Select( l => new Army
             {
@@ -28,7 +28,7 @@ namespace TME.QueryServices
         }
         
         public IEnumerable<IArmy> GetLordRidersAsArmies(
-            IEnumerable<ILord> lords, Func<ILord,bool> isFriendlyTo )
+            IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
             return lords.Select( l => new Army
             {
@@ -45,7 +45,7 @@ namespace TME.QueryServices
         }
         
         public IEnumerable<IArmy> GetRegimentsAsArmies(
-            IEnumerable<IRegiment> regiments, Func<ILord?,bool> isFriendlyTo )
+            IEnumerable<IRegiment> regiments, Func<ICharacter?,bool> isFriendlyTo )
         {
             return regiments.Select( r => new Army
             {

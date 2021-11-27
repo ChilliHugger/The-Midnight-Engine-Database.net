@@ -4,7 +4,7 @@ using TME.Serialize;
 
 namespace TME.Scenario.Default.Items
 {
-    public partial class Thing
+    public partial class Object
     {
         #region Serialize
 

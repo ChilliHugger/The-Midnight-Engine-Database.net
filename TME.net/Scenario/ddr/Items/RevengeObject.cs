@@ -9,7 +9,7 @@ namespace TME.Scenario.ddr.Items
 {
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class RevengeThing : Thing, IRevengeThing
+    public class RevengeObject : Object, IRevengeThing
     {
         public ObjectPower ObjectPower { get; internal set; }
         public ObjectType ObjectType { get; internal set; }

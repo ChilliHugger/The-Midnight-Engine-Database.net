@@ -8,12 +8,12 @@ namespace TME.Interfaces
     {
         IReadOnlyDictionary<string,IEntity> SymbolCache { get; }
         
-        IReadOnlyList<ILord> Lords { get; }
+        IReadOnlyList<ICharacter> Lords { get; }
         IReadOnlyList<IRouteNode> RouteNodes { get; }
         IReadOnlyList<IRegiment> Regiments { get; } 
         IReadOnlyList<IStronghold> Strongholds { get; }
         IReadOnlyList<IWaypoint> Waypoints { get; }
-        IReadOnlyList<IThing> Things { get; }
+        IReadOnlyList<IObject> Things { get; }
         IReadOnlyList<IMission> Missions { get; }
         IReadOnlyList<IVictory> Victories { get; }
         

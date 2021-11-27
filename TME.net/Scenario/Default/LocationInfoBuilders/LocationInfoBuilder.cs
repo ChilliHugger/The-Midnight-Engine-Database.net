@@ -22,7 +22,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         
         private Loc _location = Loc.Zero;
         private Direction _direction = Enums.Direction.None;
-        private ILord? _lord;
+        private ICharacter? _lord;
         private bool _tunnel;
 
         public LocationInfoBuilder(
@@ -53,7 +53,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             return this;
         }
         
-        public ILocationInfoBuilder Lord(ILord lord)
+        public ILocationInfoBuilder Lord(ICharacter lord)
         {
             _lord = lord;
             return this;
@@ -123,7 +123,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             return location;
         }
         
-        private IThing? FindObjectAtLocation(Loc location)
+        private IObject? FindObjectAtLocation(Loc location)
         {
             return _entityContainer.Things
                     .FirstOrDefault(t => !t.IsCarried && t.Location == location);

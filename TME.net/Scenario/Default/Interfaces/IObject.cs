@@ -2,12 +2,12 @@
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IThingInternal : IThing, IItemInternal
+    internal interface IObjectInternal : IObject, IItemInternal
     {
         void UpdateCarriedBy(IItem? carriedBy);
     }
     
-    public interface IThing : IItem
+    public interface IObject : IItem
     {
         ThingType Kills { get; }
         string Name { get; }

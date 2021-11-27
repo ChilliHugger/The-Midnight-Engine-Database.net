@@ -7,7 +7,7 @@ namespace TME.Interfaces
     public interface ILocationLordInfoBuilder
     {
         ILocationLordInfoBuilder Location(Loc location);
-        ILocationLordInfoBuilder Lord(ILord lord);
+        ILocationLordInfoBuilder Lord(ICharacter lord);
         ILocationLordInfoBuilder Tunnel(bool tunnel);
         LocationLordInfo Build();
     }

@@ -23,8 +23,8 @@ namespace TME.Scenario.Default.Items
             EnemySuccess = ctx.Reader.ReadUInt32();
             Influence = ctx.Reader.ReadUInt32();
             Respawn = ctx.Reader.ReadUInt32();
-            Occupier = ctx.ReadEntity<ILord>();
-            Owner = ctx.ReadEntity<ILord>();
+            Occupier = ctx.ReadEntity<ICharacter>();
+            Owner = ctx.ReadEntity<ICharacter>();
             Terrain = ctx.Reader.ReadTerrain();
             Killed = ctx.Reader.ReadUInt32();
             Lost = 0;

@@ -11,9 +11,9 @@ namespace TME.Scenario.Default.LocationInfoBuilders
     {
         public Loc Location { get; internal set; } = Loc.Zero;
         public bool Tunnel { get; internal set; }
-        public IReadOnlyList<ILord> Recruited { get; internal set; } = new List<ILord>();
-        public IReadOnlyList<ILord> UnRecruited { get; internal set; } = new List<ILord>();
-        public IReadOnlyList<ILord> Lords { get; internal set; } = new List<ILord>();
-        public IReadOnlyList<ILord> Recruitable { get; internal set; } = new List<ILord>();
+        public IReadOnlyList<ICharacter> Recruited { get; internal set; } = new List<ICharacter>();
+        public IReadOnlyList<ICharacter> UnRecruited { get; internal set; } = new List<ICharacter>();
+        public IReadOnlyList<ICharacter> Lords { get; internal set; } = new List<ICharacter>();
+        public IReadOnlyList<ICharacter> Recruitable { get; internal set; } = new List<ICharacter>();
     }
 }

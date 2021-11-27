@@ -11,8 +11,8 @@ namespace TME.Scenario.Default.Interfaces
 		Race OccupyingRace { get; }
 		Race Race { get; }
 		UnitType UnitType { get; }
-		ILord? Occupier { get; }
-		ILord? Owner { get; }
+		ICharacter? Occupier { get; }
+		ICharacter? Owner { get; }
 		uint Total { get; }
 		uint Min { get; }
 		uint Max { get; }

@@ -18,7 +18,6 @@ using TME.Serialize;
 using Lord = TME.Scenario.Default.Items.Lord;
 using Regiment = TME.Scenario.Default.Items.Regiment;
 using Stronghold = TME.Scenario.Default.Items.Stronghold;
-using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME
 {
@@ -80,12 +79,12 @@ namespace TME
             _builder.RegisterType<Regiment>().As<IRegiment>();
             _builder.RegisterType<Stronghold>().As<IStronghold>();
             _builder.RegisterType<Waypoint>().As<IWaypoint>();
-            _builder.RegisterType<Thing>().As<IThing>();
+            _builder.RegisterType<Object>().As<IObject>();
 
             _builder.RegisterType<Mission>().As<IMission>();
             _builder.RegisterType<Victory>().As<IVictory>();
             
-            _builder.RegisterType<Lord>().As<ILord>().WithAttributeFiltering();
+            _builder.RegisterType<Lord>().As<ICharacter>().WithAttributeFiltering();
 
             _builder.RegisterType<Warriors>().Keyed<IUnit>(UnitType.Warrior);
             _builder.RegisterType<Riders>().Keyed<IUnit>(UnitType.Rider);

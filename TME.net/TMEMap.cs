@@ -129,7 +129,7 @@ namespace TME
                 && loc.Y >= 0 && loc.Y < _size.Height;
         }
 
-        public void SetThing(Loc location, IThing thing)
+        public void SetThing(Loc location, IObject thing)
         {
             var loc = GetAt(location);
 

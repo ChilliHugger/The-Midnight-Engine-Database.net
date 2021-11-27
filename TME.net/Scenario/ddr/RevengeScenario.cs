@@ -37,9 +37,9 @@ namespace TME.Scenario.ddr
         
         public void Register(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<RevengeLord>().As<ILord>().WithAttributeFiltering();
+            containerBuilder.RegisterType<RevengeLord>().As<ICharacter>().WithAttributeFiltering();
             containerBuilder.RegisterType<RevengeStronghold>().As<IStronghold>();
-            containerBuilder.RegisterType<RevengeThing>().As<IThing>();
+            containerBuilder.RegisterType<RevengeObject>().As<IObject>();
         }
         
         public void InitialiseAfterGameLoad()

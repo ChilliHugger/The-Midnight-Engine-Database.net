@@ -22,7 +22,7 @@ namespace TME.SpecTests.Mocks
 
             mock
                 .Setup(m => m.Execute(It.IsAny<object[]>()))
-                .Callback<object[]>((args)=> _actionsContext.ObjectDropped = args[0] as IThing)
+                .Callback<object[]>((args)=> _actionsContext.ObjectDropped = args[0] as IObject)
                 .ReturnsAsync( ()=>
                 {
                     return _actionsContext.ObjectDroppedActionResult;

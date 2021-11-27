@@ -22,7 +22,7 @@ namespace TME.Scenario.Default.Actions
         //
         protected override Task<IResult> OnExecute(params object[] args)
         {
-            if (args.FirstOrDefault() is IThingInternal {IsCarried: true} thing)
+            if (args.FirstOrDefault() is IObjectInternal {IsCarried: true} thing)
             {
                 // get the location details
                 var currentLocation = thing.CarriedBy!.Location;
@@ -51,7 +51,7 @@ namespace TME.Scenario.Default.Actions
 
         public override Task<IResult> CanExecute(params object[] args)
         {
-            return Task.FromResult(args.FirstOrDefault() is IThingInternal {IsCarried: true}
+            return Task.FromResult(args.FirstOrDefault() is IObjectInternal {IsCarried: true}
                 ? Success.Default 
                 : Failure.Default);
         }

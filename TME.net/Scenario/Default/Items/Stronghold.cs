@@ -21,8 +21,8 @@ namespace TME.Scenario.Default.Items
         public uint EnemySuccess { get; private set; }
         public uint Influence { get; private set; }
         public uint Respawn { get; private set; }
-        public ILord? Occupier { get; internal set; }
-        public ILord? Owner { get; internal set; }
+        public ICharacter? Occupier { get; internal set; }
+        public ICharacter? Owner { get; internal set; }
         public Terrain Terrain { get; internal set; } = Terrain.None;
         public uint Killed { get; internal set; }
         public uint Lost { get; internal set; }

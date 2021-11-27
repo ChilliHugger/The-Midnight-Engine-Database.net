@@ -8,6 +8,6 @@ namespace TME.Scenario.Default.Interfaces
         IDictionary<UnitType, uint> Units { get; }
         uint Armies { get; }
         uint Adjustment { get; }
-        ILord Lord { get; }
+        ICharacter Lord { get; }
     }
 }

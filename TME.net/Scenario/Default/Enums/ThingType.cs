@@ -31,10 +31,10 @@
         // other
         EyeOfTheMoon,
 
-        Crown_Varenand = 22,
-        Crown_Carudrium,
-        Spell_Thigror,
-        Runes_Finorn,
-        Crown_Imiriel
+        CrownVarenand = 22,
+        CrownCarudrium,
+        SpellThigror,
+        RunesFinorn,
+        CrownImiriel
     }
 }

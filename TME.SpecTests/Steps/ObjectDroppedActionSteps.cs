@@ -85,9 +85,9 @@ namespace TME.SpecTests.Steps
             _scenarioContext["currentThing"] = thing;
         }
 
-        private IThing GetThing()
+        private IObject GetThing()
         {
-            var thing = _scenarioContext["currentThing"] as IThing;
+            var thing = _scenarioContext["currentThing"] as IObject;
             return thing!;
         }
 
@@ -106,7 +106,7 @@ namespace TME.SpecTests.Steps
             Assert.True(result is Failure, "Command Not Successful");
         }
         
-        private async Task<IResult> ExecuteObjectDropped(IThing thing)
+        private async Task<IResult> ExecuteObjectDropped(IObject thing)
         {
             var sut = _mainHooks.Container.ResolveKeyed<IAction>(nameof(ObjectDropped));
             return await sut.Execute(thing);

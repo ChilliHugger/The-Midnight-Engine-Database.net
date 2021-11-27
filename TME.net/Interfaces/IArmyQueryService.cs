@@ -6,9 +6,9 @@ namespace TME.Interfaces
 {
     public interface IArmyQueryService
     {
-        IEnumerable<IArmy> GetLordWarriorsAsArmies(IEnumerable<ILord> lords, Func<ILord, bool> isFriendlyTo);
-        IEnumerable<IArmy> GetLordRidersAsArmies(IEnumerable<ILord> lords, Func<ILord, bool> isFriendlyTo);
-        IEnumerable<IArmy> GetRegimentsAsArmies(IEnumerable<IRegiment> regiments, Func<ILord?, bool> isFriendlyTo);
+        IEnumerable<IArmy> GetLordWarriorsAsArmies(IEnumerable<ICharacter> lords, Func<ICharacter, bool> isFriendlyTo);
+        IEnumerable<IArmy> GetLordRidersAsArmies(IEnumerable<ICharacter> lords, Func<ICharacter, bool> isFriendlyTo);
+        IEnumerable<IArmy> GetRegimentsAsArmies(IEnumerable<IRegiment> regiments, Func<ICharacter?, bool> isFriendlyTo);
         IEnumerable<IArmy> GetStrongholdArmy(IEnumerable<IStronghold> stronghold, Func<IStronghold, bool> isFriendlyTo);
     }
 }

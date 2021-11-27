@@ -10,7 +10,7 @@ namespace TME.SpecTests.Context
     {
         public bool ObjectDroppedActionIsMocked { get; set; } = false;
         public IResult ObjectDroppedActionResult { get; set; } = Success.Default;
-        public IThing? ObjectDropped { get; set; }
+        public IObject? ObjectDropped { get; set; }
 
     }
 }

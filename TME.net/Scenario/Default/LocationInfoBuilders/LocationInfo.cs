@@ -24,12 +24,12 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
         public IReadOnlyList<IRouteNode> Routenodes { get; internal set; } = new List<IRouteNode>();
 
-        public ILord? StubbornFollowerMove { get; internal set; }
-        public ILord? StubbornFollowerBattle { get; internal set; }
-        public IThing? ObjectToTake { get; internal set; }
-        public ILord? SomeoneToGiveTo { get; internal set; }
+        public ICharacter? StubbornFollowerMove { get; internal set; }
+        public ICharacter? StubbornFollowerBattle { get; internal set; }
+        public IObject? ObjectToTake { get; internal set; }
+        public ICharacter? SomeoneToGiveTo { get; internal set; }
         
-        public ILord? Owner { get; internal set; }
+        public ICharacter? Owner { get; internal set; }
         public uint FriendArmies { get; internal set; }
         public uint FoeArmies { get; internal set; }
         

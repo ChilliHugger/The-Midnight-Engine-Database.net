@@ -8,12 +8,12 @@ using TME.Scenario.Default.Commands;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Scenario.Default.Scenario;
 using TME.SpecTests.Context;
 using TME.SpecTests.Hooks;
 using TME.SpecTests.Mocks;
 using TME.Types;
-using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME.SpecTests.Drivers
 {
@@ -36,17 +36,17 @@ namespace TME.SpecTests.Drivers
             _mainHooks = mainHooks;
         }
         
-        public (ILord lord, IThing thing) GivenALordIsCarryingAnObjectOfType(ThingType thingType, bool unique = false)
+        public (ICharacter lord, IObject thing) GivenALordIsCarryingAnObjectOfType(ThingType thingType, bool unique = false)
         {
-            var lord = _mainHooks.Container.Resolve<ILord>();
+            var lord = _mainHooks.Container.Resolve<ICharacter>();
             var thing = GivenAnObjectOfType(thingType,unique);
 
-            if (lord is ILordInternal internalLord)
+            if (lord is ICharacterInternal internalLord)
             {
-                internalLord.SetCarrying(new List<IThing>{thing});
+                internalLord.SetCarrying(new List<IObject>{thing});
             }
 
-            if (thing is IThingInternal internalThing)
+            if (thing is IObjectInternal internalThing)
             {
                 internalThing.UpdateCarriedBy(lord);
             }
@@ -54,11 +54,11 @@ namespace TME.SpecTests.Drivers
             return (lord, thing);
         }
 
-        public IThing GivenAnObjectOfType(ThingType thingType, bool unique = false)
+        public IObject GivenAnObjectOfType(ThingType thingType, bool unique = false)
         {
-            var thing = _mainHooks.Container.Resolve<IThing>();
+            var thing = _mainHooks.Container.Resolve<IObject>();
             
-            if (thing is Thing item)
+            if (thing is Object item)
             {
                 item.Id = new MXId(EntityType.Thing,(uint)thingType);
                 item.SetFlags(ThingFlags.Unique, unique);

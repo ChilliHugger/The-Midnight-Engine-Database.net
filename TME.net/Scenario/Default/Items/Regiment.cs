@@ -19,7 +19,7 @@ namespace TME.Scenario.Default.Items
         public bool Friendly => false;
         public MXId TargetId { get; internal set; } = MXId.None;
         public Orders Orders { get; internal set; } = Orders.None;
-        public ILord? LoyaltyLord { get; internal set; }
+        public ICharacter? LoyaltyLord { get; internal set; }
         public uint Total { get; internal set; }
         public uint Success { get; internal set; }
         public uint Killed { get; internal set; }

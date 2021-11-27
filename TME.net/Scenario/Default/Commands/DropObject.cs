@@ -36,8 +36,8 @@ namespace TME.Scenario.Default.Commands
             //
             // Lord is dropping a Thing
             //
-            if (args.FirstOrDefault() is ILordInternal lord
-                && args.LastOrDefault() is IThing thing)
+            if (args.FirstOrDefault() is ICharacterInternal lord
+                && args.LastOrDefault() is IObject thing)
             {
                 var dropped = await _objectDropped.Execute(thing);
 
@@ -62,8 +62,8 @@ namespace TME.Scenario.Default.Commands
 
         public override Task<IResult> CanExecute(params object[] args)
         {
-            if (args.FirstOrDefault() is ILord lord &&
-                args.LastOrDefault() is IThing thing &&
+            if (args.FirstOrDefault() is ICharacter lord &&
+                args.LastOrDefault() is IObject thing &&
                 lord.Time + Duration > _variables.sv_time_night &&
                 lord.Carrying.Contains(thing))
             {

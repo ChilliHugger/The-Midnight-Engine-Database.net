@@ -19,7 +19,7 @@ namespace TME.Scenario.Default.Items
             TargetId = ctx.Reader.ReadMXId();
             Orders = ctx.Reader.ReadOrders();
             Success = ctx.Reader.ReadUInt32();
-            LoyaltyLord = ctx.ReadEntity<ILord>();
+            LoyaltyLord = ctx.ReadEntity<ICharacter>();
             Killed = ctx.Reader.ReadUInt32();
             LastLocation = (ctx.Version > 3)
                 ? ctx.Reader.ReadLoc()

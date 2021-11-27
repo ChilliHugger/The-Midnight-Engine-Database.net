@@ -14,7 +14,7 @@ namespace TME.Scenario.Default.Interfaces
         Orders Orders { get; }
         uint Delay { get; }
         uint Lost { get; }
-        ILord? LoyaltyLord { get; }
+        ICharacter? LoyaltyLord { get; }
         Loc LastLocation { get; }
         // night processing and thus not required for storage
         uint Turns { get; }

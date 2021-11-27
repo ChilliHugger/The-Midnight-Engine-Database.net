@@ -4,14 +4,14 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface ILordInternal : ILord
+    internal interface ICharacterInternal : ICharacter
     {
         void UpdateTime(Time time);
-        void RemoveCarriedObject(IThing thing);
-        void SetCarrying(IEnumerable<IThing> carried);
+        void RemoveCarriedObject(IObject thing);
+        void SetCarrying(IEnumerable<IObject> carried);
     }
     
-    public interface ILord : IItem
+    public interface ICharacter : IItem
     {
         Direction Looking { get; }
         Time Time { get; }
@@ -26,8 +26,8 @@ namespace TME.Scenario.Default.Interfaces
         IBattleInfo BattleInfo { get; }
         IRecruitment Recruitment { get; }
 
-        IReadOnlyList<IThing> Carrying { get; }
-        IThing? KilledBy { get; }
+        IReadOnlyList<IObject> Carrying { get; }
+        IObject? KilledBy { get; }
 
         WaitStatus WaitStatus { get; }
 
@@ -36,7 +36,7 @@ namespace TME.Scenario.Default.Interfaces
 
         List<IUnit> Units { get; }
 
-        ILord? Following { get; }
+        ICharacter? Following { get; }
         uint Followers { get; }
 
         // lom
@@ -49,14 +49,14 @@ namespace TME.Scenario.Default.Interfaces
         // supported in default characters
         Orders Orders { get; }
         Race Loyalty { get; }
-        ILord? Foe { get; }
-        ILord? Liege { get; }
+        ICharacter? Foe { get; }
+        ICharacter? Liege { get; }
         uint Despondency { get; }
         uint Traits { get; }
 
-        bool IsFriendlyTo(ILord lord);
-        bool IsOnSameSide(ILord lord);
-        ILord? CommanderInChief { get; }
+        bool IsFriendlyTo(ICharacter lord);
+        bool IsOnSameSide(ICharacter lord);
+        ICharacter? CommanderInChief { get; }
         
         // flags
         bool IsAlive { get; }

@@ -22,12 +22,12 @@ namespace TME.QueryServices
         // TODO: Ideally this would not be a flag, but would
         // be checking in the lord is recruited by the CommanderInChief
         // of the lord making the request
-        private static bool IsRecruited(ILord lord)
+        private static bool IsRecruited(ICharacter lord)
         {
             return lord.IsRecruited;
         }
 
-        public IReadOnlyList<ILord> LordsAtLocation(Loc location, bool inTunnel)
+        public IReadOnlyList<ICharacter> LordsAtLocation(Loc location, bool inTunnel)
         {
             return _entityContainer
                 .Lords
@@ -37,7 +37,7 @@ namespace TME.QueryServices
                             l.Location == location).ToList();
         }
         
-        public IReadOnlyList<ILord> NotRecruitedLordsAtLocation(Loc location, bool inTunnel)
+        public IReadOnlyList<ICharacter> NotRecruitedLordsAtLocation(Loc location, bool inTunnel)
         {
             return _entityContainer
                 .Lords
@@ -48,7 +48,7 @@ namespace TME.QueryServices
                             l.Location == location).ToList();
         }
 
-        public IReadOnlyList<ILord> RecruitedLordsAtLocation(Loc location, bool inTunnel)
+        public IReadOnlyList<ICharacter> RecruitedLordsAtLocation(Loc location, bool inTunnel)
         {
             return _entityContainer
                 .Lords

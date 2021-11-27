@@ -150,17 +150,17 @@ namespace TME.SpecTests.Steps
         }
         #endregion
         
-        private void SetupLordTime(ILord lord)
+        private void SetupLordTime(ICharacter lord)
         {
-            if (lord is ILordInternal internalLord)
+            if (lord is ICharacterInternal internalLord)
             {
                 internalLord.UpdateTime(_time);
             }
         }
         
-        private void RemoveObjectFromLord(ILord lord, IThing thing)
+        private void RemoveObjectFromLord(ICharacter lord, IObject thing)
         {
-            if (lord is ILordInternal internalLord)
+            if (lord is ICharacterInternal internalLord)
             {
                 internalLord.RemoveCarriedObject(thing);
             }
@@ -173,10 +173,10 @@ namespace TME.SpecTests.Steps
             _scenarioContext["currentThing"] = thing;
         }
         
-        private (ILord, IThing) GetLordAndObject()
+        private (ICharacter, IObject) GetLordAndObject()
         {
-            var lord = _scenarioContext["currentLord"] as ILord;
-            var thing = _scenarioContext["currentThing"] as IThing;
+            var lord = _scenarioContext["currentLord"] as ICharacter;
+            var thing = _scenarioContext["currentThing"] as IObject;
             return (lord!, thing!);
         }
         

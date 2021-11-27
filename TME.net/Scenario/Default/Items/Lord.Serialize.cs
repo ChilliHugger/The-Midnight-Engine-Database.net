@@ -35,20 +35,20 @@ namespace TME.Scenario.Default.Items
 
             Race = ctx.Reader.ReadRace();
 
-            var carried = ctx.ReadEntity<IThing>();
+            var carried = ctx.ReadEntity<IObject>();
             Carrying = carried == null
-                ? new List<IThing>().AsReadOnly()
-                : new List<IThing> {carried}.AsReadOnly();
+                ? new List<IObject>().AsReadOnly()
+                : new List<IObject> {carried}.AsReadOnly();
             
-            KilledBy = ctx.ReadEntity<IThing>();
+            KilledBy = ctx.ReadEntity<IObject>();
 
             Gender = ctx.Reader.ReadGender();
 
             Loyalty = ctx.Reader.ReadRace();
 
-            Liege = ctx.ReadEntity<ILord>();
+            Liege = ctx.ReadEntity<ICharacter>();
 
-            Foe = ctx.ReadEntity<ILord>();
+            Foe = ctx.ReadEntity<ICharacter>();
 
             WaitStatus = ctx.Reader.ReadWaitStatus();
 
@@ -59,7 +59,7 @@ namespace TME.Scenario.Default.Items
             Traits = ctx.Reader.ReadUInt32();
 
             Following = ctx.Version > 2
-                ? ctx.ReadEntity<ILord>()
+                ? ctx.ReadEntity<ICharacter>()
                 : null;
 
             Followers = ctx.Version > 4

@@ -11,6 +11,6 @@ namespace TME.Scenario.Default.Base
         public IDictionary<UnitType, uint> Units { get; internal set; } = new Dictionary<UnitType, uint>();
         public uint Armies { get;  internal set; }
         public uint Adjustment { get;  internal set; }
-        public ILord Lord { get; internal set; } = null!;
+        public ICharacter Lord { get; internal set; } = null!;
     }
 }

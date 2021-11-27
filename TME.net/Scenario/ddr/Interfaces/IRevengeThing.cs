@@ -3,7 +3,7 @@ using TME.Scenario.Default.Interfaces;
 
 namespace TME.Scenario.ddr.Interfaces
 {
-    public interface IRevengeThing : IThing
+    public interface IRevengeThing : IObject
     {
         ObjectPower ObjectPower { get; }
         ObjectType ObjectType { get; }

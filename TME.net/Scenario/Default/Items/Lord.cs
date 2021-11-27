@@ -11,7 +11,7 @@ using TME.Types;
 namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public partial class Lord : Item, ILordInternal
+    public partial class Lord : Item, ICharacterInternal
     {
 
         #region "DI"
@@ -27,13 +27,13 @@ namespace TME.Scenario.Default.Items
         public Gender Gender { get; private set; } = Gender.None;
         public string LongName { get; private set; } = "";
         public string ShortName { get; private set; } = "";
-        public IReadOnlyList<IThing> Carrying { get; internal set; }
-        public IThing? KilledBy { get; internal set; }
+        public IReadOnlyList<IObject> Carrying { get; internal set; }
+        public IObject? KilledBy { get; internal set; }
         public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
         public MXId LastCommandId { get; internal set; } = MXId.None;
         public Command LastCommand { get; internal set; } = Command.None;
         public List<IUnit> Units { get; private set; }
-        public ILord? Following { get; internal set; }
+        public ICharacter? Following { get; internal set; }
         public uint Energy { get; internal set; }
         public uint Reckless { get; internal set; }
         public uint Followers { get; internal set; }
@@ -43,8 +43,8 @@ namespace TME.Scenario.Default.Items
         public uint Fear { get; internal set; }
         public Orders Orders { get; internal set; } = Orders.None;
         public Race Loyalty { get; internal set; } = Race.None;
-        public ILord? Foe { get; internal set; }
-        public ILord? Liege { get; internal set; }
+        public ICharacter? Foe { get; internal set; }
+        public ICharacter? Liege { get; internal set; }
         public uint Despondency { get; internal set; }
         public uint Traits { get; private set; }
 
@@ -53,14 +53,14 @@ namespace TME.Scenario.Default.Items
         public bool IsRecruited => IsFlags(LordFlags.Recruited);
         public bool IsInTunnel => IsFlags(LordFlags.Tunnel);
         
-        public bool IsFriendlyTo( ILord lord ) => Loyalty == lord.Loyalty;
+        public bool IsFriendlyTo( ICharacter lord ) => Loyalty == lord.Loyalty;
 
-        public bool IsOnSameSide ( ILord lord ) 
+        public bool IsOnSameSide ( ICharacter lord ) 
         {
             return CommanderInChief == lord.CommanderInChief ;
         }
 
-        public ILord? CommanderInChief => Liege?.CommanderInChief;
+        public ICharacter? CommanderInChief => Liege?.CommanderInChief;
         
         public Lord(
             IBattleInfo battleInfo,
@@ -71,23 +71,23 @@ namespace TME.Scenario.Default.Items
             BattleInfo = battleInfo;
             Recruitment = recruitment;
             Units = new List<IUnit>() {warriors, riders};
-            Carrying = new List<IThing>();
+            Carrying = new List<IObject>();
         }
 
         #region Internal Helpers
-        void ILordInternal.UpdateTime(Time time)
+        void ICharacterInternal.UpdateTime(Time time)
         {
             Time = time;
         }
 
-        void ILordInternal.RemoveCarriedObject(IThing thing)
+        void ICharacterInternal.RemoveCarriedObject(IObject thing)
         {
-            var oldObjects = new List<IThing>(Carrying);
+            var oldObjects = new List<IObject>(Carrying);
             oldObjects.Remove(thing);
             Carrying = oldObjects.AsReadOnly();
         }
 
-        void ILordInternal.SetCarrying(IEnumerable<IThing> carried)
+        void ICharacterInternal.SetCarrying(IEnumerable<IObject> carried)
         {
             Carrying = carried.ToList().AsReadOnly();
         }

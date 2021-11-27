@@ -16,14 +16,14 @@ namespace TME
 
         private readonly Dictionary<Type, EntityType> _typeMappings = new()
         {
-            { typeof(ILord), EntityType.Character },
+            { typeof(ICharacter), EntityType.Character },
             { typeof(IRevengeLord), EntityType.Character },
             { typeof(IRegiment), EntityType.Regiment },
             { typeof(IRouteNode), EntityType.RouteNode },
             { typeof(IStronghold), EntityType.Stronghold },   
             { typeof(IRevengeStronghold), EntityType.Stronghold },
             { typeof(IWaypoint), EntityType.Waypoint },
-            { typeof(IThing), EntityType.Thing },
+            { typeof(IObject), EntityType.Thing },
             { typeof(IRevengeThing), EntityType.Thing },
             { typeof(IMission), EntityType.Mission },
             { typeof(IVictory), EntityType.Victory },

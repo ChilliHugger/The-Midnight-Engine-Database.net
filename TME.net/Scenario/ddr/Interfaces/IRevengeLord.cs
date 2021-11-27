@@ -5,7 +5,7 @@ using TME.Types;
 
 namespace TME.Scenario.ddr.Interfaces
 {
-    public interface IRevengeLord : ILord
+    public interface IRevengeLord : ICharacter
     {
         Loc LastLocation { get; }
         IRevengeThing? DesiredObject { get; }

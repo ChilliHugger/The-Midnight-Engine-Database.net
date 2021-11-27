@@ -20,8 +20,8 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
         private Loc _location = Loc.Zero;
         private bool _tunnel;
-        private ILord _doomdark = null!;
-        private ILord _luxor = null!;
+        private ICharacter _doomdark = null!;
+        private ICharacter _luxor = null!;
 
         public LocationArmyInfoBuilder(
             IEngine engine,
@@ -61,8 +61,8 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             var armies = new List<IArmy>();
 
             var mapLoc = _map.GetAt(_location);
-            _doomdark = _entityResolver.EntityBySymbol<ILord>("CH_DOOMDARK")!;
-            _luxor = _entityResolver.EntityBySymbol<ILord>("CH_LUXOR")!;
+            _doomdark = _entityResolver.EntityBySymbol<ICharacter>("CH_DOOMDARK")!;
+            _luxor = _entityResolver.EntityBySymbol<ICharacter>("CH_LUXOR")!;
 
             var regiments = _mapQueryService.RegimentsAtLocation(_location, _tunnel);
             var strongholds = _tunnel
@@ -131,7 +131,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             };
         }
 
-        private bool IsFriendlyTo(ILord lord)
+        private bool IsFriendlyTo(ICharacter lord)
         {
             return _engine.Scenario is not RevengeScenario || lord.IsFriendlyTo(_luxor);
         }

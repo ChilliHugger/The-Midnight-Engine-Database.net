@@ -10,9 +10,9 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Scenario.Default.Scenario;
 using TME.Types;
-using Thing = TME.Scenario.Default.Items.Thing;
 
 namespace TME.UnitTests
 {
@@ -63,8 +63,8 @@ namespace TME.UnitTests
             var sut = Container.ResolveKeyed<IAction>(nameof(ObjectDropped));
 
             // GIVEN a lord is carrying an object
-            var lord = Container.Resolve<ILord>();
-            var thing = Container.Resolve<IThing>();
+            var lord = Container.Resolve<ICharacter>();
+            var thing = Container.Resolve<IObject>();
 
             GivenALordIsCarryingAnObjectOfType(lord, thing, ThingType.Moonring);
 
@@ -83,8 +83,8 @@ namespace TME.UnitTests
             var sut = Container.ResolveKeyed<IAction>(nameof(ObjectDropped));
 
             // GIVEN a lord is carrying an object
-            var lord = Container.Resolve<ILord>();
-            var thing = Container.Resolve<IThing>();
+            var lord = Container.Resolve<ICharacter>();
+            var thing = Container.Resolve<IObject>();
 
             GivenALordIsCarryingAnObjectOfType(lord, thing, ThingType.IceCrown, true);
 
@@ -97,14 +97,14 @@ namespace TME.UnitTests
             Assert.AreEqual(ThingType.IceCrown, _currentLocation.Thing, "Location has correct object type");
         }
 
-        private static void GivenALordIsCarryingAnObjectOfType(IItem lord, IThing thing, ThingType thingType, bool unique = false)
+        private static void GivenALordIsCarryingAnObjectOfType(IItem lord, IObject thing, ThingType thingType, bool unique = false)
         {
-            if (lord is ILordInternal internalLord)
+            if (lord is ICharacterInternal internalLord)
             {
-                internalLord.SetCarrying(new List<IThing>{thing});
+                internalLord.SetCarrying(new List<IObject>{thing});
             }
 
-            if (thing is IThingInternal internalThing && thing is Thing item)
+            if (thing is IObjectInternal internalThing && thing is Object item)
             {
                 item.Id = new MXId(EntityType.Thing,(uint)thingType);
                 if (unique)

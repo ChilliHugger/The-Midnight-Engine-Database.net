@@ -14,7 +14,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private readonly IMapQueryService _mapQueryService;
 
         private Loc _location = Loc.Zero;
-        private ILord? _lord;
+        private ICharacter? _lord;
         private bool _tunnel;
         
         public LocationLordInfoBuilder(
@@ -29,7 +29,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             return this;
         }
         
-        public ILocationLordInfoBuilder Lord(ILord lord)
+        public ILocationLordInfoBuilder Lord(ICharacter lord)
         {
             _lord = lord;
             return this;
@@ -69,15 +69,15 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             };
         }
         
-        private IReadOnlyList<ILord> GetRecruitableLords(IEnumerable<ILord> lords)
+        private IReadOnlyList<ICharacter> GetRecruitableLords(IEnumerable<ICharacter> lords)
         {
             return _lord != null
                 ? lords.Where(l => CanRecruitLord(_lord, l)).ToList().AsReadOnly()
-                : new List<ILord>().AsReadOnly();
+                : new List<ICharacter>().AsReadOnly();
         }
         
         // TODO: Scenario check
-        private static bool CanRecruitLord(ILord recruiter, ILord lord)
+        private static bool CanRecruitLord(ICharacter recruiter, ICharacter lord)
         {
             throw new NotImplementedException();
         }

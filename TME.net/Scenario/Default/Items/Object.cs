@@ -10,7 +10,7 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public partial class Thing : Item, IThingInternal
+    public partial class Object : Item, IObjectInternal
     {
         public ThingType Kills { get; internal set; } = ThingType.None;
         public string Name { get; internal set; } = "";
@@ -21,7 +21,7 @@ namespace TME.Scenario.Default.Items
         public bool IsUnique => HasFlags(ThingFlags.Unique.Raw());
         public bool IsCarried => CarriedBy != null;
 
-        public Thing() : base(EntityType.Thing)
+        public Object() : base(EntityType.Thing)
         {
         }
         

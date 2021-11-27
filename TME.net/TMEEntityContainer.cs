@@ -21,12 +21,12 @@ namespace TME
         
         public IReadOnlyDictionary<string,IEntity> SymbolCache { get; internal set; }
 
-        public IReadOnlyList<ILord> Lords { get; internal set; }
+        public IReadOnlyList<ICharacter> Lords { get; internal set; }
         public IReadOnlyList<IRouteNode> RouteNodes { get; internal set; }
         public IReadOnlyList<IRegiment> Regiments { get; internal set; } 
         public IReadOnlyList<IStronghold> Strongholds { get; internal set; }
         public IReadOnlyList<IWaypoint> Waypoints { get; internal set; }
-        public IReadOnlyList<IThing> Things { get; internal set; }
+        public IReadOnlyList<IObject> Things { get; internal set; }
         public IReadOnlyList<IMission> Missions { get; internal set; }
         public IReadOnlyList<IVictory> Victories { get; internal set; }
         
@@ -48,12 +48,12 @@ namespace TME
             _variables = variables;
             
             // Items
-            Lords = new List<ILord>().AsReadOnly();
+            Lords = new List<ICharacter>().AsReadOnly();
             Regiments = new List<IRegiment>().AsReadOnly();
             Strongholds = new List<IStronghold>().AsReadOnly();
             RouteNodes = new List<IRouteNode>().AsReadOnly();
             Waypoints = new List<IWaypoint>().AsReadOnly();
-            Things = new List<IThing>().AsReadOnly();
+            Things = new List<IObject>().AsReadOnly();
             Missions = new List<IMission>().AsReadOnly();
             Victories = new List<IVictory>().AsReadOnly();
 
@@ -95,12 +95,12 @@ namespace TME
 
             _internalSymbolCache = new Dictionary<string, IEntity>();
 
-            Lords = CreateCollection<ILord>(characters).ToList().AsReadOnly();
+            Lords = CreateCollection<ICharacter>(characters).ToList().AsReadOnly();
             Regiments = CreateCollection<IRegiment>(regiments).ToList().AsReadOnly();
             RouteNodes = CreateCollection<IRouteNode>(routenodes).ToList().AsReadOnly();
             Strongholds = CreateCollection<IStronghold>(strongholds).ToList().AsReadOnly();
             Waypoints = CreateCollection<IWaypoint>(places).ToList().AsReadOnly();
-            Things = CreateCollection<IThing>(objects).ToList().AsReadOnly();
+            Things = CreateCollection<IObject>(objects).ToList().AsReadOnly();
             Missions = CreateCollection<IMission>(missions).ToList().AsReadOnly();
             Victories = CreateCollection<IVictory>(victories).ToList().AsReadOnly();
 
