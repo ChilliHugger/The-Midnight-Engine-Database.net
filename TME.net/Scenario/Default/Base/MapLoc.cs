@@ -6,6 +6,16 @@ namespace TME.Scenario.Default.Base
 {
     public struct MapLoc
     {
+        public static MapLoc None = new MapLoc
+        {
+            Terrain = Terrain.None,
+            Variant = 0,
+            Climate = 0,
+            Thing = ThingType.None,
+            Area = 0,
+            Flags = LocationFlags.None
+        };
+        
         //
         //                                Flags (36:28)
         //                                |          Area (26:10)
@@ -72,15 +82,21 @@ namespace TME.Scenario.Default.Base
         public bool IsVisible => Flags.HasFlag(LocationFlags.Seen);
         public bool IsInDomain => Flags.HasFlag(LocationFlags.Domain);
         public bool IsSpecial => Flags.HasFlag(LocationFlags.Special);
+        public bool IsInteresting => Flags.HasFlag(LocationFlags.Interesting);
         public bool IsMisty => Flags.HasFlag(LocationFlags.Mist);
         public bool IsStronghold => Flags.HasFlag(LocationFlags.Stronghold);
-        public bool IsRouteNode => Flags.HasFlag(LocationFlags.Routenode);
+        public bool IsRouteNode => Flags.HasFlag(LocationFlags.RouteNode);
         public bool IsTunnelVisible => Flags.HasFlag(LocationFlags.TunnelLookedAt);
         public bool HasTunnel => Flags.HasFlag(LocationFlags.Tunnel);
         public bool HasArmy => Flags.HasFlag(LocationFlags.Army);
         public bool HasLord => Flags.HasFlag(LocationFlags.Lord);
+        
+        public bool HasTunnelExit => Flags.HasFlag(LocationFlags.TunnelExit);
+        public bool HasTunnelEntrance => Flags.HasFlag(LocationFlags.TunnelEntrance);
+        public bool HasTunnelPassage => Flags.HasFlag(LocationFlags.TunnelPassageway);
 
-        private void SetFlags(LocationFlags flags,bool value)
+
+        internal void SetFlags(LocationFlags flags,bool value)
         {
             if (value)
             {

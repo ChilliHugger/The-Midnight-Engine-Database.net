@@ -7,6 +7,7 @@ namespace TME.Interfaces
     public interface IEntityResolver
     {
         T? EntityById<T>(int id) where T : IEntity;
+        public T? EntityBySymbol<T>(string symbol) where T : IEntity;
         object? EntityById(MXId id);
         object? EntityById(EntityType type, int id);
     }

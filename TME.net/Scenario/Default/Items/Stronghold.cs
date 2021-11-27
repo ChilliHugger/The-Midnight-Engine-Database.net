@@ -27,6 +27,9 @@ namespace TME.Scenario.Default.Items
         public uint Killed { get; internal set; }
         public uint Lost { get; internal set; }
 
+        // TODO: Check in battle code that this is correct and not Race.None
+        public Race LoyaltyRace => Owner?.Race ?? OccupyingRace; 
+
         public Stronghold() : base(EntityType.Stronghold)
         {
         }

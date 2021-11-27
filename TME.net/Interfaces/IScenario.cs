@@ -6,5 +6,7 @@ namespace TME.Interfaces
     {
         IScenarioInfo Info { get;}
         void Register(ContainerBuilder containerBuilder);
+
+        void InitialiseAfterGameLoad();
     }
 }

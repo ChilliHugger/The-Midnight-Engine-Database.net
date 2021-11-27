@@ -42,6 +42,16 @@ namespace TME
             _entityContainer = entityContainer;
         }
 
+        public T? EntityBySymbol<T>(string symbol)
+            where T : IEntity
+        {
+            if(_entityContainer.SymbolCache.TryGetValue( symbol, out var entity))
+            {
+                return (T?)entity;
+            }
+            return default;
+        }
+        
         public T? EntityById<T>(int id)
             where T : IEntity
         {

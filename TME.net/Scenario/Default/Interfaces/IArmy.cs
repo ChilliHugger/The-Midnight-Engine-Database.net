@@ -16,5 +16,6 @@ namespace TME.Scenario.Default.Interfaces
         uint Success { get; }
         uint Killed { get; }
         Race LoyaltyRace { get; }
+        bool Friendly { get; }
     }
 }

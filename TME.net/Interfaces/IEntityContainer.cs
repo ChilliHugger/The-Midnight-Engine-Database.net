@@ -6,6 +6,8 @@ namespace TME.Interfaces
 {
     public interface IEntityContainer
     {
+        IReadOnlyDictionary<string,IEntity> SymbolCache { get; }
+        
         IReadOnlyList<ILord> Lords { get; }
         IReadOnlyList<IRouteNode> RouteNodes { get; }
         IReadOnlyList<IRegiment> Regiments { get; } 

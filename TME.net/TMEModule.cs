@@ -3,6 +3,7 @@ using Autofac.Features.AttributeFilters;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using TME.Interfaces;
+using TME.QueryServices;
 using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Commands;
@@ -11,6 +12,7 @@ using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
+using TME.Scenario.Default.LocationInfoBuilders;
 using TME.Scenario.Default.Scenario;
 using TME.Serialize;
 using Lord = TME.Scenario.Default.Items.Lord;
@@ -36,7 +38,8 @@ namespace TME
             RegisterActions();
             RegisterCommands();
             RegisterTypes();
-
+            RegisterQueryServices();
+            RegisterBuilders();
             RegisterLogger();
         }
 
@@ -55,6 +58,21 @@ namespace TME
             _builder.RegisterType<TMEMap>().As<IMap>();
         }
 
+        private void RegisterQueryServices()
+        {
+            _builder.RegisterType<MapQueryService>().As<IMapQueryService>();
+            _builder.RegisterType<ArmyQueryService>().As<IArmyQueryService>();
+        }
+
+        private void RegisterBuilders()
+        {
+            _builder.RegisterType<LocationInfoBuilder>().As<ILocationInfoBuilder>();
+            _builder.RegisterType<LocationActionBuilder>().As<ILocationActionBuilder>();
+            _builder.RegisterType<LocationLordInfoBuilder>().As<ILocationLordInfoBuilder>();
+            _builder.RegisterType<LocationArmyInfoBuilder>().As<ILocationArmyInfoBuilder>();
+        }
+        
+        
         private void RegisterEntities()
         {
             _builder.RegisterType<RouteNodes>().As<IRouteNodes>();
@@ -114,8 +132,7 @@ namespace TME
         
         private void RegisterLogger()
         {
- 
-            _builder.Register(handler => LoggerFactory.Create(ConfigureLogging))
+            _builder.Register(_ => LoggerFactory.Create(ConfigureLogging))
                 .As<ILoggerFactory>()
                 .SingleInstance()
                 .AutoActivate();

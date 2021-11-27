@@ -1,3 +1,5 @@
+using TME.Scenario.Default.Flags;
+
 namespace TME.Interfaces
 {
     public interface IScenarioInfo
@@ -11,5 +13,7 @@ namespace TME.Interfaces
         string Support { get; }
         string Author { get; }
         string Copyright { get; }
+        
+        public bool IsFeature(FeatureFlags flags);
     }
 }

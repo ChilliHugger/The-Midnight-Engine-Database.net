@@ -109,11 +109,11 @@ namespace TME.UnitTests
                 item.Id = new MXId(EntityType.Thing,(uint)thingType);
                 if (unique)
                 {
-                    item.SetFlags(ThingFlags.Unique.Raw(), true);
+                    item.SetFlags(ThingFlags.Unique, true);
                 }
                 else
                 {
-                    item.SetFlags(ThingFlags.Unique.Raw(), false);
+                    item.SetFlags(ThingFlags.Unique, false);
                 }
                 internalThing.UpdateCarriedBy(lord);
             }

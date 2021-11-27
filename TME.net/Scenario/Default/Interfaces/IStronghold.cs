@@ -24,5 +24,7 @@ namespace TME.Scenario.Default.Interfaces
 		Terrain Terrain { get; }
 		uint Killed { get; }
 		uint Lost { get; }
+	    Race LoyaltyRace { get; }
+
 	}
 }

@@ -8,7 +8,7 @@ namespace TME.Scenario.Default.Interfaces
     {
     }
     
-    public interface IRegiment : IArmy, IEntity
+    public interface IRegiment : IItem, IArmy
     {
         MXId TargetId { get; }
         Orders Orders { get; }
@@ -19,5 +19,7 @@ namespace TME.Scenario.Default.Interfaces
         // night processing and thus not required for storage
         uint Turns { get; }
         Loc TargetLocation { get; }
+        
+        bool IsInTunnel { get; }
     }
 }

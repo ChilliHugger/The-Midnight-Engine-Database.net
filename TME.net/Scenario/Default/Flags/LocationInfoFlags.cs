@@ -5,6 +5,7 @@ namespace TME.Scenario.Default.Flags
     [Flags]
     public enum LocationInfoFlags : uint
     {
+        None            = 0,
         MoveForward     = 1 << 0,   // can we move into the location we are looking at?
         Seek            = 1 << 1,   // can we do a search - always true at present
         Hide            = 1 << 2,   // can the character hide here?

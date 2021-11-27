@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Types;
 
@@ -14,7 +15,8 @@ namespace TME.Scenario.Default.Items
         public ArmyType ArmyType { get; private set; } = ArmyType.Regiment;
         public UnitType UnitType { get; private set; } = UnitType.None;
         public Race Race { get; private set; } = Race.None;
-        public Race LoyaltyRace { get; internal set; } = Race.None;
+        public Race LoyaltyRace => LoyaltyLord?.Loyalty ?? Race;
+        public bool Friendly => false;
         public MXId TargetId { get; internal set; } = MXId.None;
         public Orders Orders { get; internal set; } = Orders.None;
         public ILord? LoyaltyLord { get; internal set; }
@@ -27,6 +29,8 @@ namespace TME.Scenario.Default.Items
         public Loc LastLocation { get; internal set; } = Loc.Zero;
         public Loc TargetLocation { get; internal set; } = Loc.Zero;
 
+        public bool IsInTunnel => IsFlags(RegimentFlags.Tunnel);
+        
         public Regiment() : base(EntityType.Regiment)
         {
         }

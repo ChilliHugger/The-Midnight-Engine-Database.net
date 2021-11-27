@@ -9,7 +9,7 @@ namespace TME.Scenario.Default.Interfaces
     {
         void Initialise();
         List<KeyValuePair<string, string>> GetValues();
-        
+
         double sv_database_version { get; set; }
         double sv_battle_default_energy_drain { get; set; }
         double sv_battle_default_char_energy_drain { get; set; }
@@ -64,12 +64,12 @@ namespace TME.Scenario.Default.Interfaces
         MXId sv_character_foe { get; set; }
         IEnumerable<MXId> sv_character_default { get; set; }
         IEnumerable<MXId> sv_guidance { get; set; }
-        
+
         int sv_days { get; set; }
         int sv_variables { get; set; }
         int sv_stronghold_adjuster { get; set; }
         int sv_controlled_character { get; set; }
-        
+
         int sv_energy_max { get; set; }
         int sv_strength_max { get; set; }
 
@@ -81,5 +81,14 @@ namespace TME.Scenario.Default.Interfaces
         bool sv_cheat_always_win_fight { get; set; }
 
         int sv_energy_cannot_continue { get; set; }
+
+        int sv_max_character_following { get; set; }
+        int sv_max_characters_in_location { get; set; }
+        int sv_max_regiments_in_location { get; set; }
+        int sv_max_foe_armies_in_location { get; set; }
+        int sv_max_friend_armies_in_location { get; set; }
+        int sv_max_strongholds_in_location { get; set; }
+        int sv_max_routenodes_in_location { get; set; }
+        int sv_max_armies_in_location { get; set; }
     }
 }

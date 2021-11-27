@@ -7,7 +7,7 @@ namespace TME.Scenario.Default.Base
     public class Item : Entity, IMappableInternal
     {
         #region Properties
-        public Loc Location { get; private set; } = Loc.Zero;
+        public Loc Location { get; internal set; } = Loc.Zero;
         #endregion
 
         internal Item(EntityType type) : base(type)

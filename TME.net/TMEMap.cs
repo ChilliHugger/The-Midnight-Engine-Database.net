@@ -1,7 +1,9 @@
 ﻿using System;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -22,7 +24,10 @@ namespace TME
 
         private Loc _topVisible;
         private Loc _bottomVisible;
-
+    
+        public bool TunnelsEnabled { get; internal set; }
+        public bool MistEnabled { get; internal set; }
+        
         public bool LoadFullMapFromStream(TMEBinaryReader stream)
         {
             var magicNo = stream.ReadUInt32();
@@ -67,6 +72,7 @@ namespace TME
             }
 
             CalculateVisibleArea();
+            UpdateTunnelsAndMist();
 
             return true;
         }
@@ -171,5 +177,38 @@ namespace TME
 
             _data[offset] = mapLoc;
         }
+
+        private void UpdateTunnelsAndMist()
+        {           
+            if (_data == null)
+            {
+                return;
+            }
+
+            for (var y = 0; y < _size.Height; y++)
+            {
+                for (var x = 0; x < _size.Width; x++)
+                {
+                    var offset = y * _size.Width + x;
+                    var terrain = _data[offset].Terrain;
+
+                    var tunnel = _data[offset].HasTunnel;
+                    if (tunnel && terrain.IsTunnelExit())
+                    {
+                        _data[offset].SetFlags(LocationFlags.TunnelExit,true);
+                    }
+                    if (tunnel && terrain.IsTunnelEntrance())
+                    {
+                        _data[offset].SetFlags(LocationFlags.TunnelEntrance,true);
+                    }
+                    if (tunnel && terrain.IsTunnelPassage())
+                    {
+                        _data[offset].SetFlags(LocationFlags.TunnelPassageway,true);
+                    }
+                }
+            }
+            
+        }
+        
     }
 }

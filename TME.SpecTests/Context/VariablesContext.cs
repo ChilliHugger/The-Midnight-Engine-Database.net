@@ -66,25 +66,8 @@ namespace TME.SpecTests.Context
         public MXId sv_character_foe { get; set; } = MXId.None;
         public IEnumerable<MXId> sv_character_default { get; set; } = new List<MXId>();
         public IEnumerable<MXId> sv_guidance { get; set; } = new List<MXId>();
-        public int sv_characters { get; set; }
-        public int sv_routenodes { get; set; }
-        public int sv_strongholds { get; set; }
-        public int sv_regiments { get; set; }
-        public int sv_places { get; set; }
-        public int sv_directions { get; set; }
-        public int sv_objects { get; set; }
-        public int sv_units { get; set; }
-        public int sv_races { get; set; }
-        public int sv_genders { get; set; }
-        public int sv_terrains { get; set; }
-        public int sv_areas { get; set; }
-        public int sv_commands { get; set; }
-        public int sv_missions { get; set; }
-        public int sv_victories { get; set; }
-        public int sv_object_powers { get; set; }
-        public int sv_object_types { get; set; }
+
         public int sv_days { get; set; }
-        public int sv_attributes { get; set; }
         public int sv_variables { get; set; }
         public int sv_stronghold_adjuster { get; set; }
         public int sv_controlled_character { get; set; }
@@ -97,5 +80,13 @@ namespace TME.SpecTests.Context
         public bool sv_cheat_commands_free { get; set; }
         public bool sv_cheat_always_win_fight { get; set; }
         public int sv_energy_cannot_continue { get; set; }
+        public int sv_max_character_following { get; set; }
+        public int sv_max_characters_in_location { get; set; }
+        public int sv_max_regiments_in_location { get; set; }
+        public int sv_max_foe_armies_in_location { get; set; }
+        public int sv_max_friend_armies_in_location { get; set; }
+        public int sv_max_strongholds_in_location { get; set; }
+        public int sv_max_routenodes_in_location { get; set; }
+        public int sv_max_armies_in_location { get; set; }
     }
 }

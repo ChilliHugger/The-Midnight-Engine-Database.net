@@ -1,7 +1,11 @@
-﻿namespace TME.Scenario.Default.Flags
+﻿using System;
+
+namespace TME.Scenario.Default.Flags
 {
+    [Flags]
     public enum LordFlags : uint
     {
+        None                = 0,
         Hidden              = 1 << 0,   // currently hiding
         Riding              = 1 << 1,   // currently riding
         Alive               = 1 << 2,   // alive

@@ -8,6 +8,7 @@ using System.Runtime.InteropServices.ComTypes;
 using Autofac;
 using Microsoft.Extensions.Logging;
 using TME.Interfaces;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -136,7 +137,9 @@ namespace TME
                         throw new FileLoadException("Error in variables");
                     }
                 }
-                
+
+                _engine.Scenario.InitialiseAfterGameLoad();
+
                 // load Version 10 extras ** DDR **
 
             }
@@ -149,6 +152,11 @@ namespace TME
             var path = Path.Combine(Directory, "map");
             using var reader = new TMEBinaryReader(File.Open(path, FileMode.Open));
             GameMap = _container.Resolve<IMap>();
+            if (GameMap is TMEMap map)
+            {
+                map.MistEnabled = _engine.Scenario.Info.IsFeature(FeatureFlags.Mist);
+                map.TunnelsEnabled = _engine.Scenario.Info.IsFeature(FeatureFlags.Tunnels);
+            }
             GameMap.LoadFullMapFromStream(reader);
             return true;
         }

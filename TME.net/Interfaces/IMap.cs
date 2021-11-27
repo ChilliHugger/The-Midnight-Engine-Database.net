@@ -12,5 +12,9 @@ namespace TME.Interfaces
         MapLoc GetAt(Loc location);
         void SetAt(Loc location, ref MapLoc mapLoc);
         void SetThing(Loc location, IThing thing);
+        
+        bool TunnelsEnabled { get; }
+        bool MistEnabled { get; }
+        
     }
 }

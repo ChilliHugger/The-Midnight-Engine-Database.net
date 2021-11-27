@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac;
@@ -16,7 +17,10 @@ namespace TME
     {
         private readonly IDependencyContainer _container;
         private readonly IVariables _variables;
+        private IDictionary<string, IEntity> _internalSymbolCache = new Dictionary<string, IEntity>();
         
+        public IReadOnlyDictionary<string,IEntity> SymbolCache { get; internal set; }
+
         public IReadOnlyList<ILord> Lords { get; internal set; }
         public IReadOnlyList<IRouteNode> RouteNodes { get; internal set; }
         public IReadOnlyList<IRegiment> Regiments { get; internal set; } 
@@ -63,6 +67,8 @@ namespace TME
             Commands = new List<CommandInfo>().AsReadOnly();
             ObjectTypes = new List<ObjectTypeInfo>().AsReadOnly();
             ObjectPowers = new List<ObjectPowerInfo>().AsReadOnly();
+
+            SymbolCache = new Dictionary<string, IEntity>();
         }
 
 
@@ -86,7 +92,9 @@ namespace TME
             var variables = context.Reader.ReadInt32();
 
             _variables.sv_variables = variables;
-            
+
+            _internalSymbolCache = new Dictionary<string, IEntity>();
+
             Lords = CreateCollection<ILord>(characters).ToList().AsReadOnly();
             Regiments = CreateCollection<IRegiment>(regiments).ToList().AsReadOnly();
             RouteNodes = CreateCollection<IRouteNode>(routenodes).ToList().AsReadOnly();
@@ -130,6 +138,9 @@ namespace TME
             //     ReadCollection(ObjectPowers, context);
             // }
 
+            SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
+            _internalSymbolCache = new Dictionary<string, IEntity>();
+            
             return true;
         }
 
@@ -158,7 +169,7 @@ namespace TME
             return result;
         }
 
-        private static void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)
+        private void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)
             where T: IEntity
         {
             var enumerable = list.ToArray();
@@ -166,14 +177,17 @@ namespace TME
             foreach (var _ in enumerable)
             {
                 var index = context.Reader.PeekInt32()-1;
-                if ( enumerable.ElementAt(index) is ISerializable item )
+                var entity = enumerable.ElementAt(index);
+                if ( entity is ISerializable item )
                 {
                     item.Load(context);
                 }
+                
+                _internalSymbolCache.Add( entity.Symbol, entity);
             }
         }
         
-        private static void ReadInfoCollection<T>(IEnumerable<T> list, ISerializeContext context)
+        private void ReadInfoCollection<T>(IEnumerable<T> list, ISerializeContext context)
             where T: IEntity
         {
             var enumerable = list.ToArray();
@@ -181,10 +195,13 @@ namespace TME
             foreach (var _ in enumerable)
             {
                 var index = context.Reader.PeekInt32();
-                if ( enumerable.ElementAt(index) is ISerializable item )
+                var entity = enumerable.ElementAt(index);
+                if ( entity is ISerializable item )
                 {
                     item.Load(context);
                 }
+                
+                _internalSymbolCache.Add( entity.Symbol, entity);
             }
         }
     }

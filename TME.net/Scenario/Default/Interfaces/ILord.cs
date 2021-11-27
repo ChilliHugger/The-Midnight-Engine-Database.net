@@ -54,5 +54,15 @@ namespace TME.Scenario.Default.Interfaces
         uint Despondency { get; }
         uint Traits { get; }
 
+        bool IsFriendlyTo(ILord lord);
+        bool IsOnSameSide(ILord lord);
+        ILord? CommanderInChief { get; }
+        
+        // flags
+        bool IsAlive { get; }
+        bool IsHidden { get; }
+        bool IsRecruited { get; }
+        bool IsInTunnel { get; }
+        
     }
 }

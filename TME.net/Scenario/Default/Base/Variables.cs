@@ -84,6 +84,15 @@ namespace TME.Scenario.Default.Base
         public bool sv_cheat_always_win_fight { get; set; }
 
         public int sv_energy_cannot_continue { get; set; }
+        
+        public int sv_max_character_following { get; set; }
+        public int sv_max_characters_in_location { get; set; }
+        public int sv_max_regiments_in_location { get; set; }
+        public int sv_max_foe_armies_in_location { get; set; }
+        public int sv_max_friend_armies_in_location { get; set; }
+        public int sv_max_strongholds_in_location { get; set; }
+        public int sv_max_routenodes_in_location { get; set; }
+        public int sv_max_armies_in_location { get; set; }
 
         private static readonly VariableDefinition[] VariableDefinitions = new[]
         {
@@ -151,6 +160,16 @@ namespace TME.Scenario.Default.Base
             new VariableDefinition(nameof(sv_stronghold_adjuster),              "STRONGHOLD_ADJUSTER",              "0" ),
             new VariableDefinition(nameof(sv_controlled_character),             "CONTROLLED_CHARACTER",             "0" ),
             new VariableDefinition(nameof(sv_energy_cannot_continue),           "ENERGY_CANNOT_CONTINUE",           "0" ),
+            
+            new VariableDefinition(nameof(sv_max_character_following),           "MAX_CHARACTERS_FOLLOWING",        "32" ),
+            new VariableDefinition(nameof(sv_max_characters_in_location),        "MAX_CHARACTERS_IN_LOCATION",      "128" ),
+            new VariableDefinition(nameof(sv_max_regiments_in_location),         "MAX_REGIMENTS_IN_LOCATION",       "128" ),
+            new VariableDefinition(nameof(sv_max_foe_armies_in_location),        "MAX_FOE_ARMIES_IN_LOCATION",      "128" ),
+            new VariableDefinition(nameof(sv_max_friend_armies_in_location),     "MAX_FRIEND_ARMIES_IN_LOCATION",   "128" ),
+            new VariableDefinition(nameof(sv_max_strongholds_in_location),       "MAX_STRONGHOLDS_IN_LOCATION",     "1" ),
+            new VariableDefinition(nameof(sv_max_routenodes_in_location),        "MAX_ROUTENODES_IN_LOCATION",      "1" ),
+            new VariableDefinition(nameof(sv_max_armies_in_location),            "MAX_ARMIES_IN_LOCATION",          "256" ),
+
         };
 
         public Variables(ILogger<Variables> logger)

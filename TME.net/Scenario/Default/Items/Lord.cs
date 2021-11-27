@@ -4,6 +4,7 @@ using System.Linq;
 using Autofac.Features.AttributeFilters;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Types;
 
@@ -47,6 +48,20 @@ namespace TME.Scenario.Default.Items
         public uint Despondency { get; internal set; }
         public uint Traits { get; private set; }
 
+        public bool IsAlive => IsFlags(LordFlags.Alive);
+        public bool IsHidden => IsFlags(LordFlags.Hidden);
+        public bool IsRecruited => IsFlags(LordFlags.Recruited);
+        public bool IsInTunnel => IsFlags(LordFlags.Tunnel);
+        
+        public bool IsFriendlyTo( ILord lord ) => Loyalty == lord.Loyalty;
+
+        public bool IsOnSameSide ( ILord lord ) 
+        {
+            return CommanderInChief == lord.CommanderInChief ;
+        }
+
+        public ILord? CommanderInChief => Liege?.CommanderInChief;
+        
         public Lord(
             IBattleInfo battleInfo,
             IRecruitment recruitment,
