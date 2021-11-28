@@ -92,6 +92,8 @@ namespace TME.Scenario.Default.Interfaces
         bool KilledFoe { get; }
         #endregion
 
-        
+        // 
+        bool WillRecruitSucceed(ICharacter character);
+
     }
 }

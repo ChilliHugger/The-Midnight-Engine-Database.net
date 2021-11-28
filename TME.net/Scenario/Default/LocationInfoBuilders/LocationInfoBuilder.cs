@@ -196,5 +196,17 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         //         ? thing.CarriedBy as ILord 
         //         : null;
         // }
+        
+//         void FindApproachCharactersInfront ( const mxcharacter* c )
+//         {
+//             infront->FindRecruitCharactersHere(c);
+//             
+// #if defined(_DDR_)
+//             if ( infront->objCharacters.Count()>1 )
+//                 return;
+// #endif
+//             for (u32 ii = 0; ii <infront->objRecruit.Count(); ii++)
+//                 objRecruit.Add ( infront->objRecruit[ii] );
+//         }
     }
 }

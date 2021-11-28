@@ -146,6 +146,17 @@ namespace TME.Scenario.Default.Items
                 return true;
             }
         }
+
+        public bool WillApproachSucceed(ICharacter character)
+        {
+            return false;
+        }
+        
+        public bool WillRecruitSucceed(ICharacter character)
+        {
+            // TODO: check engine FeatureFlags.Approach
+            return (character.Recruitment.By & character.Recruitment.Key) != 0;
+        }
         
     }
 

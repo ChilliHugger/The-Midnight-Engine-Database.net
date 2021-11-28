@@ -11,6 +11,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 {
     public class LocationLordInfoBuilder : ILocationLordInfoBuilder
     {
+        private readonly IEngine _engine;
         private readonly IMapQueryService _mapQueryService;
 
         private Loc _location = Loc.Zero;
@@ -18,8 +19,10 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private bool _tunnel;
         
         public LocationLordInfoBuilder(
+            IEngine engine,
             IMapQueryService mapQueryService)
         {
+            _engine = engine;
             _mapQueryService = mapQueryService;
         }
         
@@ -77,10 +80,13 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         }
         
         // TODO: Scenario check
-        private static bool CanRecruitLord(ICharacter recruiter, ICharacter lord)
+        private bool CanRecruitLord(ICharacter recruiter, ICharacter lord)
         {
-            throw new NotImplementedException();
+            if (_engine.Scenario.Info.IsFeature(FeatureFlags.Approach))
+            {
+                return true;
+            }
+            return recruiter.WillRecruitSucceed(lord);
         }
-
     }
 }

@@ -100,6 +100,7 @@
 ##Character
 - CanWalkForward
 - CanRecruitCharacter
+- CanApproach
 - CanFightObject
 - CanFollow
 - CanSeeLocation
