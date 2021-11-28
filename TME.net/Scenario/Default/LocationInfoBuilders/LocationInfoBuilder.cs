@@ -8,6 +8,7 @@ using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Rules;
 
 namespace TME.Scenario.Default.LocationInfoBuilders
 {
@@ -19,6 +20,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private readonly IEntityContainer _entityContainer;
         private readonly IEntityResolver _entityResolver;
         private readonly IEngine _engine;
+        private readonly ICharacterMoveForwardRule _characterMoveForwardRule;
         private readonly ILocationArmyCountInfoBuilder _locationArmyCountInfoBuilder;
         private readonly IMapQueryService _mapQueryService;
         
@@ -28,6 +30,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private bool _tunnel;
 
         public LocationInfoBuilder(
+            ICharacterMoveForwardRule characterMoveForwardRule,
             ILocationArmyCountInfoBuilder locationArmyCountInfoBuilder,
             IMapQueryService mapQueryService,
             IEngine engine,
@@ -36,6 +39,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             IMap map,
             IVariables variables)
         {
+            _characterMoveForwardRule = characterMoveForwardRule;
             _locationArmyCountInfoBuilder = locationArmyCountInfoBuilder;
             _mapQueryService = mapQueryService;
             _engine = engine;
@@ -141,7 +145,8 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private ICharacter? CheckStubbornMove()
         {
             return _lord?.HasFollowers == true
-                ? _entityContainer.Lords.FirstOrDefault(l => l.Following == _lord && !l.CanWalkForward)
+                ? _entityContainer.Lords
+                    .FirstOrDefault(l => l.Following == _lord && !_characterMoveForwardRule.Check(l))
                 : null;
         }
 

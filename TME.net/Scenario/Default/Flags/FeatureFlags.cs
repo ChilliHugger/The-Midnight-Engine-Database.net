@@ -8,9 +8,9 @@ namespace TME.Scenario.Default.Flags
         None            = 0,
         MoonRing        = 1 << 0,
         IceFear         = 1 << 1,
-        Approach        = 1 << 2,
-        Recruit         = 1 << 3,
-        RecruitTime     = 1 << 4,
+        Approach        = 1 << 2, // Use Approach for recruitment
+        Recruit         = 1 << 3, 
+        RecruitTime     = 1 << 4, // recruitment takes time (overnight)
         Tunnels         = 1 << 5,
         Mist            = 1 << 6,
         Take            = 1 << 7,

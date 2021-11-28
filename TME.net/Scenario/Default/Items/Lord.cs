@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac.Features.AttributeFilters;
@@ -119,45 +118,6 @@ namespace TME.Scenario.Default.Items
             Carrying = carried.ToList().AsReadOnly();
         }
         #endregion
-        
-        // TODO: Should be a rule somewhere
-        public bool CanWalkForward 
-        {
-            get
-            {
-                // dead men don't walk!
-                // or should be sleeping!
-                // completely and utterly shattered?
-                if (IsDead || 
-                    IsNight || 
-                    Energy <= _variables.sv_energy_cannot_continue )
-                {
-                    return false;
-                }
-
-                // hidden under a rock?
-                // if auto unhide turned on then we must unhide and carry on
-                if (IsHidden && !_variables.sv_auto_unhide)
-                {
-                    if (!_variables.sv_auto_unhide)
-                        return false;
-                }
-
-                return true;
-            }
-        }
-
-        public bool WillApproachSucceed(ICharacter character)
-        {
-            return false;
-        }
-        
-        public bool WillRecruitSucceed(ICharacter character)
-        {
-            // TODO: check engine FeatureFlags.Approach
-            return (character.Recruitment.By & character.Recruitment.Key) != 0;
-        }
-        
     }
 
 

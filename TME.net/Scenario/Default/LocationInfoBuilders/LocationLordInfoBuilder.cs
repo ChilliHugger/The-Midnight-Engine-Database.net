@@ -1,16 +1,17 @@
-using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Rules;
 
 namespace TME.Scenario.Default.LocationInfoBuilders
 {
     public class LocationLordInfoBuilder : ILocationLordInfoBuilder
     {
+        private readonly ICharacterRecruitRule _characterRecruitRule;
+        private readonly ICharacterApproachRule _characterApproachRule;
         private readonly IEngine _engine;
         private readonly IMapQueryService _mapQueryService;
 
@@ -19,9 +20,13 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private bool _tunnel;
         
         public LocationLordInfoBuilder(
+            ICharacterRecruitRule characterRecruitRule,
+            ICharacterApproachRule characterApproachRule,
             IEngine engine,
             IMapQueryService mapQueryService)
         {
+            _characterRecruitRule = characterRecruitRule;
+            _characterApproachRule = characterApproachRule;
             _engine = engine;
             _mapQueryService = mapQueryService;
         }
@@ -79,14 +84,11 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                 : new List<ICharacter>().AsReadOnly();
         }
         
-        // TODO: Scenario check
-        private bool CanRecruitLord(ICharacter recruiter, ICharacter lord)
+        private bool CanRecruitLord(ICharacter recruiter, ICharacter target)
         {
-            if (_engine.Scenario.Info.IsFeature(FeatureFlags.Approach))
-            {
-                return true;
-            }
-            return recruiter.WillRecruitSucceed(lord);
+            return _engine.Scenario.Info.IsFeature(FeatureFlags.Approach)
+                ? _characterApproachRule.Check(recruiter,target)
+                : _characterRecruitRule.Check(recruiter,target);
         }
     }
 }

@@ -62,7 +62,6 @@ namespace TME.Scenario.Default.Interfaces
         
         #region Flags Helpers
         bool CanDestroyIceCrown { get; }
-        bool CanWalkForward { get; }
         bool HasArmy { get; }
         bool HasFollowers { get; }
         bool HasUsedObject { get; }
@@ -91,9 +90,6 @@ namespace TME.Scenario.Default.Interfaces
         bool IsRiding { get; }
         bool KilledFoe { get; }
         #endregion
-
-        // 
-        bool WillRecruitSucceed(ICharacter character);
-
+        
     }
 }

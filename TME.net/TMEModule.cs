@@ -13,6 +13,7 @@ using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.Scenario.Default.LocationInfoBuilders;
+using TME.Scenario.Default.Rules;
 using TME.Scenario.Default.Scenario;
 using TME.Serialize;
 using Lord = TME.Scenario.Default.Items.Lord;
@@ -36,6 +37,7 @@ namespace TME
             RegisterInfo();
             RegisterActions();
             RegisterCommands();
+            RegisterRules();
             RegisterTypes();
             RegisterQueryServices();
             RegisterBuilders();
@@ -123,6 +125,13 @@ namespace TME
                 .WithAttributeFiltering();
         }
 
+        private void RegisterRules()
+        {
+            _builder.RegisterType<CharacterApproachRule>().As<ICharacterApproachRule>();
+            _builder.RegisterType<CharacterMoveForwardRule>().As<ICharacterMoveForwardRule>();
+            _builder.RegisterType<CharacterRecruitRule>().As<ICharacterRecruitRule>();
+        }
+        
         private static void ConfigureLogging(ILoggingBuilder log)
         {
             log.ClearProviders();
