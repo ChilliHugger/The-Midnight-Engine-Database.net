@@ -1,44 +1,78 @@
+using System;
+using System.Collections.Generic;
 using Autofac;
-using Moq;
 using TechTalk.SpecFlow;
-using TME.Scenario.Default.Interfaces;
-using TME.SpecTests.Context;
 using TME.SpecTests.Mocks;
-
-//using ContainerBuilder = TechTalk.SpecFlow.Infrastructure.ContainerBuilder;
 
 namespace TME.SpecTests.Hooks
 {
+    public delegate void RegisterMock(ContainerBuilder builder);
+        
     [Binding]
     public class MainHooks
     {
         private readonly MapMockBuilder _mapMockBuilder;
         private readonly VariablesMockBuilder _variablesMockBuilder;
+        private readonly IScenarioContext _scenarioContext;
         private readonly CommandHistoryMockBuilder _commandHistoryMockBuilder;
-        //private readonly ActionMockBuilder _actionMockBuilder;
 
-        //public Mock<IAction> MockObjectDropped { get; set; } = null!;
 
+        private readonly IList<RegisterMock> _registerMocksList = new List<RegisterMock>();
+        
         public IContainer Container { get; private set; } = null!;
-
+        public ILifetimeScope? TestsContainer { get; set; }
+        
+        private bool _whenExecuted;
+        
         public MainHooks(
-            //ActionMockBuilder actionMockBuilder,
+            ScenarioContext scenarioContext,
             CommandHistoryMockBuilder commandHistoryMockBuilder,
             VariablesMockBuilder variablesMockBuilder,
             MapMockBuilder mapMockBuilder)
         {
-            //_actionMockBuilder = actionMockBuilder;
+            _scenarioContext = scenarioContext;
             _commandHistoryMockBuilder = commandHistoryMockBuilder;
             _variablesMockBuilder = variablesMockBuilder; 
             _mapMockBuilder = mapMockBuilder;
         }
 
-        [BeforeScenario()]
+        public void RegisterMockHandler(RegisterMock mockHandler)
+        {
+            _registerMocksList.Add(mockHandler);
+        }
+        
+        [BeforeScenario]
         private void BeforeScenario()
         {
             RegisterDependencies();
         }
+        
+        [BeforeScenarioBlock]
+        private void BeforeScenarioBlock()
+        {
+            if (_scenarioContext.CurrentScenarioBlock != ScenarioBlock.When &&
+                (_scenarioContext.CurrentScenarioBlock != ScenarioBlock.Then || _whenExecuted))
+            {
+                return;
+            }
+            
+            TestsContainer = Container.BeginLifetimeScope( "MainHooks", builder =>
+            {
+                foreach (var handler in _registerMocksList)
+                {
+                    handler(builder);
+                }
+            });
+            _whenExecuted = true;
+        }
 
+        [AfterScenario]
+        private void AfterScenario()
+        {
+            TestsContainer?.Dispose();
+            TestsContainer = null;
+        }
+        
         private void RegisterDependencies()
         {
             var builder = new ContainerBuilder();
@@ -58,7 +92,6 @@ namespace TME.SpecTests.Hooks
             _mapMockBuilder.Build(containerBuilder);
             _variablesMockBuilder.Build(containerBuilder);
             _commandHistoryMockBuilder.Build(containerBuilder);
-            //MockObjectDropped = _actionMockBuilder.Build(containerBuilder);
         }
         
     }

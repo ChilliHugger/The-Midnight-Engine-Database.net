@@ -1,3 +1,4 @@
+using Autofac;
 using Moq;
 using TechTalk.SpecFlow;
 using TME.Scenario.Default.Actions.Interfaces;
@@ -17,7 +18,7 @@ namespace TME.SpecTests.Mocks
             _actionsContext = actionsContext;
         }
         
-        public Mock<IObjectDroppedAction> Build()
+        public Mock<IObjectDroppedAction> Build(ContainerBuilder builder)
         {
             var mock = new Mock<IObjectDroppedAction>();
 
@@ -25,6 +26,8 @@ namespace TME.SpecTests.Mocks
                 .Setup(m => m.Execute(It.IsAny<IObject>()))
                 .Callback<IObject>(thing => _actionsContext.ObjectDropped = thing)
                 .Returns( ()=> _actionsContext.ObjectDroppedActionResult);
+
+            builder.RegisterInstance(mock.Object).SingleInstance();
             
             return mock;
         }

@@ -4,6 +4,7 @@ using Autofac;
 using Moq;
 using TechTalk.SpecFlow;
 using TME.Extensions;
+using TME.Interfaces;
 using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Commands;
 using TME.Scenario.Default.Commands.Interfaces;
@@ -36,6 +37,8 @@ namespace TME.SpecTests.Drivers
             _actionsContext = actionsContext;
             _actionMockBuilder = actionMockBuilder;
             _mainHooks = mainHooks;
+            
+            _mainHooks.RegisterMockHandler(MockRegistration);
         }
         
         public (ICharacter lord, IObject thing) GivenALordIsCarryingAnObjectOfType(ThingType thingType, bool unique = false)
@@ -68,29 +71,20 @@ namespace TME.SpecTests.Drivers
 
             return thing;
         }
+
+        private void MockRegistration(ContainerBuilder builder)
+        {
+            if (_actionsContext.ObjectDroppedActionIsMocked)
+            {
+                ObjectDroppedMock = _actionMockBuilder.Build(builder);
+            }
+        }
+        
         
         public IResult ExecuteObjectDropped(ICharacter character, IObject thing)
         {
-            if (!_actionsContext.ObjectDroppedActionIsMocked)
-            {
-                var command = _mainHooks.Container.Resolve<IDropObjectCommand>();
-                return command.Execute(character, thing);
-            }
-            
-            var sut = new DropObjectCommand(
-                _mainHooks.Container.Resolve<ICommandHistory>(),
-                _mainHooks.Container.Resolve<IVariables>(),
-                ObjectDroppedMock.Object);
-            
-            return sut.Execute(character, thing);
+            var command = _mainHooks.TestsContainer?.Resolve<IDropObjectCommand>();
+            return command?.Execute(character, thing) ?? Failure.Default;
         }
-
-        [BeforeScenario]
-        private void BeforeScenario()
-        {
-            ObjectDroppedMock = _actionMockBuilder.Build();
-        }
-        
-        
     }
 }
