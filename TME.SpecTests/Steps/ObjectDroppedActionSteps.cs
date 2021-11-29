@@ -3,6 +3,7 @@ using Autofac;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
 using TME.Scenario.Default.Actions;
+using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
@@ -17,8 +18,6 @@ namespace TME.SpecTests.Steps
     [Scope(Feature = "Object Dropped Action")]
     public sealed class ObjectDroppedActionSteps
     {
-        // For additional details on SpecFlow step definitions see https://go.specflow.org/doc-stepdef
-
         private readonly ScenarioContext _scenarioContext;
         private readonly MainHooks _mainHooks;
         private readonly ActionDriver _actionDriver;
@@ -48,10 +47,10 @@ namespace TME.SpecTests.Steps
 
         #region When
         [When(@"the object is dropped")]
-        public async Task WhenTheObjectIsDropped()
+        public void WhenTheObjectIsDropped()
         {
             var thing = GetThing();
-            var result = await ExecuteObjectDropped(thing);
+            var result = ExecuteObjectDropped(thing);
             _scenarioContext["result"] = result;
         }
         #endregion
@@ -99,17 +98,17 @@ namespace TME.SpecTests.Steps
         }
 
         [Then(@"the object should not be able to be dropped")]
-        public async Task ThenTheObjectShouldNotBeAbleToBeDropped()
+        public void ThenTheObjectShouldNotBeAbleToBeDropped()
         {
             var thing = GetThing();
-            var result = await ExecuteObjectDropped(thing);
+            var result = ExecuteObjectDropped(thing);
             Assert.True(result is Failure, "Command Not Successful");
         }
         
-        private async Task<IResult> ExecuteObjectDropped(IObject thing)
+        private IResult ExecuteObjectDropped(IObject thing)
         {
-            var sut = _mainHooks.Container.ResolveKeyed<IAction>(nameof(ObjectDropped));
-            return await sut.Execute(thing);
+            var sut = _mainHooks.Container.Resolve<IObjectDroppedAction>();
+            return sut.Execute(thing);
         }
 
     }

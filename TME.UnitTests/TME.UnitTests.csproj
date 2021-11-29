@@ -86,7 +86,6 @@
         </Reference>
     </ItemGroup>
     <ItemGroup>
-        <Compile Include="ActionTests.cs" />
         <Compile Include="BaseTestClass.cs" />
         <Compile Include="MidnightLoadingTests.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />

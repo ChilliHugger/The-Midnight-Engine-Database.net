@@ -30,7 +30,7 @@ namespace TME.SpecTests.Mocks
                     It.IsAny<Time>(),
                     It.IsAny<object[]>()))
                 .Callback<Command, Time, object[]>((c, t, a) => _commandHistoryFake.Save(c, t, a))
-                .ReturnsAsync(true);
+                .Returns(true);
             
             
             containerBuilder.RegisterInstance(mock.Object).SingleInstance();

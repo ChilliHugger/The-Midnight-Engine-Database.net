@@ -4,7 +4,9 @@ using Autofac;
 using Moq;
 using TechTalk.SpecFlow;
 using TME.Extensions;
+using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Commands;
+using TME.Scenario.Default.Commands.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
@@ -24,7 +26,7 @@ namespace TME.SpecTests.Drivers
         private readonly ActionMockBuilder _actionMockBuilder;
         private readonly ActionsContext _actionsContext;
 
-        public Mock<IAction> ObjectDroppedMock { get; private set; } = null!;
+        public Mock<IObjectDroppedAction> ObjectDroppedMock { get; private set; } = null!;
 
         public ActionDriver(
             ActionsContext actionsContext,
@@ -67,20 +69,20 @@ namespace TME.SpecTests.Drivers
             return thing;
         }
         
-        public async Task<IResult> ExecuteObjectDropped(params object[] args)
+        public IResult ExecuteObjectDropped(ICharacter character, IObject thing)
         {
             if (!_actionsContext.ObjectDroppedActionIsMocked)
             {
-                var command = _mainHooks.Container.ResolveKeyed<ICommand>(nameof(DropObject));
-                return  await command.Execute(args);
+                var command = _mainHooks.Container.Resolve<IDropObjectCommand>();
+                return command.Execute(character, thing);
             }
             
-            var sut = new DropObject(
+            var sut = new DropObjectCommand(
                 _mainHooks.Container.Resolve<ICommandHistory>(),
                 _mainHooks.Container.Resolve<IVariables>(),
                 ObjectDroppedMock.Object);
             
-            return await sut.Execute(args);
+            return sut.Execute(character, thing);
         }
 
         [BeforeScenario]

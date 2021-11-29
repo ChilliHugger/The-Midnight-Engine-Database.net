@@ -72,24 +72,24 @@ namespace TME.SpecTests.Steps
         #region WHEN
         [When(@"the lord drops the object")]
         [When(@"the lord tries to drop their object")]
-        public async Task WhenTheLordDropsTheObject()
+        public void WhenTheLordDropsTheObject()
         {
             var (lord,thing) = GetLordAndObject();
             
             SetupLordTime(lord);
 
-            var result = await _actionDriver.ExecuteObjectDropped(lord, thing);
+            var result = _actionDriver.ExecuteObjectDropped(lord, thing);
             _scenarioContext["result"] = result;
         }
         
         [When(@"the lord tries to drop an object they are not carrying")]
-        public async Task WhenTheLordDropsAnObjectTheyAreNotCarrying()
+        public void  WhenTheLordDropsAnObjectTheyAreNotCarrying()
         {
             var (lord,thing) = GetLordAndObject();
             
             RemoveObjectFromLord(lord,thing);   
 
-            var result = await _actionDriver.ExecuteObjectDropped(lord, thing);
+            var result = _actionDriver.ExecuteObjectDropped(lord, thing);
             _scenarioContext["result"] = result;
         }
         #endregion
@@ -102,20 +102,20 @@ namespace TME.SpecTests.Steps
 
              _actionDriver
                  .ObjectDroppedMock
-                 .Verify( m => m.Execute( It.IsAny<object[]>()), Times.Once() );
+                 .Verify( m => m.Execute( It.IsAny<IObject>()), Times.Once() );
              
              Assert.AreEqual(thing.RawId, _actionsContext.ObjectDropped?.RawId);
         }
         
         [Then(@"they (should|should not) be able to drop the object")]
         [Then(@"the lord (should|should not) be able to drop the object")]
-        public async Task ThenTheLordShouldShouldNotBeAbleToDropTheObject(bool shouldShouldNot)
+        public void ThenTheLordShouldShouldNotBeAbleToDropTheObject(bool shouldShouldNot)
         {
             var (lord,thing) = GetLordAndObject();
             
             SetupLordTime(lord);
 
-            var result = await _actionDriver.ExecuteObjectDropped(lord, thing);
+            var result = _actionDriver.ExecuteObjectDropped(lord, thing);
             CheckResult(shouldShouldNot, result);
         }
 

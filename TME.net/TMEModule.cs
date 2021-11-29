@@ -5,8 +5,10 @@ using Microsoft.Extensions.Logging.Debug;
 using TME.Interfaces;
 using TME.QueryServices;
 using TME.Scenario.Default.Actions;
+using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Commands;
+using TME.Scenario.Default.Commands.Interfaces;
 using TME.Scenario.Default.Entities;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
@@ -112,17 +114,12 @@ namespace TME
 
         private void RegisterActions()
         {
-            _builder
-                .RegisterType<ObjectDropped>()
-                .Keyed<IAction>(nameof(ObjectDropped));
+            _builder.RegisterType<ObjectDroppedAction>().As<IObjectDroppedAction>();
         }
 
         private void RegisterCommands()
         {
-            _builder
-                .RegisterType<DropObject>()
-                .Keyed<ICommand>(nameof(DropObject))
-                .WithAttributeFiltering();
+            _builder.RegisterType<DropObjectCommand>().As<IDropObjectCommand>();
         }
 
         private void RegisterRules()

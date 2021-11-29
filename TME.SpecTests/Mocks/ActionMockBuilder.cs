@@ -1,5 +1,6 @@
 using Moq;
 using TechTalk.SpecFlow;
+using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Interfaces;
 using TME.SpecTests.Context;
 
@@ -16,17 +17,14 @@ namespace TME.SpecTests.Mocks
             _actionsContext = actionsContext;
         }
         
-        public Mock<IAction> Build()
+        public Mock<IObjectDroppedAction> Build()
         {
-            var mock = new Mock<IAction>();
+            var mock = new Mock<IObjectDroppedAction>();
 
             mock
-                .Setup(m => m.Execute(It.IsAny<object[]>()))
-                .Callback<object[]>((args)=> _actionsContext.ObjectDropped = args[0] as IObject)
-                .ReturnsAsync( ()=>
-                {
-                    return _actionsContext.ObjectDroppedActionResult;
-                });
+                .Setup(m => m.Execute(It.IsAny<IObject>()))
+                .Callback<IObject>(thing => _actionsContext.ObjectDropped = thing)
+                .Returns( ()=> _actionsContext.ObjectDroppedActionResult);
             
             return mock;
         }

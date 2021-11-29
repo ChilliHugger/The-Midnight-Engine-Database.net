@@ -20,12 +20,12 @@ namespace TME.SpecTests.Fakes
             _commandHistoryContext = commandHistoryContext;
         }
         
-        public Task<bool> Save(Command command, Time duration, params object[] args)
+        public bool Save(Command command, Time duration, params object[] args)
         {
            _commandHistoryContext.Items.Add(
                new CommandHistoryItem(command,duration,args) 
                );
-           return Task.FromResult(true);
+           return true;
         }
     }
 }

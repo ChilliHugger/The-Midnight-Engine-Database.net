@@ -7,6 +7,6 @@ namespace TME.Scenario.Default.Interfaces
 {
     public interface ICommandHistory
     {
-        Task<bool> Save(Command command, Time duration, params object[] args);
+        bool Save(Command command, Time duration, params object[] args);
     }
 }
