@@ -50,6 +50,9 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             
             var friendlyLords = _armyQueryService.CountLordArmies(lords, IsFriendlyTo);
             var foeLords = lords.Count - friendlyLords;
+            // TODO: Check this count with Original LoM
+            // ie: does a lord without an army count as an army?
+            // and does a lord with warriors and riders count as 2
 
             return new LocationArmyCountInfo
             {

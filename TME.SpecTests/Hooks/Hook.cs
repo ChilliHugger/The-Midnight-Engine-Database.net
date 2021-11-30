@@ -20,7 +20,9 @@ namespace TME.SpecTests.Hooks
         private readonly IList<RegisterMock> _registerMocksList = new List<RegisterMock>();
         
         public IContainer Container { get; private set; } = null!;
-        public ILifetimeScope? TestsContainer { get; set; }
+        private ILifetimeScope? _lifetimeScope;
+        private readonly Lazy<ILifetimeScope> _lazyLifetimeScope;
+        public ILifetimeScope TestsContainer => _lazyLifetimeScope.Value;
         
         private bool _whenExecuted;
         
@@ -34,6 +36,8 @@ namespace TME.SpecTests.Hooks
             _commandHistoryMockBuilder = commandHistoryMockBuilder;
             _variablesMockBuilder = variablesMockBuilder; 
             _mapMockBuilder = mapMockBuilder;
+                
+            _lazyLifetimeScope = new Lazy<ILifetimeScope>( () => _lifetimeScope! );
         }
 
         public void RegisterMockHandler(RegisterMock mockHandler)
@@ -56,7 +60,7 @@ namespace TME.SpecTests.Hooks
                 return;
             }
             
-            TestsContainer = Container.BeginLifetimeScope( "MainHooks", builder =>
+            _lifetimeScope = Container.BeginLifetimeScope( "MainHooks", builder =>
             {
                 foreach (var handler in _registerMocksList)
                 {
@@ -69,8 +73,8 @@ namespace TME.SpecTests.Hooks
         [AfterScenario]
         private void AfterScenario()
         {
-            TestsContainer?.Dispose();
-            TestsContainer = null;
+            _lifetimeScope?.Dispose();
+            _lifetimeScope = null;
         }
         
         private void RegisterDependencies()

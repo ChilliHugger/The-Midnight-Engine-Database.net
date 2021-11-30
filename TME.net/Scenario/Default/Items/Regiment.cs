@@ -13,8 +13,8 @@ namespace TME.Scenario.Default.Items
     {
         public IItem? Parent { get; internal set; } 
         public ArmyType ArmyType { get; private set; } = ArmyType.Regiment;
-        public UnitType UnitType { get; private set; } = UnitType.None;
-        public Race Race { get; private set; } = Race.None;
+        public UnitType UnitType { get; internal set; } = UnitType.None;
+        public Race Race { get; internal set; } = Race.None;
         public Race LoyaltyRace => LoyaltyLord?.Loyalty ?? Race;
         public bool Friendly => false;
         public MXId TargetId { get; internal set; } = MXId.None;

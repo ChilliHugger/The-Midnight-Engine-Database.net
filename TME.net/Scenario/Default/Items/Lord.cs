@@ -19,22 +19,22 @@ namespace TME.Scenario.Default.Items
         #region "DI"
 
         public IBattleInfo BattleInfo { get; internal set; }
-        public IRecruitment Recruitment { get; private set; }
+        public IRecruitment Recruitment { get; internal set; }
 
         #endregion
 
         public Direction Looking { get; internal set; } = Direction.None;
-        public Time Time { get; private set; } = Time.None;
-        public Race Race { get; private set; } = Race.None;
-        public Gender Gender { get; private set; } = Gender.None;
-        public string LongName { get; private set; } = "";
-        public string ShortName { get; private set; } = "";
+        public Time Time { get; internal set; } = Time.None;
+        public Race Race { get; internal set; } = Race.None;
+        public Gender Gender { get; internal set; } = Gender.None;
+        public string LongName { get; internal set; } = "";
+        public string ShortName { get; internal set; } = "";
         public IReadOnlyList<IObject> Carrying { get; internal set; }
         public IObject? KilledBy { get; internal set; }
         public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
         public MXId LastCommandId { get; internal set; } = MXId.None;
         public Command LastCommand { get; internal set; } = Command.None;
-        public List<IUnit> Units { get; private set; }
+        public List<IUnit> Units { get; internal set; }
         public ICharacter? Following { get; internal set; }
         public uint Energy { get; internal set; }
         public uint Reckless { get; internal set; }
@@ -48,7 +48,7 @@ namespace TME.Scenario.Default.Items
         public ICharacter? Foe { get; internal set; }
         public ICharacter? Liege { get; internal set; }
         public uint Despondency { get; internal set; }
-        public LordTraits Traits { get; private set; }
+        public LordTraits Traits { get; internal set; }
 
         #region Flags Helpers
         public bool CanDestroyIceCrown => IsFlags(LordFlags.CanDestroyIceCrown);

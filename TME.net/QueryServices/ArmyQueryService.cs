@@ -10,22 +10,30 @@ namespace TME.QueryServices
 {
     public class ArmyQueryService : IArmyQueryService
     {
+        private int CountLordUnits(ICharacter character)
+        {
+            return (character.Units[0].Total > 0 ? 1 : 0) +
+                   (character.Units[1].Total > 0 ? 1 : 0);
+        }
+        
         public uint CountLordArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo ) =>
-            (uint)lords.Count(isFriendlyTo);
+            (uint)lords.Where(isFriendlyTo).Sum(CountLordUnits);
 
         public uint CountRegimentsArmies(
             IEnumerable<IRegiment> regiments, Func<IRegiment,bool> isFriendlyTo ) =>
-            (uint)regiments.Count(isFriendlyTo);
+            (uint)regiments.Where(r=>r.Total > 0).Count(isFriendlyTo);
         
         public uint CountStrongholdArmies(
             IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo) =>
-            (uint)strongholds.Count(isFriendlyTo);
+            (uint)strongholds.Where(s=>s.Total > 0).Count(isFriendlyTo);
         
         public IEnumerable<IArmy> GetLordWarriorsAsArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
-            return lords.Select( l => new Army
+            return lords
+                .Where( l=> l.Units[0].Total > 0)
+                .Select( l => new Army
             {
                 Parent = l,
                 ArmyType = ArmyType.Character,
@@ -42,7 +50,9 @@ namespace TME.QueryServices
         public IEnumerable<IArmy> GetLordRidersAsArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
-            return lords.Select( l => new Army
+            return lords
+                .Where( l=> l.Units[1].Total > 0)
+                .Select( l => new Army
             {
                 Parent = l,
                 ArmyType = ArmyType.Character,
@@ -57,9 +67,11 @@ namespace TME.QueryServices
         }
         
         public IEnumerable<IArmy> GetRegimentsAsArmies(
-            IEnumerable<IRegiment> regiments, Func<ICharacter?,bool> isFriendlyTo )
+            IEnumerable<IRegiment> regiments, Func<IRegiment,bool> isFriendlyTo )
         {
-            return regiments.Select( r => new Army
+            return regiments
+                .Where(r=>r.Total>0)
+                .Select( r => new Army
             {
                 Parent = r,
                 ArmyType = ArmyType.Regiment,
@@ -69,13 +81,15 @@ namespace TME.QueryServices
                 Success = 0, // regiment->battleSuccess
                 Killed = 0,
                 LoyaltyRace = r.LoyaltyRace,
-                Friendly = isFriendlyTo(r.LoyaltyLord)
+                Friendly = isFriendlyTo(r)
             });
         }
         
         public IEnumerable<IArmy> GetStrongholdArmy(IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo)
         {
-            return strongholds.Select( s => new Army
+            return strongholds
+                .Where(r=>r.Total>0)
+                .Select( s => new Army
             {
                 Parent = s,
                 ArmyType = ArmyType.Stronghold,
