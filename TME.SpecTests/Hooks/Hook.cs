@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
 using Autofac;
+using BoDi;
 using TechTalk.SpecFlow;
+using TME.SpecTests.Mapping;
 using TME.SpecTests.Mocks;
 
 namespace TME.SpecTests.Hooks
@@ -13,6 +15,7 @@ namespace TME.SpecTests.Hooks
     {
         private readonly MapMockBuilder _mapMockBuilder;
         private readonly VariablesMockBuilder _variablesMockBuilder;
+        private readonly IObjectContainer _objectContainer;
         private readonly IScenarioContext _scenarioContext;
         private readonly CommandHistoryMockBuilder _commandHistoryMockBuilder;
 
@@ -27,11 +30,13 @@ namespace TME.SpecTests.Hooks
         private bool _whenExecuted;
         
         public MainHooks(
+            IObjectContainer objectContainer,
             ScenarioContext scenarioContext,
             CommandHistoryMockBuilder commandHistoryMockBuilder,
             VariablesMockBuilder variablesMockBuilder,
             MapMockBuilder mapMockBuilder)
         {
+            _objectContainer = objectContainer;
             _scenarioContext = scenarioContext;
             _commandHistoryMockBuilder = commandHistoryMockBuilder;
             _variablesMockBuilder = variablesMockBuilder; 
@@ -49,6 +54,7 @@ namespace TME.SpecTests.Hooks
         private void BeforeScenario()
         {
             RegisterDependencies();
+            RegisterMapping();
         }
         
         [BeforeScenarioBlock]
@@ -96,6 +102,13 @@ namespace TME.SpecTests.Hooks
             _mapMockBuilder.Build(containerBuilder);
             _variablesMockBuilder.Build(containerBuilder);
             _commandHistoryMockBuilder.Build(containerBuilder);
+        }
+
+        private void RegisterMapping()
+        {
+            _objectContainer.RegisterInstanceAs(MapperProvider.GetMapper(
+                new MappingConfiguration()
+            ));
         }
         
     }

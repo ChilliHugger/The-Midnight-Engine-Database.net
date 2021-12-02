@@ -14,13 +14,11 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public partial class Lord : Item, ICharacterInternal
     {
-        private readonly IVariables _variables;
 
         #region "DI"
-
-        public IBattleInfo BattleInfo { get; internal set; }
-        public IRecruitment Recruitment { get; internal set; }
-
+        private readonly IVariables _variables = null!;
+        public IBattleInfo BattleInfo { get; internal set; } = null!;
+        public IRecruitment Recruitment { get; internal set; } = null!;
         #endregion
 
         public Direction Looking { get; internal set; } = Direction.None;
@@ -29,12 +27,12 @@ namespace TME.Scenario.Default.Items
         public Gender Gender { get; internal set; } = Gender.None;
         public string LongName { get; internal set; } = "";
         public string ShortName { get; internal set; } = "";
-        public IReadOnlyList<IObject> Carrying { get; internal set; }
+        public IReadOnlyList<IObject> Carrying { get; internal set; } = new List<IObject>();
         public IObject? KilledBy { get; internal set; }
         public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
         public MXId LastCommandId { get; internal set; } = MXId.None;
         public Command LastCommand { get; internal set; } = Command.None;
-        public List<IUnit> Units { get; internal set; }
+        public List<IUnit> Units { get; internal set; } = new List<IUnit>();
         public ICharacter? Following { get; internal set; }
         public uint Energy { get; internal set; }
         public uint Reckless { get; internal set; }
@@ -85,7 +83,11 @@ namespace TME.Scenario.Default.Items
         public bool IsOnSameSide ( ICharacter lord ) => CommanderInChief == lord.CommanderInChief;
         public bool HasTrait(LordTraits mask) => (Traits.Raw() & mask.Raw()) != 0;
         public ICharacter? CommanderInChief => Liege?.CommanderInChief;
-        
+
+        internal Lord() : base(EntityType.Character)
+        {
+        }
+
         public Lord(
             IVariables variables,
             IBattleInfo battleInfo,

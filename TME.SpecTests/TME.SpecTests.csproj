@@ -8,6 +8,8 @@
 
     <ItemGroup>
         <PackageReference Include="Autofac" Version="6.3.0" />
+        <PackageReference Include="AutoMapper" Version="10.1.1" />
+        <PackageReference Include="AutoMapper.Contrib.Autofac.DependencyInjection" Version="5.5.0" />
         <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
         <PackageReference Include="Moq" Version="4.16.1" />
         <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.9.35" />

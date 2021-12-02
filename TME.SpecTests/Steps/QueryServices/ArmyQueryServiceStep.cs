@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Autofac;
+using AutoMapper;
 using FluentAssertions;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using TME.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.SpecTests.Hooks;
+using TME.SpecTests.Mapping.Models;
 
 namespace TME.SpecTests.Steps.QueryServices
 {
@@ -17,12 +20,13 @@ namespace TME.SpecTests.Steps.QueryServices
     [Scope(Feature = "Army Query Service Feature")]
     public sealed class ArmyQueryServiceStep
     {
+        private readonly IMapper _mapper;
         private readonly ScenarioContext _scenarioContext;
         private readonly MainHooks _mainHooks;
 
-        private readonly IList<ICharacter> _lords = new List<ICharacter>();
-        private readonly IList<IRegiment> _regiments = new List<IRegiment>();
-        private readonly IList<IStronghold> _strongholds = new List<IStronghold>();
+        private IList<Lord> _lords = new List<Lord>();
+        private IList<Regiment> _regiments = new List<Regiment>();
+        private IList<Stronghold> _strongholds = new List<Stronghold>();
         
         private uint _countLordArmies;
         private IList<IArmy> _armies = new List<IArmy>();
@@ -30,9 +34,11 @@ namespace TME.SpecTests.Steps.QueryServices
         private UnitType _unitType = UnitType.None;
         
         public ArmyQueryServiceStep(
+            IMapper mapper,
             ScenarioContext scenarioContext,
             MainHooks mainHooks)
         {
+            _mapper = mapper;
             _scenarioContext = scenarioContext;
             _mainHooks = mainHooks;
         }
@@ -43,57 +49,44 @@ namespace TME.SpecTests.Steps.QueryServices
         [Given(@"there are lords with the following friend or foe status")]
         public void GivenThereAreLordsWithTheFollowingFriendOrFoeStatus(Table table)
         {
-            foreach (var entry in table.Rows)
-            {
-                var item = _mainHooks.Container.Resolve<ICharacter>();
-                if (item is Lord lord)
+            var items = table.Rows
+                .Select(entry => new TestCharacter
                 {
-                    lord.Race = FriendOrFoe(entry["status"]);
+                    Race = FriendOrFoe(entry["status"]), 
+                    Warriors = entry["warriors"] == "yes" ? 100u : 0u, 
+                    Riders = entry["riders"] == "yes" ? 100u : 0u
+                }).ToList();
 
-                    if (lord.Units[0] is IUnitInternal warriors)
-                    {
-                        warriors.SetTotal(entry["warriors"] == "yes" ? 100u : 0u);
-                    }
-                    if (lord.Units[1] is IUnitInternal riders)
-                    {
-                        riders.SetTotal(entry["riders"] == "yes" ? 100u : 0u);
-                    }
-                }
-                _lords.Add(item);
-            }
+            _lords =  _mapper.Map<List<Lord>>(items);
         }
         
         [Given(@"there are regiments with the following friend or foe status")]
         public void GivenThereAreRegimentsWithTheFollowingFriendOrFoeStatus(Table table)
         {
-            foreach (var entry in table.Rows)
-            {
-                var item = _mainHooks.Container.Resolve<IRegiment>();
-                if (item is Regiment regiment)
+            var items = table.Rows
+                .Select(entry => new TestRegiment
                 {
-                    regiment.Race = FriendOrFoe(entry["status"]);
-                    regiment.UnitType = WarriorsOrRiders(entry["type"]);
-                    regiment.Total = uint.Parse(entry["total"]);
-                }
-                _regiments.Add(item);
-            }
+                    Race = FriendOrFoe(entry["status"]), 
+                    UnitType = WarriorsOrRiders(entry["type"]),
+                    Total = uint.Parse(entry["total"])
+                }).ToList();
+
+            _regiments = _mapper.Map<List<Regiment>>(items);
         }
         
         [Given(@"there are strongholds with the following friend or foe status")]
         public void GivenThereAreStrongholdsWithTheFollowingFriendOrFoeStatus(Table table)
         {
-            foreach (var entry in table.Rows)
-            {
-                var item = _mainHooks.Container.Resolve<IStronghold>();
-                if (item is Stronghold stronghold)
+            var items = table.Rows
+                .Select(entry => new TestStronghold
                 {
-                    stronghold.Race = FriendOrFoe(entry["status"]);
-                    stronghold.OccupyingRace = stronghold.Race;
-                    stronghold.UnitType = WarriorsOrRiders(entry["type"]);
-                    stronghold.Total = uint.Parse(entry["total"]);
-                }
-                _strongholds.Add(item);
-            }
+                    Race = FriendOrFoe(entry["status"]), 
+                    OccupyingRace = FriendOrFoe(entry["status"]),
+                    UnitType = WarriorsOrRiders(entry["type"]),
+                    Total = uint.Parse(entry["total"])
+                }).ToList();
+
+            _strongholds = _mapper.Map<List<Stronghold>>(items);
         }
         
         #endregion
