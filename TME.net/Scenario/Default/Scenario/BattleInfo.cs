@@ -5,7 +5,7 @@ using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario
 {
-    public class BattleInfo : IBattleInfo
+    public class BattleInfo 
     {
         public Loc Location { get; set; }
         public uint Slew { get; set; }

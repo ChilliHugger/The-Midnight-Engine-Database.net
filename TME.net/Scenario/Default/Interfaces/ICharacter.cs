@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.Scenario;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
@@ -24,8 +25,8 @@ namespace TME.Scenario.Default.Interfaces
         uint Energy { get; }
         uint Reckless { get; }
 
-        IBattleInfo BattleInfo { get; }
-        IRecruitment Recruitment { get; }
+        BattleInfo BattleInfo { get; }
+        Recruitment Recruitment { get; }
 
         IReadOnlyList<IObject> Carrying { get; }
         IObject? KilledBy { get; }

@@ -39,7 +39,7 @@ namespace TME.Scenario.ddr
         
         public void Register(ContainerBuilder containerBuilder)
         {
-            containerBuilder.RegisterType<RevengeLord>().As<ICharacter>().WithAttributeFiltering();
+            containerBuilder.RegisterType<RevengeCharacter>().As<ICharacter>().WithAttributeFiltering();
             containerBuilder.RegisterType<RevengeStronghold>().As<IStronghold>();
             containerBuilder.RegisterType<RevengeObject>().As<IObject>();
         }

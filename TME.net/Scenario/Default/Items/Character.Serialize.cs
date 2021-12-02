@@ -7,7 +7,7 @@ using TME.Serialize;
 
 namespace TME.Scenario.Default.Items
 {
-    public partial class Lord
+    public partial class Character
     {
         #region Serialize
 

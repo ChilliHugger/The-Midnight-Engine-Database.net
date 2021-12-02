@@ -11,9 +11,9 @@ namespace TME.Scenario.Default.LocationInfoBuilders
     {
         public Loc Location { get; internal set; } = Loc.Zero;
         public bool Tunnel { get; internal set; }
-        public IArmyTotals Friends { get; internal set; } = new ArmyTotals();
-        public IArmyTotals Foe { get; internal set; } = new ArmyTotals();
-        public IArmyTotals Doomdark { get; internal set; } = new ArmyTotals();
+        public ArmyTotals Friends { get; internal set; } = new ArmyTotals();
+        public ArmyTotals Foe { get; internal set; } = new ArmyTotals();
+        public ArmyTotals Doomdark { get; internal set; } = new ArmyTotals();
         public IReadOnlyList<IArmy> Armies { get; internal set; } = new List<IArmy>();
         public IReadOnlyList<IStronghold> Strongholds { get; internal set; } = new List<IStronghold>();
         public IReadOnlyList<IRegiment> Regiments { get; internal set; } = new List<IRegiment>();

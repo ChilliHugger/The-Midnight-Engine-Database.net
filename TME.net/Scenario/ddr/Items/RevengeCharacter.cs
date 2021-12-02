@@ -13,7 +13,7 @@ namespace TME.Scenario.ddr.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public class RevengeLord : Lord, IRevengeLord
+    public class RevengeCharacter : Character, IRevengeLord
     {
         public Loc LastLocation { get; internal set; } = Loc.Zero;
         public IRevengeThing? DesiredObject { get; internal set; }
@@ -39,12 +39,8 @@ namespace TME.Scenario.ddr.Items
 
         public uint ArmySize => Unit?.Total ?? 0;
         
-        public RevengeLord(
-            IVariables variables,
-            IBattleInfo battleInfo,
-            IRecruitment recruitment,
-            [KeyFilter(UnitType.Warrior)] IUnit warriors,
-            [KeyFilter(UnitType.Rider)] IUnit riders) : base(variables, battleInfo, recruitment, warriors, riders)
+        public RevengeCharacter(
+            IVariables variables) : base(variables)
         {
         }
 

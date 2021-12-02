@@ -18,7 +18,6 @@ using TME.Scenario.Default.LocationInfoBuilders;
 using TME.Scenario.Default.Rules;
 using TME.Scenario.Default.Scenario;
 using TME.Serialize;
-using Lord = TME.Scenario.Default.Items.Lord;
 using Regiment = TME.Scenario.Default.Items.Regiment;
 using Stronghold = TME.Scenario.Default.Items.Stronghold;
 
@@ -48,8 +47,6 @@ namespace TME
 
         private void RegisterTypes()
         {
-            _builder.RegisterType<BattleInfo>().As<IBattleInfo>();
-            _builder.RegisterType<Recruitment>().As<IRecruitment>();
         }
 
         private void RegisterDatabase()
@@ -88,11 +85,9 @@ namespace TME
 
             _builder.RegisterType<Mission>().As<IMission>();
             _builder.RegisterType<Victory>().As<IVictory>();
-            
-            _builder.RegisterType<Lord>().As<ICharacter>().WithAttributeFiltering();
 
-            _builder.RegisterType<Warriors>().Keyed<IUnit>(UnitType.Warrior);
-            _builder.RegisterType<Riders>().Keyed<IUnit>(UnitType.Rider);
+            _builder.RegisterType<Character>().As<ICharacter>();
+            
         }
 
         private void RegisterInfo()

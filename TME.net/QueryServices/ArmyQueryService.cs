@@ -28,7 +28,7 @@ namespace TME.QueryServices
             IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo) =>
             (uint)strongholds.Where(s=>s.Total > 0).Count(isFriendlyTo);
         
-        public IEnumerable<IArmy> GetLordWarriorsAsArmies(
+        public IEnumerable<Army> GetLordWarriorsAsArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
             return lords
@@ -47,7 +47,7 @@ namespace TME.QueryServices
             });
         }
         
-        public IEnumerable<IArmy> GetLordRidersAsArmies(
+        public IEnumerable<Army> GetLordRidersAsArmies(
             IEnumerable<ICharacter> lords, Func<ICharacter,bool> isFriendlyTo )
         {
             return lords
@@ -66,7 +66,7 @@ namespace TME.QueryServices
             });
         }
         
-        public IEnumerable<IArmy> GetRegimentsAsArmies(
+        public IEnumerable<Army> GetRegimentsAsArmies(
             IEnumerable<IRegiment> regiments, Func<IRegiment,bool> isFriendlyTo )
         {
             return regiments
@@ -85,7 +85,7 @@ namespace TME.QueryServices
             });
         }
         
-        public IEnumerable<IArmy> GetStrongholdArmy(IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo)
+        public IEnumerable<Army> GetStrongholdArmy(IEnumerable<IStronghold> strongholds, Func<IStronghold, bool> isFriendlyTo)
         {
             return strongholds
                 .Where(r=>r.Total>0)

@@ -8,6 +8,7 @@ using FluentAssertions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
 using TME.Interfaces;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
@@ -24,12 +25,12 @@ namespace TME.SpecTests.Steps.QueryServices
         private readonly ScenarioContext _scenarioContext;
         private readonly MainHooks _mainHooks;
 
-        private IList<Lord> _lords = new List<Lord>();
+        private IList<Character> _lords = new List<Character>();
         private IList<Regiment> _regiments = new List<Regiment>();
         private IList<Stronghold> _strongholds = new List<Stronghold>();
         
         private uint _countLordArmies;
-        private IList<IArmy> _armies = new List<IArmy>();
+        private IList<Army> _armies = new List<Army>();
         private Race _race = Race.None;
         private UnitType _unitType = UnitType.None;
         
@@ -57,7 +58,7 @@ namespace TME.SpecTests.Steps.QueryServices
                     Riders = entry["riders"] == "yes" ? 100u : 0u
                 }).ToList();
 
-            _lords =  _mapper.Map<List<Lord>>(items);
+            _lords =  _mapper.Map<List<Character>>(items);
         }
         
         [Given(@"there are regiments with the following friend or foe status")]
@@ -176,7 +177,7 @@ namespace TME.SpecTests.Steps.QueryServices
 
         #endregion
         
-        private static void CheckArmies(IList<IArmy> armies, Race race, UnitType type, uint count, bool exact)
+        private static void CheckArmies(IList<Army> armies, Race race, UnitType type, uint count, bool exact)
         {
             if (race == Race.Moonprince)
             {

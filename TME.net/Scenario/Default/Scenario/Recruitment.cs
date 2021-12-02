@@ -6,7 +6,7 @@ using TME.Serialize;
 namespace TME.Scenario.Default.Scenario
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class Recruitment : IRecruitment
+    public class Recruitment 
     {
         public uint Key { get; internal set; }
         public uint By { get; internal set; }

@@ -7,18 +7,19 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Scenario;
 using TME.Types;
 
 namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public partial class Lord : Item, ICharacterInternal
+    public partial class Character : Item, ICharacterInternal
     {
 
         #region "DI"
         private readonly IVariables _variables = null!;
-        public IBattleInfo BattleInfo { get; internal set; } = null!;
-        public IRecruitment Recruitment { get; internal set; } = null!;
+        public BattleInfo BattleInfo { get; internal set; }
+        public Recruitment Recruitment { get; internal set; }
         #endregion
 
         public Direction Looking { get; internal set; } = Direction.None;
@@ -27,12 +28,12 @@ namespace TME.Scenario.Default.Items
         public Gender Gender { get; internal set; } = Gender.None;
         public string LongName { get; internal set; } = "";
         public string ShortName { get; internal set; } = "";
-        public IReadOnlyList<IObject> Carrying { get; internal set; } = new List<IObject>();
+        public IReadOnlyList<IObject> Carrying { get; internal set; }
         public IObject? KilledBy { get; internal set; }
         public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
         public MXId LastCommandId { get; internal set; } = MXId.None;
         public Command LastCommand { get; internal set; } = Command.None;
-        public List<IUnit> Units { get; internal set; } = new List<IUnit>();
+        public List<IUnit> Units { get; internal set; } 
         public ICharacter? Following { get; internal set; }
         public uint Energy { get; internal set; }
         public uint Reckless { get; internal set; }
@@ -84,21 +85,21 @@ namespace TME.Scenario.Default.Items
         public bool HasTrait(LordTraits mask) => (Traits.Raw() & mask.Raw()) != 0;
         public ICharacter? CommanderInChief => Liege?.CommanderInChief;
 
-        internal Lord() : base(EntityType.Character)
+        internal Character() : base(EntityType.Character)
         {
+            BattleInfo = new BattleInfo();
+            Recruitment = new Recruitment();
+            Units = new List<IUnit>();
+            Carrying = new List<IObject>();
         }
 
-        public Lord(
-            IVariables variables,
-            IBattleInfo battleInfo,
-            IRecruitment recruitment,
-            [KeyFilter(UnitType.Warrior)] IUnit warriors,
-            [KeyFilter(UnitType.Rider)] IUnit riders) : base(EntityType.Character)
+        public Character(
+            IVariables variables) : base(EntityType.Character)
         {
             _variables = variables;
-            BattleInfo = battleInfo;
-            Recruitment = recruitment;
-            Units = new List<IUnit>() {warriors, riders};
+            BattleInfo = new BattleInfo();
+            Recruitment = new Recruitment();
+            Units = new List<IUnit> { new Warriors(), new Riders()};
             Carrying = new List<IObject>();
         }
 
