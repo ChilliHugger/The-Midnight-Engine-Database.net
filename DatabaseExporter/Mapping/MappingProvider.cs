@@ -1,8 +1,7 @@
 using AutoMapper;
 using AutoMapper.Configuration;
-using Castle.DynamicProxy.Internal;
 
-namespace TME.SpecTests.Mapping
+namespace DatabaseExporter.Mapping
 {
     public static class MapperProvider
     {
