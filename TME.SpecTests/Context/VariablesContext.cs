@@ -12,7 +12,7 @@ namespace TME.SpecTests.Context
         {
         }
 
-        public List<KeyValuePair<string, string>> GetValues()
+        public List<DatabaseVariable> GetValues()
         {
             throw new System.NotImplementedException();
         }

@@ -59,9 +59,9 @@ namespace MidnightConsole
             
             
             Console.WriteLine($"Variables\n{new string('=', 9)}");
-            foreach (var (key, value) in variables.GetValues())
+            foreach (var variable in variables.GetValues())
             {
-                Console.WriteLine($"{key}='{value}'");
+                Console.WriteLine($"{variable.Symbol}='{variable.Value}'");
             }
             Console.WriteLine();
             

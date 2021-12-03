@@ -308,12 +308,12 @@ namespace TME.Scenario.Default.Base
             throw new NotImplementedException();
         }
 
-        public List<KeyValuePair<string, string>> GetValues()
+        public List<DatabaseVariable> GetValues()
         {
             return (
                 from v in VariableDefinitions 
                 let value = GetValue(v.PropertyName) 
-                select new KeyValuePair<string, string>(v.VariableName, value)
+                select new DatabaseVariable { Symbol = v.VariableName, Value = value}
                 ).ToList();
         }
     }

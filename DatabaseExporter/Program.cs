@@ -25,6 +25,8 @@ namespace DatabaseExporter
             var builder = new ContainerBuilder();
 
             RegisterMapping(builder);
+
+            builder.RegisterType<CsvExporter>();
             
             var dependencyContainer = new TMEDependencyContainer(builder);
             dependencyContainer.Build();
@@ -33,23 +35,14 @@ namespace DatabaseExporter
 
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
-            var entities = container.Resolve<IEntityContainer>();
-            var variables = container.Resolve<IVariables>();
-            var mapper = container.Resolve<IMapper>();
-            
+
             engine.SetScenario(MidnightScenario.Tag);
             database.Directory = "../../../../data/lom";
             database.Load();
-            
-            //var results = variables.GetValues();
 
-            using var writer = new StreamWriter("routenodes.csv");
-            using var csv = new CsvWriter(writer, CultureInfo.InvariantCulture);
+            var exporter = container.Resolve<CsvExporter>();
+            exporter.Export();
 
-            csv.Context.RegisterClassMap<CSVRouteNodeMap>();
-
-            var routeNodes = mapper.Map<List<CsvRouteNode>>(entities.RouteNodes);
-            csv.WriteRecords(routeNodes);
         }
         
         private static void RegisterMapping(ContainerBuilder builder)
@@ -58,5 +51,7 @@ namespace DatabaseExporter
                 new MappingConfiguration()
             ));
         }
+
+
     }
 }

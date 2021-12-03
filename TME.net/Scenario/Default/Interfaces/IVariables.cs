@@ -8,7 +8,7 @@ namespace TME.Scenario.Default.Interfaces
     public interface IVariables
     {
         void Initialise();
-        List<KeyValuePair<string, string>> GetValues();
+        List<DatabaseVariable> GetValues();
 
         double sv_database_version { get; set; }
         double sv_battle_default_energy_drain { get; set; }
