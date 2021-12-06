@@ -3,6 +3,7 @@ using Autofac.Features.AttributeFilters;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Debug;
 using TME.Interfaces;
+using TME.Processors;
 using TME.QueryServices;
 using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Actions.Interfaces;
@@ -43,6 +44,8 @@ namespace TME
             RegisterQueryServices();
             RegisterBuilders();
             RegisterLogger();
+
+            RegisterLocalisation();
         }
 
         private void RegisterTypes()
@@ -141,6 +144,13 @@ namespace TME
             _builder.RegisterGeneric(typeof(Logger<>))
                 .As(typeof(ILogger<>))
                 .SingleInstance();
+        }
+
+        private void RegisterLocalisation()
+        {
+            _builder.RegisterType<NumberTextEnglish>().As<INumberText>();
+            //_builder.RegisterType<NumberTextDefault>().As<INumberText>();
+
         }
     }
 }

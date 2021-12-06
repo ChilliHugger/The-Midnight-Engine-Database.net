@@ -15,6 +15,7 @@ namespace TME.SpecTests.Hooks
     {
         private readonly MapMockBuilder _mapMockBuilder;
         private readonly VariablesMockBuilder _variablesMockBuilder;
+        private readonly StringsMockBuilder _stringsMockBuilder;
         private readonly IObjectContainer _objectContainer;
         private readonly IScenarioContext _scenarioContext;
         private readonly CommandHistoryMockBuilder _commandHistoryMockBuilder;
@@ -34,12 +35,14 @@ namespace TME.SpecTests.Hooks
             ScenarioContext scenarioContext,
             CommandHistoryMockBuilder commandHistoryMockBuilder,
             VariablesMockBuilder variablesMockBuilder,
+            StringsMockBuilder stringsMockBuilder,
             MapMockBuilder mapMockBuilder)
         {
             _objectContainer = objectContainer;
             _scenarioContext = scenarioContext;
             _commandHistoryMockBuilder = commandHistoryMockBuilder;
-            _variablesMockBuilder = variablesMockBuilder; 
+            _variablesMockBuilder = variablesMockBuilder;
+            _stringsMockBuilder = stringsMockBuilder;
             _mapMockBuilder = mapMockBuilder;
                 
             _lazyLifetimeScope = new Lazy<ILifetimeScope>( () => _lifetimeScope! );
@@ -102,6 +105,7 @@ namespace TME.SpecTests.Hooks
             _mapMockBuilder.Build(containerBuilder);
             _variablesMockBuilder.Build(containerBuilder);
             _commandHistoryMockBuilder.Build(containerBuilder);
+            _stringsMockBuilder.Build(containerBuilder);
         }
 
         private void RegisterMapping()

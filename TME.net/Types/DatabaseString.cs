@@ -11,6 +11,17 @@ namespace TME.Types
         public MXId Id { get; set; } = MXId.None;
         public string Symbol { get; set; } = "";
         public string Text { get; set; } = "";
+
+        public DatabaseString()
+        {
+        }
+        
+        internal DatabaseString(uint id, string symbol, string text)
+        {
+            Id = new MXId(EntityType.String, id);
+            Symbol = symbol;
+            Text = text;
+        }
         
         public bool Load(ISerializeContext context)
         {
