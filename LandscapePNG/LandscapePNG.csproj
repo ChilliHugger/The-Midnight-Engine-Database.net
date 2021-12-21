@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TME.Landscaping\TME.Landscaping.csproj" />
+    <ProjectReference Include="..\TME.net\TME.net.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="SkiaSharp" Version="2.88.0-preview.178" />
+    <PackageReference Include="System.Drawing.Common" Version="6.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\floor.png" />
+    <EmbeddedResource Include="Resources\floor.png" />
+    <None Remove="Resources\sky.png" />
+    <EmbeddedResource Include="Resources\sky.png" />
+    <None Remove="Resources\t_army0.png" />
+    <EmbeddedResource Include="Resources\t_army0.png" />
+    <None Remove="Resources\t_cavern0.png" />
+    <EmbeddedResource Include="Resources\t_cavern0.png" />
+    <None Remove="Resources\t_citadel0.png" />
+    <EmbeddedResource Include="Resources\t_citadel0.png" />
+    <None Remove="Resources\t_downs0.png" />
+    <EmbeddedResource Include="Resources\t_downs0.png" />
+    <None Remove="Resources\t_forest0.png" />
+    <EmbeddedResource Include="Resources\t_forest0.png" />
+    <None Remove="Resources\t_frozenwaste0.png" />
+    <EmbeddedResource Include="Resources\t_frozenwaste0.png" />
+    <None Remove="Resources\t_henge0.png" />
+    <EmbeddedResource Include="Resources\t_henge0.png" />
+    <None Remove="Resources\t_keep0.png" />
+    <EmbeddedResource Include="Resources\t_keep0.png" />
+    <None Remove="Resources\t_lake0.png" />
+    <EmbeddedResource Include="Resources\t_lake0.png" />
+    <None Remove="Resources\t_land0.png" />
+    <EmbeddedResource Include="Resources\t_land0.png" />
+    <None Remove="Resources\t_lith0.png" />
+    <EmbeddedResource Include="Resources\t_lith0.png" />
+    <None Remove="Resources\t_mountain0.png" />
+    <EmbeddedResource Include="Resources\t_mountain0.png" />
+    <None Remove="Resources\t_ruin0.png" />
+    <EmbeddedResource Include="Resources\t_ruin0.png" />
+    <None Remove="Resources\t_snowhall0.png" />
+    <EmbeddedResource Include="Resources\t_snowhall0.png" />
+    <None Remove="Resources\t_tower0.png" />
+    <EmbeddedResource Include="Resources\t_tower0.png" />
+    <None Remove="Resources\t_village0.png" />
+    <EmbeddedResource Include="Resources\t_village0.png" />
+    <None Remove="Resources\dot.png" />
+    <EmbeddedResource Include="Resources\dot.png" />
+  </ItemGroup>
+
+</Project>
