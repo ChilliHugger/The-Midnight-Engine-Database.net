@@ -31,7 +31,7 @@ namespace LandscapePNG
 
         private readonly Dictionary<Terrain, SKBitmap> _terrainImages = new Dictionary<Terrain, SKBitmap>();
         private readonly SKBitmap _army;
-        private SKCanvas _canvas;
+        private SKCanvas _canvas = null!;
 
         
         public LandscapeTerrain(
@@ -122,7 +122,6 @@ namespace LandscapePNG
                 return;
             }
 
-            var headerHeight = 57 * LandscapeGenerator.LandscapeGScale;
             var newScale = scale * 0.5f; // we have loaded hi-res images
             var width = (graphic.Width * newScale);
             var height = (graphic.Height * newScale);

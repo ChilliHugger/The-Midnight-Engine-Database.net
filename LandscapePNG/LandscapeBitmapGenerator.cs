@@ -1,7 +1,4 @@
-using System.Drawing;
-using System.Drawing.Imaging;
 using System.IO;
-using System.Reflection;
 using SkiaSharp;
 using TME.Interfaces;
 using TME.Landscaping;
@@ -13,13 +10,11 @@ namespace LandscapePNG
 {
     public class LandscapeBitmapGenerator
     {
-
         private readonly IEntityResolver _entityResolver;
         private readonly LandscapeLand _landscapeLand;
         private readonly LandscapeSky _landscapeSky;
         private readonly LandscapeTerrain _landscapeTerrain;
         private readonly LandscapeGenerator _landscapeGenerator;
-
         
         public LandscapeBitmapGenerator(
             IEntityResolver entityResolver,
@@ -39,17 +34,17 @@ namespace LandscapePNG
         {
             Generate();
 
-            var imageInfo = new SKImageInfo((int)_landscapeGenerator.LandscapeScreenWidth, 768);
+            var imageInfo = new SKImageInfo((int)_landscapeGenerator.ViewportWidth, 768);
             using SKSurface surface = SKSurface.Create(imageInfo);
             var canvas = surface.Canvas;
 
-            // (0,0) top left
+            // BASED ON (0,0) top left
+            
             var paint = new SKPaint {
                 Style = SKPaintStyle.Fill,
-                Color = SKColors.Yellow
+                Color = SKColors.Gray
             };          
-            var headerHeight = 57 * LandscapeGenerator.LandscapeGScale;
-            canvas.DrawRect(0,0,imageInfo.Width, headerHeight, paint );
+            canvas.DrawRect(0,0,imageInfo.Width, Landscaping.HeaderHeight, paint );
 
             _landscapeSky.Draw(canvas);
             _landscapeLand.Draw(canvas);
@@ -72,19 +67,15 @@ namespace LandscapePNG
             var currentLoc = luxor.Location + Direction.South;
             var looking = Direction.North; // luxor.Looking;
             
-            var loc = new Loc(
-                currentLoc.X * (int) LandscapeGenerator.LandscapeDirSteps,
-                currentLoc.Y * (int) LandscapeGenerator.LandscapeDirSteps);
-
-            var lookAmount = (float) (looking-1) * LandscapeGenerator.LandscapeDirAmount;
-            if (lookAmount > LandscapeGenerator.LandscapeFullWidth)
+            var lookAmount = (float) (looking-1) * Landscaping.DirAmount;
+            if (lookAmount > Landscaping.FullWidth)
             {
-                lookAmount -= LandscapeGenerator.LandscapeFullWidth;
+                lookAmount -= Landscaping.FullWidth;
             }
 
             var options = new LandscapeOptions
             {
-                Here = loc,
+                Here = currentLoc,
                 TimeOfDay = luxor.Time,
                 LookAmount = lookAmount,
                 CurrentDirection = looking,
@@ -95,11 +86,11 @@ namespace LandscapePNG
                 IsInTunnel = false,
                 IsLookingDownTunnel = false,
                 IsLookingOutTunnel = false,
-                LookOffsetAdjustment = -512
+                LookOffsetAdjustment = -512 // centre view in the middle
             };
 
-            _landscapeGenerator.HorizontalOffset = 0;//options.LookAmount; // look amount
-            _landscapeGenerator.LandscapeScreenWidth = 2048;
+            _landscapeGenerator.HorizontalOffset = 0;
+            _landscapeGenerator.ViewportWidth = 2048;
             _landscapeGenerator.Build(options);
         }
     }

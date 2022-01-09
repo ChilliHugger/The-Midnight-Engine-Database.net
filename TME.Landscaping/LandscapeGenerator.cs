@@ -23,16 +23,7 @@ namespace TME.Landscaping
         // adjustment for the furthest of our visible locations being on the horizon
         public const float ViewportNear = 0.25f;
         public const float ViewportFar = 6.5f;
-        public const float BaseHeight = 768;
-        public const float BaseWidth = 1024;
         public const int PeopleWindowHeight = 256;
-        public const float LandscapeDirAmount = 400.0f;
-        public const float LandscapeDirSteps = 400.0f;
-        public const float LandscapeDir = LandscapeDirAmount / LandscapeDirSteps;
-        public const float LandscapeDirLeft = -LandscapeDir;
-        public const float LandscapeDirRight = LandscapeDir;
-        public const float LandscapeGScale = 4.0f;
-        public const float LandscapeFullWidth = LandscapeDirAmount * 8;
         private const double Pi2 = Math.PI * 2.0;
         
         private LandscapeOptions _options;
@@ -45,7 +36,7 @@ namespace TME.Landscaping
         public float HorizonAdjust { get; private set; }
         public float HorizonOffset { get; private set; }
         public float HorizontalOffset { get; set; }
-        public float LandscapeScreenWidth { get; set; }
+        public float ViewportWidth { get; set; }
         
         private Loc _loc;
         private int _looking;
@@ -68,18 +59,21 @@ namespace TME.Landscaping
         {
             _options = options;
             
-            HorizonCentreX = LRES(256*LandscapeGScale/2) - options.LookOffsetAdjustment;
-            HorizonCentreY = 0 ; 
-            PanoramaWidth =  LRES(800.0f*LandscapeGScale);
-            PanoramaHeight = LRES(38.0f*LandscapeGScale);
-            LocationHeight = LRES(48.0f*LandscapeGScale);
-            HorizonAdjust = LRES(5*LandscapeGScale);
-            HorizonOffset = LRES(112*LandscapeGScale);
+            HorizonCentreX = LRES(Landscaping.HorizonCentreX) - options.LookOffsetAdjustment;
+            HorizonCentreY = LRES(Landscaping.HorizonCentreY) ; 
+            PanoramaWidth =  LRES(Landscaping.PanoramaWidth);
+            PanoramaHeight = LRES(Landscaping.PanoramaHeight);
+            LocationHeight = LRES(Landscaping.LocationHeight);
+            HorizonAdjust = LRES(Landscaping.HorizonAdjust);
+            HorizonOffset = LRES(Landscaping.HorizonOffset);
             
             // Options.Here will be the x,y coordinate of the map location 
             // multiplied by LandscapeDirSteps
             // this allows for the tween when moving
-            _loc = _options.Here;
+            _loc = new Loc(
+                options.Here.X * (int) Landscaping.DirSteps,
+                options.Here.Y * (int) Landscaping.DirSteps);
+            
             _looking = 0;
     
             Items.Clear();
@@ -92,8 +86,8 @@ namespace TME.Landscaping
 
         private void BuildPanorama()
         {
-            var x = _loc.X / LandscapeDirSteps;
-            var y = _loc.Y / LandscapeDirSteps;
+            var x = _loc.X / Landscaping.DirSteps;
+            var y = _loc.Y / Landscaping.DirSteps;
             const int qDim = 8;
     
             for ( var y1=y-qDim; y1<=y+qDim; y1++ ) {
@@ -156,18 +150,11 @@ namespace TME.Landscaping
                 _ => FloorType.Normal
             };
         }
-
-        // spectrum screen was 256x192
-        // Sky was 112  height
-        // floor was 80 height
-        // location in front was at 48 pixels from the bottom
-        // thus the panorama height was 32
-        // we need a 3 pixel horizon adjustment to put the far locations on the horizon
-
+        
         LandscapeItem CalcCylindricalProjection(LandscapeItem item)
         {
-            var x = ( item.Loc.X*LandscapeDirSteps - _loc.X) / LandscapeDirSteps;
-            var y = ( item.Loc.Y*LandscapeDirSteps - _loc.Y) / LandscapeDirSteps;
+            var x = ( item.Loc.X*Landscaping.DirSteps - _loc.X) / Landscaping.DirSteps;
+            var y = ( item.Loc.Y*Landscaping.DirSteps - _loc.Y) / Landscaping.DirSteps;
             
             // TODO: I think _looking is now always 0
             // because of how we are generating the whole landscape
@@ -224,8 +211,8 @@ namespace TME.Landscaping
             var newX = x-LRES(HorizontalOffset) ;
     
             // Boundary in panoramic units
-            const float boundary = LandscapeDirSteps*3;
-            var maxScreenX = LandscapeScreenWidth+LRES(512);
+            const float boundary = Landscaping.DirSteps*3;
+            var maxScreenX = ViewportWidth+LRES(512);
             var minScreenX = 0 - LRES(-512);
     
             // to the left

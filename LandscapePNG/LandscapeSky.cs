@@ -5,8 +5,7 @@ namespace LandscapePNG
 {
     public class LandscapeSky
     {
-        public const float SkyHeight = 55 * LandscapeGenerator.LandscapeGScale;
-
+    
         private readonly LandscapeGenerator _landscapeGenerator;
         private readonly SKBitmap? _sky;
         
@@ -20,13 +19,12 @@ namespace LandscapePNG
         
         public void Draw(SKCanvas canvas)
         {
-            var headerHeight = 57 * LandscapeGenerator.LandscapeGScale;
             canvas.DrawBitmap(_sky,
                 new SKRect(
                     0,
-                    headerHeight, 
-                    _landscapeGenerator.LandscapeScreenWidth, 
-                    headerHeight+SkyHeight));
+                    Landscaping.HeaderHeight, 
+                    _landscapeGenerator.ViewportWidth, 
+                    Landscaping.HeaderHeight+Landscaping.SkyHeight));
         }
     }
 }
