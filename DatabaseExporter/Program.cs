@@ -41,7 +41,7 @@ namespace DatabaseExporter
             database.Load();
 
             var exporter = container.Resolve<CsvExporter>();
-            exporter.Export();
+            exporter.Export("../../../../data/csv_lom");
 
         }
         

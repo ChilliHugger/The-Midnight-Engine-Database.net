@@ -3,25 +3,9 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Scenario;
 
 // ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace DatabaseExporter.Models
 {
-    public class CsvRecord
-    {
-        public int Version { get; set; }
-        public uint Id { get; set; }
-        public string Symbol { get; set; }
-    }
-    
-    public class CsvEntity : CsvRecord
-    {
-        public ulong Flags { get; set; }
-    }
-
-    public class CsvItem : CsvEntity
-    {
-        public Loc Location { get; set; }
-    }
-
     public class CsvRouteNode : CsvItem
     {
         public string Left { get; set; }
