@@ -13,11 +13,11 @@ Version	Id	Symbol	Flags	Location	Kills	Name	Description	UseDescription	CarriedBy
 1	12	OB_WOLFSLAYER	PICKUP+DROP+WEAPON+REMOVE	[0,0]	Wolves	Sword Wolfslayer	the {obj:name}	SS_FIGHT2	
 1	13	OB_DRAGONSLAYER	PICKUP+DROP+WEAPON+REMOVE	[0,0]	Dragons	Sword Dragonslayer	the {obj:name}	SS_FIGHT2	
 1	14	OB_ICECROWN	PICKUP+WEAPON+UNIQUE	[0,0]	IceTrolls	Ice Crown	the {obj:name}	SS_FIGHT4	
-1	15	OB_MOONRING	PICKUP+WEAPON+UNIQUE	[0,0]	Skulkrin	Moon Ring	the {obj:name}	SS_FIGHT3	
+1	15	OB_MOONRING	PICKUP+WEAPON+UNIQUE	[0,0]	Skulkrin	Moon Ring	the {obj:name}	SS_FIGHT3	CH_LUXOR
 1	16	OB_CLAWS	NONE	[0,0]	None	Claws		SS_ADVERBS	
 1	17	OB_FLAMES	NONE	[0,0]	None	Flames		SS_ADVERBS	
 1	18	OB_THORNS	NONE	[0,0]	None	Thorns		SS_ADVERBS	
 1	19	OB_BLOOD	NONE	[0,0]	None	Blood		SS_ADVERBS	
 1	20	OB_LANGUOR	NONE	[0,0]	None	Languor		SS_ADVERBS	
 1	21	OB_SPRINGS	NONE	[0,0]	None	Springs		SS_ADVERBS	
-1	22	OB_EYEOFTHEMOON	UNIQUE	[0,0]	None	Eye of the Moon	the {obj:name}	SS_ADVERBS	
+1	22	OB_EYEOFTHEMOON	UNIQUE	[0,0]	None	Eye of the Moon	the {obj:name}	SS_ADVERBS	CH_MIDWINTER
