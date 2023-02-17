@@ -1,0 +1,35 @@
+Version	Id	Symbol	Flags	Location	Looking	Time	Race	Gender	LongName	ShortName	Loyalty	Energy	Reckless	Strength	Cowardly	Courage	Despondency	Fear	Orders	Carrying	WaitStatus	Warriors	Riders	Following	Foe	Liege	Traits
+1	1	CH_LUXOR	RIDING+ALIVE+RECRUITED+ARMY+HIDE+HORSE+MOONRING	[13,41]	SouthEast	16	Free	Male	Luxor the Moonprince	Luxor	Free	127	180	25	80	0	0	0	None	OB_MOONRING	None	0	0		CH_DOOMDARK		None
+1	2	CH_MORKIN	RIDING+ALIVE+RECRUITED+HORSE+MOONRING+ICECROWN	[13,41]	North	16	Morkin	Male	Morkin	Morkin	Free	127	200	5	127	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	3	CH_CORLETH	RIDING+ALIVE+RECRUITED+ARMY+HIDE+HORSE	[13,41]	East	16	Fey	Male	Corleth the Fey	Corleth	Free	127	180	20	96	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	4	CH_RORTHRON	RIDING+ALIVE+RECRUITED+HIDE+HORSE	[13,41]	NorthEast	16	Wise	Male	Rorthron the Wise	Rorthron	Free	127	220	40	80	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	5	CH_GARD	RIDING+ALIVE+ARMY+HIDE+HORSE	[11,56]	East	16	Free	Male	The Lord of Gard	Gard	Free	64	150	10	64	0	0	0	None	None	None	500	1000		CH_DOOMDARK		None
+1	6	CH_MARAKITH	RIDING+ALIVE+ARMY+HIDE+HORSE	[44,33]	West	16	Free	Male	The Lord of Marakith	Marakith	Free	64	150	10	64	0	0	0	None	None	None	500	1000		CH_DOOMDARK		None
+1	7	CH_XAJORKITH	RIDING+ALIVE+ARMY+HIDE+HORSE	[46,60]	North	16	Free	Male	The Lord of Xajorkith	Xajorkith	Free	64	150	15	64	0	0	0	None	None	None	800	1200		CH_DOOMDARK		None
+1	8	CH_GLOOM	RIDING+ALIVE+ARMY+HIDE+HORSE	[9,1]	East	16	Free	Male	The Lord of Gloom	Gloom	Free	64	150	15	56	0	0	0	None	None	None	500	1000		CH_DOOMDARK		None
+1	9	CH_SHIMERIL	RIDING+ALIVE+ARMY+HIDE+HORSE	[29,43]	NorthWest	16	Free	Male	The Lord of Shimeril	Shimeril	Free	64	150	15	64	0	0	0	None	None	None	800	1000		CH_DOOMDARK		None
+1	10	CH_KUMAR	RIDING+ALIVE+ARMY+HIDE+HORSE	[58,30]	South	16	Free	Male	The Lord of Kumar	Kumar	Free	64	150	10	64	0	0	0	None	None	None	700	1000		CH_DOOMDARK		None
+1	11	CH_ITHRORN	RIDING+ALIVE+ARMY+HIDE+HORSE	[58,16]	NorthWest	16	Free	Male	The Lord of Ithrorn	Ithrorn	Free	64	150	15	64	0	0	0	None	None	None	1000	1200		CH_DOOMDARK		None
+1	12	CH_DAWN	RIDING+ALIVE+ARMY+HIDE+HORSE	[45,46]	North	16	Free	Male	The Lord of Dawn	Dawn	Free	64	120	8	48	0	0	0	None	None	None	500	800		CH_DOOMDARK		None
+1	13	CH_DREAMS	RIDING+ALIVE+ARMY+HIDE+HORSE	[43,17]	North	16	Fey	Male	The Lord of Dreams	Dreams	Free	64	180	20	90	0	0	0	None	None	None	800	1200		CH_DOOMDARK		None
+1	14	CH_DREGRIM	RIDING+ALIVE+ARMY+HIDE+HORSE	[60,44]	North	16	Fey	Male	The Lord of Dregrim	Dregrim	Free	64	150	15	80	0	0	0	None	None	None	400	1000		CH_DOOMDARK		None
+1	15	CH_THIMRATH	RIDING+ALIVE+ARMY+HIDE+HORSE	[34,61]	West	16	Fey	Male	Thimrath the Fey	Thimrath	Free	64	130	12	90	0	0	0	None	None	None	600	400		CH_DOOMDARK		None
+1	16	CH_WHISPERS	RIDING+ALIVE+ARMY+HIDE+HORSE	[58,21]	NorthWest	16	Fey	Male	The Lord of Whispers	Whispers	Free	64	150	12	80	0	0	0	None	None	None	300	600		CH_DOOMDARK		None
+1	17	CH_SHADOWS	ALIVE+ARMY+HIDE+HORSE	[12,38]	North	16	Fey	Male	The Lord of Shadows	Shadows	Free	64	130	12	70	0	0	0	None	None	None	0	1000		CH_DOOMDARK		None
+1	18	CH_LOTHORIL	RIDING+ALIVE+ARMY+HIDE+HORSE	[12,11]	East	16	Fey	Male	The Lord of Lothoril	Lothoril	Free	64	100	8	60	0	0	0	None	None	None	200	500		CH_DOOMDARK		None
+1	19	CH_KORINEL	ALIVE+ARMY+HIDE+HORSE	[24,22]	North	16	Fey	Male	Korinel the Fey	Korinel	Free	64	120	12	60	0	0	0	None	None	None	0	1000		CH_DOOMDARK		None
+1	20	CH_THRALL	RIDING+ALIVE+ARMY+HIDE+HORSE	[34,39]	NorthWest	16	Fey	Male	The Lord of Thrall	Thrall	Free	64	150	10	70	0	0	0	None	None	None	300	600		CH_DOOMDARK		None
+1	21	CH_BRITH	RIDING+ALIVE+ARMY+HIDE+HORSE	[22,50]	NorthEast	16	Free	Male	Lord Brith	Brith	Free	64	100	8	40	0	0	0	None	None	None	500	300		CH_DOOMDARK		None
+1	22	CH_RORATH	RIDING+ALIVE+ARMY+HIDE+HORSE	[24,61]	North	16	Free	Male	Lord Rorath	Rorath	Free	64	100	8	50	0	0	0	None	None	None	800	400		CH_DOOMDARK		None
+1	23	CH_TRORN	RIDING+ALIVE+ARMY+HIDE+HORSE	[55,51]	NorthWest	16	Free	Male	Lord Trorn	Trorn	Free	64	100	8	35	0	0	0	None	None	None	400	800		CH_DOOMDARK		None
+1	24	CH_MORNING	RIDING+ALIVE+ARMY+HIDE+HORSE	[40,52]	North	16	Free	Male	The Lord of Morning	Morning	Free	64	120	8	40	0	0	0	None	None	None	300	800		CH_DOOMDARK		None
+1	25	CH_ATHORIL	RIDING+ALIVE+ARMY+HIDE+HORSE	[55,39]	North	16	Free	Male	Lord Athoril	Athoril	Free	64	120	8	50	0	0	0	None	None	None	800	300		CH_DOOMDARK		None
+1	26	CH_BLOOD	RIDING+ALIVE+ARMY+HIDE+HORSE	[22,37]	North	16	Free	Male	Lord Blood	Blood	Free	64	150	15	80	0	0	0	None	None	None	1200	0		CH_DOOMDARK		None
+1	27	CH_HERATH	RIDING+ALIVE+ARMY+HIDE+HORSE	[46,27]	NorthEast	16	Free	Male	Lord Herath	Herath	Free	64	130	8	40	0	0	0	None	None	None	500	600		CH_DOOMDARK		None
+1	28	CH_MITHARG	RIDING+ALIVE+ARMY+HIDE+HORSE	[30,47]	North	16	Free	Male	Lord Mitharg	Mitharg	Free	64	130	8	50	0	0	0	None	None	None	500	600		CH_DOOMDARK		None
+1	29	CH_UTARG	RIDING+ALIVE+ARMY+HIDE+HORSE	[60,35]	West	16	Targ	Male	The Utarg of Utarg	Utarg	Free	64	180	20	80	0	0	0	None	None	None	1000	0		CH_DOOMDARK		None
+1	30	CH_FAWKRIN	ALIVE+HIDE+CANDESTROYICECROWN	[2,11]	East	16	Skulkrin	Male	Fawkrin the Skulkrin	Fawkrin	Free	64	200	1	30	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	31	CH_LORGRIM	ALIVE+HIDE+HORSE+CANDESTROYICECROWN	[63,1]	South	16	Wise	Male	Lorgrim the Wise	Lorgrim	Free	64	200	20	70	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	32	CH_FARFLAME	ALIVE+HIDE+CANDESTROYICECROWN	[13,24]	SouthEast	16	Dragon	Male	Farflame the Dragonlord	Farflame	Free	64	200	100	127	0	0	0	None	None	None	0	0		CH_DOOMDARK		None
+1	33	CH_MIDWINTER	RIDING+ALIVE+HORSE	[38,18]	South	16	Moonprince	Male	Lord of Midwinter	Midwinter	Fey	127	200	100	127	0	0	0	None	OB_EYEOFTHEMOON	None	0	0				None
+1	34	CH_DOOMDARK	HIDDEN+RIDING+ALIVE+HIDE+HORSE	[0,0]	North	0	Doomguard	Male	Doomdark the Witchking	Doomdark	Doomguard	127	255	100	127	0	0	0	None	None	None	0	0		CH_LUXOR		None
