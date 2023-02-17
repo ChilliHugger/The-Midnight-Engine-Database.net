@@ -16,7 +16,7 @@ namespace TME.Scenario.Default.Items
             Race = ctx.Reader.ReadRace();
             UnitType = ctx.Reader.ReadUnitType();
             Total = ctx.Reader.ReadUInt32();
-            TargetId = ctx.Reader.ReadMXId();
+            Target = ctx.ReadEntity();
             Orders = ctx.Reader.ReadOrders();
             Success = ctx.Reader.ReadUInt32();
             LoyaltyLord = ctx.ReadEntity<ICharacter>();

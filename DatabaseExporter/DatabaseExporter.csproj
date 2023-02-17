@@ -19,4 +19,8 @@
       <Folder Include="Mapping\Models" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ReferencePathWithRefAssemblies Update="\Users\chris\.nuget\packages\autofac\6.3.0\lib\net5.0\Autofac.dll" />
+    </ItemGroup>
+
 </Project>

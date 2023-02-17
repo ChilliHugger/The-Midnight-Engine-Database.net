@@ -1,3 +1,5 @@
+using System.ComponentModel;
+
 namespace TME.Scenario.Default.Enums
 {
     public enum MissionAction : uint

@@ -1,5 +1,5 @@
+using System.Collections.Generic;
 using TME.Scenario.Default.Enums;
-using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
@@ -8,11 +8,11 @@ namespace TME.Scenario.Default.Interfaces
         int Priority { get; }
         MissionObjective Objective { get; }
         MissionCondition Condition { get; } 
-        MXId[] References { get; }
+        IList<IEntity?> References { get; }
         int Points { get; }
-        MXId Scorer { get; } 
+        IEntity? Scorer { get; } 
         MissionAction Action { get; }
-        MXId ActionId { get; set; }
+        IEntity? ActionId { get; }
         bool IsComplete { get; }
         bool IsAny{ get; }
     }

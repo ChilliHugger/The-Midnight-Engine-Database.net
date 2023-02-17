@@ -1,6 +1,8 @@
 ﻿using System;
 using TME.Interfaces;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
+using TME.Types;
 
 namespace TME.Serialize
 {
@@ -11,10 +13,12 @@ namespace TME.Serialize
         public bool IsDatabase { get; set; }
         public ISerializeReader Reader { get; set; }
         private readonly IEntityResolver _entityResolver;
+        private readonly IStrings _strings;
 
-        public SerializeContext(IEntityResolver entityResolver)
+        public SerializeContext(IEntityResolver entityResolver, IStrings strings)
         {
             _entityResolver = entityResolver;
+            _strings = strings;
             Reader = new NullReader();
         }
 
@@ -25,6 +29,19 @@ namespace TME.Serialize
             return _entityResolver.EntityById<T>((int)id);
         }
 
+        public IEntity? ReadEntity()
+        {
+            var id = Reader.ReadUInt32();
+            return (IEntity?)_entityResolver.EntityById(id);
+        }
+
+        public DatabaseString? ReadString()
+        {
+            var id = Reader.ReadUInt32();
+            return _strings.GetById(new MXId(EntityType.String, id));
+        }
+
+        
         //public void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)
         //{
         //    for (int ii = 0; ii < list.Count(); ii++)

@@ -10,7 +10,7 @@ namespace TME.Scenario.Default.Interfaces
     
     public interface IRegiment : IItem, IArmy
     {
-        MXId TargetId { get; }
+        IEntity? Target { get; }
         Orders Orders { get; }
         uint Delay { get; }
         uint Lost { get; }

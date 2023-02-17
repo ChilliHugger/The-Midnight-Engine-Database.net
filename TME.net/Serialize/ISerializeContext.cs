@@ -1,4 +1,5 @@
 ﻿using TME.Scenario.Default.Interfaces;
+using TME.Types;
 
 namespace TME.Serialize
 {
@@ -10,5 +11,8 @@ namespace TME.Serialize
         ISerializeReader Reader { get; set; }
         
         T? ReadEntity<T>() where T : IEntity;
+        IEntity? ReadEntity();
+        DatabaseString? ReadString();
+
     }
 }

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Buffers.Binary;
-using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.ComTypes;
 using Autofac;
 using Microsoft.Extensions.Logging;
 using TME.Interfaces;

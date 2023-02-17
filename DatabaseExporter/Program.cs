@@ -1,26 +1,14 @@
-﻿
-using System.Collections.Generic;
-using System.Data;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using Autofac;
-using AutoMapper;
-using CsvHelper;
+﻿using Autofac;
 using DatabaseExporter.Mapping;
-using DatabaseExporter.Models;
 using TME;
 using TME.Interfaces;
-using TME.Scenario.Default.Interfaces;
-using TME.Scenario.Default.Items;
-using TME.Scenario.Default.Scenario;
 using TME.Scenario.lom;
 
 namespace DatabaseExporter
 {
     internal static class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var builder = new ContainerBuilder();
 
@@ -43,13 +31,28 @@ namespace DatabaseExporter
             var exporter = container.Resolve<CsvExporter>();
             exporter.Export("../../../../data/csv_lom");
 
+            // Check
+            // Strongholds without owners
+            // Moonring not carried
+            // Strings - Collections / Friend / Foe
+            // Flags
+            // Missions - Check Action / ActOn
+            
+            
         }
         
         private static void RegisterMapping(ContainerBuilder builder)
         {
-            builder.RegisterInstance(MapperProvider.GetMapper(
-                new MappingConfiguration()
-            ));
+            builder.Register(context =>
+            {
+                var strings = context.Resolve<IStrings>();
+                return MapperProvider.GetMapper(
+                    new ItemMappingConfiguration(),
+                    new InfoMappingConfiguration(),
+                    new EntityMappingConfiguration(),
+                    new GeneralMappingConfiguration(strings));
+            });
+
         }
 
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using TME.Extensions;
 using TME.Scenario.Default.Base;
@@ -15,14 +16,14 @@ namespace TME.Scenario.Default.Entities
     {
         private const int MaxReferences = 5;
         
-        public int Priority { get; set; }
-        public MissionObjective Objective { get; set; } = MissionObjective.None;
-        public MissionCondition Condition { get; set; } = MissionCondition.None;
-        public MXId[] References { get; set; } = new MXId[MaxReferences];
-        public int Points { get; set; }
-        public MXId Scorer { get; set; } = MXId.None;
-        public MissionAction Action { get; set; } = MissionAction.None;
-        public MXId ActionId { get; set; } = MXId.None;
+        public int Priority { get; internal set; }
+        public MissionObjective Objective { get; internal set; } = MissionObjective.None;
+        public MissionCondition Condition { get; internal set; } = MissionCondition.None;
+        public IList<IEntity?> References { get; internal set; } = new List<IEntity?>();
+        public int Points { get; internal set; }
+        public IEntity? Scorer { get; internal set; }
+        public MissionAction Action { get; internal set; } = MissionAction.None;
+        public IEntity? ActionId { get; internal set; } 
         
         public bool IsComplete => HasFlags(MissionFlags.Complete.Raw());
         public bool IsAny => HasFlags(MissionFlags.Any.Raw());
@@ -39,15 +40,20 @@ namespace TME.Scenario.Default.Entities
             Objective = ctx.Reader.ReadEnum<MissionObjective>();
             Condition = ctx.Reader.ReadEnum<MissionCondition>();
 
+            References.Clear();
             for (var ii = 0; ii < MaxReferences; ii++)
             {
-                References[ii] = ctx.Reader.ReadMXId();
+                var entity = ctx.ReadEntity();
+                if (entity != null)
+                {
+                    References.Add(entity);
+                }
             }
 
             Points = ctx.Reader.ReadInt32();
-            Scorer = ctx.Reader.ReadMXId();
+            Scorer = ctx.ReadEntity();
             Action = ctx.Reader.ReadEnum<MissionAction>();
-            ActionId = ctx.Reader.ReadMXId();
+            ActionId = ctx.ReadEntity();
             
             return true;
         }

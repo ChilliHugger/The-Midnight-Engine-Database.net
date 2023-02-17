@@ -3,7 +3,6 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
-using TME.Types;
 
 namespace TME.Scenario.Default.Items
 {
@@ -17,7 +16,7 @@ namespace TME.Scenario.Default.Items
         public Race Race { get; internal set; } = Race.None;
         public Race LoyaltyRace => LoyaltyLord?.Loyalty ?? Race;
         public bool Friendly => false;
-        public MXId TargetId { get; internal set; } = MXId.None;
+        public IEntity? Target { get; internal set; }
         public Orders Orders { get; internal set; } = Orders.None;
         public ICharacter? LoyaltyLord { get; internal set; }
         public uint Total { get; internal set; }

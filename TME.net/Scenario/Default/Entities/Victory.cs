@@ -29,7 +29,6 @@ namespace TME.Scenario.Default.Entities
             Priority = ctx.Reader.ReadInt32();
             Mission = ctx.ReadEntity<IMission>();
             String = ctx.Reader.ReadUInt32();
-
             return true;
         }
     }
