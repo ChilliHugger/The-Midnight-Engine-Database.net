@@ -134,7 +134,7 @@ namespace TME
                         throw new FileLoadException("Error in variables");
                     }
                 }
-
+                
                 _engine.Scenario.InitialiseAfterGameLoad();
 
                 // load Version 10 extras ** DDR **

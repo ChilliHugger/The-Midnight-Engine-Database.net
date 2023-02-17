@@ -10,37 +10,33 @@ namespace DatabaseExporter
     {
         static void Main()
         {
+            ExportDatabase("../../../../data/lom","../../../../data/csv_lom");
+        }
+
+        private static void ExportDatabase(string directory, string output)
+        {
             var builder = new ContainerBuilder();
 
             RegisterMapping(builder);
 
             builder.RegisterType<CsvExporter>();
-            
+
             var dependencyContainer = new TMEDependencyContainer(builder);
             dependencyContainer.Build();
-            
+
             var container = dependencyContainer.CurrentContainer;
 
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
 
             engine.SetScenario(MidnightScenario.Tag);
-            database.Directory = "../../../../data/lom";
+            database.Directory = directory;
             database.Load();
 
             var exporter = container.Resolve<CsvExporter>();
-            exporter.Export("../../../../data/csv_lom");
-
-            // Check
-            // Strongholds without owners
-            // Moonring not carried
-            // Strings - Collections / Friend / Foe
-            // Flags
-            // Missions - Check Action / ActOn
-            
-            
+            exporter.Export(output);
         }
-        
+
         private static void RegisterMapping(ContainerBuilder builder)
         {
             builder.Register(context =>
@@ -54,7 +50,5 @@ namespace DatabaseExporter
             });
 
         }
-
-
     }
 }

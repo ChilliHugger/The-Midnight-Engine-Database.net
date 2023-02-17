@@ -52,6 +52,11 @@ namespace TME
             return default;
         }
         
+        public IEntity? EntityBySymbol(string symbol)
+        {
+            return _entityContainer.SymbolCache.TryGetValue( symbol, out var entity) ? entity : default;
+        }
+        
         public T? EntityById<T>(int id)
             where T : IEntity
         {
@@ -63,10 +68,10 @@ namespace TME
         }
 
         // ReSharper disable once UnusedMember.Global
-        public object? EntityById(MXId id) => EntityById(id.Type, id.RawId);
+        public IEntity? EntityById(MXId id) => EntityById(id.Type, id.RawId);
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public object? EntityById(EntityType type, int index)
+        public IEntity? EntityById(EntityType type, int index)
         {
             if (index == 0) return null;
             try
@@ -95,7 +100,7 @@ namespace TME
             }
             catch (Exception)
             {
-                return null;
+                return default;
             }
         }
     }

@@ -14,7 +14,7 @@ namespace TME.Scenario.Default.Items
 
 
             Name = ctx.Reader.ReadString();
-            CarriedBy = ctx.ReadEntity<IItem>();
+            CarriedBy = ctx.ReadEntity() as IItem;
             Description = ctx.Reader.ReadString();
             Kills = ctx.Reader.ReadThingType();
             UseDescription = ctx.Reader.ReadUInt32();

@@ -10,12 +10,19 @@ namespace TME
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class TMEStrings : IStrings, ISerializable
     {
-        private Dictionary<string, DatabaseString> _symbolMap = new Dictionary<string, DatabaseString>();
-        private Dictionary<MXId, DatabaseString> _idMap = new Dictionary<MXId, DatabaseString>();
+        private Dictionary<string, DatabaseString> _symbolMap = new();
+        private Dictionary<MXId, DatabaseString> _idMap = new();
         public IReadOnlyList<DatabaseString> Entries { get; internal set; } = new List<DatabaseString>().AsReadOnly();
-
-        public DatabaseString? GetById(MXId id) => _idMap[id];
-        public DatabaseString? GetBySymbol(string symbol) => _symbolMap[symbol];
+        
+        public DatabaseString? GetById(MXId id)
+        {
+            return _idMap.TryGetValue(id, out var result) ? result : default;
+        }
+        
+        public DatabaseString? GetBySymbol(string symbol)
+        {
+            return _symbolMap.TryGetValue(symbol, out var result) ? result : default;
+        }
 
         public bool Load(ISerializeContext context)
         {

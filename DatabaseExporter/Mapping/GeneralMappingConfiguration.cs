@@ -32,7 +32,10 @@ namespace DatabaseExporter.Mapping
                 .ForMember(a => a.Text, b => b.MapFrom(c => ConvertString(c.Text)));
             
             CreateMap<DatabaseVariable, CsvDatabaseVariable>(MemberList.None)
-                .ForMember(a => a.Version, b => b.MapFrom(c => CsvExportVersion));
+                .ForMember(a => a.Version, b => b.MapFrom(c => CsvExportVersion))
+                .ForMember(a => a.Value, b => b.MapFrom(c => c.Value))
+
+                ;
         }
         
         private string GetString(uint id)

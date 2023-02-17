@@ -8,7 +8,7 @@ namespace TME.Scenario.Default.Interfaces
         int Priority { get; }
         MissionObjective Objective { get; }
         MissionCondition Condition { get; } 
-        IList<IEntity?> References { get; }
+        IList<IEntity> References { get; }
         int Points { get; }
         IEntity? Scorer { get; } 
         MissionAction Action { get; }

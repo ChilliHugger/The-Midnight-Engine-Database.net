@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Autofac;
 using Microsoft.Extensions.Logging;
+using TME.Interfaces;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -12,7 +15,11 @@ namespace TME.Scenario.Default.Base
     {
         private readonly ILogger _logger;
         private readonly Dictionary<string, string> _propertyMapping;
-
+        private readonly IContainer _container;
+        
+        private IEntityResolver _entityResolver = new NoopEntityResolver();
+        private IStrings _strings = new NoopStrings();
+        
         public double sv_database_version { get; set; }
         public double sv_battle_default_energy_drain { get; set; }
         public double sv_battle_default_char_energy_drain { get; set; }
@@ -172,24 +179,46 @@ namespace TME.Scenario.Default.Base
 
         };
 
-        public Variables(ILogger<Variables> logger)
+        public Variables(ILogger<Variables> logger, IDependencyContainer dependencyContainer)
         {
             _logger = logger;
+            _container = dependencyContainer.CurrentContainer;
             _propertyMapping = VariableDefinitions
                 .ToDictionary(v => v.VariableName, v => v.PropertyName);
         }
         
         public void Initialise()
         {
+            _entityResolver = _container.Resolve<IEntityResolver>();
+            _strings = _container.Resolve<IStrings>();
             foreach (var (propertyName, _, defaultValue) in VariableDefinitions)
             {
                 SetValue(propertyName, defaultValue);
             }
         }
 
+        private string ResolveMxId(MXId id)
+        {
+            if (id.Type == EntityType.String)
+            {
+                return _strings.GetById(id)?.Symbol ?? "";
+            }
+            return _entityResolver.EntityById(id)?.Symbol ?? "";
+        }
+
+        private MXId ResolveBySymbol(string symbol)
+        {
+            var stringItem = _strings.GetBySymbol(symbol);
+            if (stringItem == null)
+            {
+                return _entityResolver.EntityBySymbol(symbol)?.Id ?? MXId.None;
+            }
+            return stringItem.Id;
+        }
+        
         private string GetValue(string propertyName)
         {
-            var t = this.GetType();
+            var t = GetType();
 
             var p = t.GetProperty(propertyName);
 
@@ -211,7 +240,11 @@ namespace TME.Scenario.Default.Base
             
             if (valueType == typeof(MXId))
             {
-                return value.ToString() ?? "";
+                if ( value is MXId mxId )
+                {
+                    return ResolveMxId(mxId);
+                }
+                return "";
             }
 
             if (valueType == typeof(bool) && value is bool yesNo)
@@ -221,7 +254,14 @@ namespace TME.Scenario.Default.Base
 
             if (valueType == typeof(IEnumerable<MXId>) && value is IEnumerable<MXId>)
             {
-                return string.Join("|",value);
+                if (value is IEnumerable<MXId> values)
+                {
+                    var result = values
+                        .Select(ResolveMxId)
+                        .Where(s => !string.IsNullOrEmpty(s));
+                    return string.Join("|", result);
+                }
+                return "";
             }
 
             return value.ToString() ?? "";
@@ -237,9 +277,7 @@ namespace TME.Scenario.Default.Base
             {
                 return;
             }
-
-            //object valueType = p.GetValue(this, null);
-
+            
             var valueType = p.PropertyType;
 
             if (valueType == typeof(bool))
@@ -271,12 +309,25 @@ namespace TME.Scenario.Default.Base
             }
             else if (valueType == typeof(MXId))
             {
-                //p.SetValue(this, 0);
+                var entity = _entityResolver.EntityBySymbol(propertyValue);
+                if (entity != null)
+                {
+                    p.SetValue(this,entity.Id);
+                }
+                //_logger.LogWarning($"Unsupported Variable['{propertyName}']={propertyValue}");
             }
             else if (valueType == typeof(IEnumerable<MXId>))
             {
-                //var values = new List<MXId>();
-                //p.SetValue(this, values);
+                var items = propertyValue
+                    .Split('|')
+                    .Select(ResolveBySymbol)
+                    .Where(e => e != MXId.None);
+
+                if (items.Any())
+                {
+                    p.SetValue(this,items);
+                }
+                //_logger.LogWarning($"Unsupported Variable['{propertyName}']={propertyValue}");
             }
 
         }
@@ -313,7 +364,7 @@ namespace TME.Scenario.Default.Base
             return (
                 from v in VariableDefinitions 
                 let value = GetValue(v.PropertyName) 
-                select new DatabaseVariable { Symbol = v.VariableName, Value = value}
+                select new DatabaseVariable { Symbol = v.VariableName, Value = value }
                 ).ToList();
         }
     }

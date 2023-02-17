@@ -35,16 +35,11 @@ namespace DatabaseExporter
 
         public void Export(string folder)
         {
-            // TODO: CSVHelper - Name attribute?
-            
-            
             _folder = folder;
             
             // Misc
             OutputVariables();
             OutputStrings();
-            
-            // TODO:
             
             // Items
             OutputRouteNodes();
@@ -55,10 +50,6 @@ namespace DatabaseExporter
             OutputRegiments();
             OutputObjects();
             OutputCharacters();
-            
-            // TODO:
-            // characters
-
             
             // Infos
             OutputAreaInfo();

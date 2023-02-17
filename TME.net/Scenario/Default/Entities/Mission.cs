@@ -1,5 +1,7 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using TME.Extensions;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
@@ -19,7 +21,7 @@ namespace TME.Scenario.Default.Entities
         public int Priority { get; internal set; }
         public MissionObjective Objective { get; internal set; } = MissionObjective.None;
         public MissionCondition Condition { get; internal set; } = MissionCondition.None;
-        public IList<IEntity?> References { get; internal set; } = new List<IEntity?>();
+        public IList<IEntity> References { get; internal set; } = new List<IEntity>();
         public int Points { get; internal set; }
         public IEntity? Scorer { get; internal set; }
         public MissionAction Action { get; internal set; } = MissionAction.None;
@@ -41,15 +43,12 @@ namespace TME.Scenario.Default.Entities
             Condition = ctx.Reader.ReadEnum<MissionCondition>();
 
             References.Clear();
-            for (var ii = 0; ii < MaxReferences; ii++)
-            {
-                var entity = ctx.ReadEntity();
-                if (entity != null)
-                {
-                    References.Add(entity);
-                }
-            }
 
+            References = Enumerable.Range(0, MaxReferences)
+                .Select(_ => ctx.ReadEntity())
+                .WhereNotNull()
+                .ToList();
+            
             Points = ctx.Reader.ReadInt32();
             Scorer = ctx.ReadEntity();
             Action = ctx.Reader.ReadEnum<MissionAction>();
