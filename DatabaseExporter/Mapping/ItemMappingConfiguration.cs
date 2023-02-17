@@ -1,7 +1,9 @@
 using System.Linq;
 using AutoMapper;
 using DatabaseExporter.Models;
+using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
+using TME.Scenario.Default.Scenario;
 
 namespace DatabaseExporter.Mapping
 {
@@ -43,6 +45,15 @@ namespace DatabaseExporter.Mapping
                 .ForMember(a => a.Version, b => b.MapFrom(c => CsvExportVersion))
                 .ForMember(a => a.Id, b => b.MapFrom(c => c.Id.RawId))
                 .ForMember(a => a.Flags, b => b.MapFrom(c => c.RawFlags));
+            
+            CreateMap<Character, CsvCharacter>(MemberList.Destination)
+                .ForMember(a => a.Version, b => b.MapFrom(c => CsvExportVersion))
+                .ForMember(a => a.Id, b => b.MapFrom(c => c.Id.RawId))
+                .ForMember(a => a.Flags, b => b.MapFrom(c => c.RawFlags));
+
+            CreateMap<IUnit, CsvUnit>(MemberList.None);
+                //.ForMember(a => a.Type, b => b.MapFrom(c => c.Type));
+
         }
     }
 }

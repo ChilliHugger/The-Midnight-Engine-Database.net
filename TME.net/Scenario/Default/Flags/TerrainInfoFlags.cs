@@ -9,5 +9,9 @@ namespace TME.Scenario.Default.Flags
         Block       = 1 << 1,   // terrain blocks movement? ( not implemented )
         Interesting = 1 << 2,   // terrain is interesting
         Army        = 1 << 3,   // army is visible at terrain
+        
+        // Entity
+        None                = EntityFlags.None,
+        Disabled            = EntityFlags.Disabled
     }
 }

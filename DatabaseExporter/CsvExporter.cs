@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
@@ -55,10 +54,11 @@ namespace DatabaseExporter
             OutputStrongholds();
             OutputRegiments();
             OutputObjects();
+            OutputCharacters();
             
             // TODO:
             // characters
-            // object
+
             
             // Infos
             OutputAreaInfo();
@@ -78,7 +78,7 @@ namespace DatabaseExporter
 
         private StreamWriter GetStream(string tag)
         {
-            return new StreamWriter( Path.Combine(_folder,tag) + ".csv");
+            return new StreamWriter( Path.Combine(_folder,tag) + ".tsv");
         }
 
         private readonly CsvConfiguration _configuration = new (CultureInfo.InvariantCulture)
@@ -143,6 +143,14 @@ namespace DatabaseExporter
             using var csv = new CsvWriter(writer, _configuration);
             csv.Context.RegisterClassMap<CsvObjectMap>();
             csv.WriteRecords(_mapper.Map<List<CsvObject>>(_entityContainer.Things));
+        }
+        
+        private void OutputCharacters()
+        {
+            using var writer = GetStream("characters");
+            using var csv = new CsvWriter(writer, _configuration);
+            csv.Context.RegisterClassMap<CsvCharacterMap>();
+            csv.WriteRecords(_mapper.Map<List<CsvCharacter>>(_entityContainer.Lords));
         }
         
         private void OutputVariables()

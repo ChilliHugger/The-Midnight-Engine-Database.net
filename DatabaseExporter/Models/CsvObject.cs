@@ -1,6 +1,5 @@
-using CsvHelper.Configuration;
-using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -13,9 +12,12 @@ namespace DatabaseExporter.Models
         public string Description { get; set; }
         public CsvId UseDescription { get; set; }
         public CsvId CarriedBy { get; set; }
+        
+        // for export
+        public ThingFlags ObjectFlags => (ThingFlags) Flags;
     }
     
-    public sealed class CsvObjectMap : ClassMap<CsvObject>
+    public sealed class CsvObjectMap : CsvClassMap<CsvObject>
     {
         public CsvObjectMap()
         {
@@ -24,7 +26,7 @@ namespace DatabaseExporter.Models
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
             // CsvEntity
-            Map(m => m.Flags).Index(3);
+            Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.ObjectFlags)).Index(3);
             // CsvItem
             Map(m => m.Location).Index(4);
             // CsvObject

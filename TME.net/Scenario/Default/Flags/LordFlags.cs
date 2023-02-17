@@ -5,7 +5,6 @@ namespace TME.Scenario.Default.Flags
     [Flags]
     public enum LordFlags : uint
     {
-        None                = 0,
         Hidden              = 1 << 0,   // currently hiding
         Riding              = 1 << 1,   // currently riding
         Alive               = 1 << 2,   // alive
@@ -37,5 +36,9 @@ namespace TME.Scenario.Default.Flags
         HasFollowers        = 1 << 21,  // has followers
         PreparesBattle      = 1 << 22,  // prepares to do battle
         Approaching         = 1 << 23,  // we are approaching a lord (DDR)
+        
+        // Entity
+        None                = EntityFlags.None,
+        Disabled            = EntityFlags.Disabled
     }
 }

@@ -5,6 +5,7 @@ namespace TME.Scenario.Default.Flags
     [Flags]
     public enum LordTraits : uint
     {
+        None             = 0,
 // +ve
         Good             = 1 << 0,
         Strong           = 1 << (1),
