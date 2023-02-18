@@ -3,6 +3,8 @@
 
 using System.Collections.Generic;
 using System.Linq;
+using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Types;
@@ -42,6 +44,15 @@ namespace DatabaseExporter.Models
         public CsvUnit Warriors => Units.First(u => u.Type == UnitType.Warrior);
         public CsvUnit Riders => Units.First(u => u.Type == UnitType.Rider);
         public LordFlags LordFlags => (LordFlags) Flags;
+        
+        // ddr
+        public CsvId Home { get; set; }
+        public CsvId DesiredObject { get; set; }
+        //public Loc LastLocation { get; internal set; } = Loc.Zero;
+        //public IRevengeLord? FightingAgainst { get; internal set; }
+        //public uint BattleLost { get; internal set; }
+        //public MXId TargetId { get; internal set; } = MXId.None;
+        //public Loc TargetLocation { get; internal set; } = Loc.Zero;
     }
     
     public sealed class CsvCharacterMap : CsvClassMap<CsvCharacter>
@@ -79,7 +90,11 @@ namespace DatabaseExporter.Models
             Map(m => m.Following.Symbol).Index(24).Name("Following");
             Map(m => m.Foe.Symbol).Index(25).Name("Foe");
             Map(m => m.Liege.Symbol).Index(26).Name("Liege");
-            Map(m => m.Traits).Index(27);
+            Map(m => m.Traits).Convert(m=>ConvertFlags(m.Value.Traits)).Index(27);
+            
+            // ddr
+            Map(m => m.Home.Symbol).Index(28).Name("Home");  
+            Map(m => m.DesiredObject.Symbol).Index(29).Name("DesiredObject");
             
             //Map(m => m.KilledBy.Symbol).Index(12).Name("KilledBy");
             //Map(m => m.LastCommandId.Symbol).Index(14).Name("KilledBy");

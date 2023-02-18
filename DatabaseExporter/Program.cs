@@ -2,6 +2,7 @@
 using DatabaseExporter.Mapping;
 using TME;
 using TME.Interfaces;
+using TME.Scenario.ddr;
 using TME.Scenario.lom;
 
 namespace DatabaseExporter
@@ -10,10 +11,12 @@ namespace DatabaseExporter
     {
         static void Main()
         {
-            ExportDatabase("../../../../data/lom","../../../../data/csv_lom");
+            ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
+            ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
+
         }
 
-        private static void ExportDatabase(string directory, string output)
+        private static void ExportDatabase(string scenario,string directory, string output)
         {
             var builder = new ContainerBuilder();
 
@@ -29,7 +32,7 @@ namespace DatabaseExporter
             var engine = container.Resolve<IEngine>();
             var database = container.Resolve<IDatabase>();
 
-            engine.SetScenario(MidnightScenario.Tag);
+            engine.SetScenario(scenario);
             database.Directory = directory;
             database.Load();
 

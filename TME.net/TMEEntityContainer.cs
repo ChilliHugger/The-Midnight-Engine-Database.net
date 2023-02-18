@@ -4,6 +4,7 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using Autofac;
 using TME.Interfaces;
+using TME.Scenario.ddr;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
@@ -74,6 +75,21 @@ namespace TME
 
         public bool Load(ISerializeContext context)
         {
+            switch (context.Section)
+            {
+                case DataSection.Entities:
+                    SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
+                    _internalSymbolCache = new Dictionary<string, IEntity>();
+                    return LoadMainInfo(context);
+                case DataSection.ObjectInfo:
+                    return LoadObjectInfo(context);
+                default:
+                    return true;
+            }
+        }
+
+        public bool LoadMainInfo(ISerializeContext context)
+        {
             var characters = context.Reader.ReadInt32();
             var regiments = context.Reader.ReadInt32();
             var routenodes = context.Reader.ReadInt32();
@@ -92,9 +108,7 @@ namespace TME
             var variables = context.Reader.ReadInt32();
 
             _variables.sv_variables = variables;
-
-            _internalSymbolCache = new Dictionary<string, IEntity>();
-
+            
             Lords = CreateCollection<ICharacter>(characters).ToList().AsReadOnly();
             Regiments = CreateCollection<IRegiment>(regiments).ToList().AsReadOnly();
             RouteNodes = CreateCollection<IRouteNode>(routenodes).ToList().AsReadOnly();
@@ -111,9 +125,6 @@ namespace TME
             Terrains = CreateCollection<TerrainInfo>(terrains).ToList().AsReadOnly();
             Areas = CreateCollection<AreaInfo>(areas).ToList().AsReadOnly();
             Commands = CreateCollection<CommandInfo>(commands).ToList().AsReadOnly();
-            
-            //ObjectTypes = CreateCollection<ObjectTypeInfo>(object_types).ToList().AsReadOnly();
-            //ObjectPowers = CreateCollection<ObjectPowerInfo>(object_powers).ToList().AsReadOnly();
             
             ReadCollection(Lords, context);
             ReadCollection(Regiments, context);
@@ -132,18 +143,26 @@ namespace TME
             ReadInfoCollection(Areas,context);
             ReadInfoCollection(Commands,context);
 
-            // if (context.Version > 10)
-            // {
-            //     ReadCollection(ObjectTypes, context);
-            //     ReadCollection(ObjectPowers, context);
-            // }
-
-            SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
-            _internalSymbolCache = new Dictionary<string, IEntity>();
-            
             return true;
         }
+        
+        public bool LoadObjectInfo(ISerializeContext context)
+        {
+            // chunk 4
+            if (context.Scenario is RevengeScenario && context.Version > 10)
+            {
+                var types = context.Reader.ReadInt32();
+                ObjectTypes = CreateCollection<ObjectTypeInfo>(types).ToList().AsReadOnly();
+                ReadInfoCollection(ObjectTypes, context);
+                
+                var powers = context.Reader.ReadInt32();
+                ObjectPowers = CreateCollection<ObjectPowerInfo>(powers).ToList().AsReadOnly();
+                ReadInfoCollection(ObjectPowers, context);
+            }
 
+            return true;
+        }
+        
         public bool Save()
         {
             throw new System.NotImplementedException();

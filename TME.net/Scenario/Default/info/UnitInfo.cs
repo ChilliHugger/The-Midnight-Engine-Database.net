@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Serialize;
@@ -21,8 +22,7 @@ namespace TME.Scenario.Default.info
             if (!base.Load(ctx)) return false;
 
             Success = ctx.Reader.ReadUInt32();
-            BaseRestModifier = ctx.Reader.ReadUInt32();
-            
+            BaseRestModifier = (uint) Math.Max(ctx.Reader.ReadInt32(),0); // temp bug fix
             return true;
         }
     }

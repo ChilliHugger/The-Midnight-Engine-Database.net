@@ -22,6 +22,10 @@ namespace DatabaseExporter.Models
         public Terrain Terrain { get; set; }
         public uint Killed { get; set; }
         public uint Lost { get; set; }
+        
+        // Revenge
+        public uint Energy { get; set; }
+
     }
     
     public sealed class CsvStrongholdMap : CsvClassMap<CsvStronghold>
@@ -53,6 +57,9 @@ namespace DatabaseExporter.Models
             Map(m => m.Terrain).Index(18);
             Map(m => m.Killed).Index(19);
             Map(m => m.Lost).Index(20);
+            
+            // ddr
+            Map(m => m.Energy).Index(21);
         }
     }
 }

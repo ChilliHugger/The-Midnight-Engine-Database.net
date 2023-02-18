@@ -334,6 +334,13 @@ namespace TME.Scenario.Default.Base
 
         public bool Load(ISerializeContext context)
         {
+            if (context.Section != DataSection.Variables)
+            {
+                return true;
+            }
+            
+            Initialise();
+            
             for ( var ii=0; ii<sv_variables; ii++ ) {
 
                 var name = context.Reader.ReadString();

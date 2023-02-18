@@ -10,6 +10,7 @@ using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Commands;
 using TME.Scenario.Default.Commands.Interfaces;
 using TME.Scenario.Default.Entities;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
@@ -99,6 +100,10 @@ namespace TME
             _builder.RegisterType<TerrainInfo>();
             _builder.RegisterType<AreaInfo>();
             _builder.RegisterType<CommandInfo>();
+            
+            // ddr
+            _builder.RegisterType<ObjectPowerInfo>(); 
+            _builder.RegisterType<ObjectTypeInfo>();
         }
         
         private void RegisterHelpers()

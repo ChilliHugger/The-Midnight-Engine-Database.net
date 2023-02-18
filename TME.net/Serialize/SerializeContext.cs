@@ -11,6 +11,9 @@ namespace TME.Serialize
         public double Version { get; set; }
         public bool IsSaveGame { get; set; }
         public bool IsDatabase { get; set; }
+        public DataSection Section { get; set; } = DataSection.None;
+        public IScenario? Scenario { get; set; } = default;
+        
         public ISerializeReader Reader { get; set; }
         private readonly IEntityResolver _entityResolver;
         private readonly IStrings _strings;
@@ -40,20 +43,5 @@ namespace TME.Serialize
             var id = Reader.ReadUInt32();
             return _strings.GetById(new MXId(EntityType.String, id));
         }
-
-        
-        //public void ReadCollection<T>(IEnumerable<T> list, ISerializeContext context)
-        //{
-        //    for (int ii = 0; ii < list.Count(); ii++)
-        //    {
-        //        var index = context.Reader.ReadInt32() - 1;
-        //        if (list.ElementAt(index) is ISerializable item)
-        //        {
-        //            item.Load(context);
-        //        }
-        //        //_objectReader.Read(list.ElementAt(index), reader);
-        //    }
-        //}
-
     }
 }

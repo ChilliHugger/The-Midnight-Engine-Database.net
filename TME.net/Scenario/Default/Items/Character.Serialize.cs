@@ -26,7 +26,7 @@ namespace TME.Scenario.Default.Items
             BattleInfo.Load(ctx);
 
             Reckless = ctx.Reader.ReadUInt32();
-            Energy = ctx.Reader.ReadUInt32();
+            Energy = (uint) Math.Max(ctx.Reader.ReadInt32(),0); // temp fix
             Strength = ctx.Reader.ReadUInt32();
             Cowardly = ctx.Reader.ReadUInt32();
             Courage = ctx.Reader.ReadUInt32();
@@ -66,11 +66,7 @@ namespace TME.Scenario.Default.Items
             Followers = ctx.Version > 4
                 ? ctx.Reader.ReadUInt32()
                 : 0;
-
-            // temp bug fix
-            if ((int) Energy < 0)
-                Energy = 0;
-
+            
             return true;
         }
 

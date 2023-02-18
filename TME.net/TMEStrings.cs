@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using TME.Interfaces;
+using TME.Scenario.Default.Enums;
 using TME.Serialize;
 using TME.Types;
 
@@ -26,6 +27,11 @@ namespace TME
 
         public bool Load(ISerializeContext context)
         {
+            if (context.Section != DataSection.Strings)
+            {
+                return true;
+            }
+            
             var count = context.Reader.ReadUInt32();
 
             Entries = Enumerable.Range(0, (int) count)

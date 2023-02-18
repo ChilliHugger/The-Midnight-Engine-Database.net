@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
+using TME.Serialize;
 
 namespace TME.Interfaces
 {
@@ -26,7 +27,5 @@ namespace TME.Interfaces
         IReadOnlyList<CommandInfo> Commands { get; }
         IReadOnlyList<ObjectTypeInfo> ObjectTypes { get; }
         IReadOnlyList<ObjectPowerInfo> ObjectPowers { get; }
-
-
     }
 }

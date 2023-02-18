@@ -26,8 +26,8 @@ namespace DatabaseExporter.Models
             Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.VictoryFlags)).Index(3);
             // CsvVictory
             Map(m => m.Priority).Index(4);
-            Map(m => m.Mission.Symbol).Index(5);
-            Map(m => m.String.Symbol).Index(6);
+            Map(m => m.Mission.Symbol).Index(5).Name("Mission");
+            Map(m => m.String.Symbol).Index(6).Name("String");
         }
     }
 }
