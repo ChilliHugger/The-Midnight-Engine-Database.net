@@ -15,6 +15,7 @@ namespace TME.Scenario.Default.Interfaces
     
     public interface ICharacter : IItem
     {
+        new LordFlags Flags { get; }
         Direction Looking { get; }
         Time Time { get; }
         Race Race { get; }
@@ -36,7 +37,7 @@ namespace TME.Scenario.Default.Interfaces
         MXId LastCommandId { get; }
         Command LastCommand { get; }
 
-        List<IUnit> Units { get; }
+        IList<IUnit> Units { get; }
 
         ICharacter? Following { get; }
         uint Followers { get; }
@@ -47,6 +48,9 @@ namespace TME.Scenario.Default.Interfaces
         uint Courage { get; }
         uint Fear { get; }
 
+        uint Riders { get; }
+        uint Warriors { get; }
+        
         // These are only initially used for DDR but are
         // supported in default characters
         Orders Orders { get; }

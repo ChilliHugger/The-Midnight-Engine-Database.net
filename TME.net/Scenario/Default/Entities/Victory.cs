@@ -11,6 +11,7 @@ namespace TME.Scenario.Default.Entities
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class Victory : Entity, IVictory
     {
+        public new VictoryFlags Flags => (VictoryFlags) RawFlags;
         public int Priority { get; internal set; }
         public uint String { get; internal set; }
         public IMission? Mission { get; internal set; }

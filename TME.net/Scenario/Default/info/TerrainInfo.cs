@@ -10,6 +10,7 @@ namespace TME.Scenario.Default.info
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class TerrainInfo : Info
     {
+        public new TerrainInfoFlags Flags => (TerrainInfoFlags) RawFlags;
         public string Preposition { get; internal set; } = "";
         public string Description { get; internal set; } = "";
         public uint Success { get; internal set; }

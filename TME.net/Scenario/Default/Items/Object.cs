@@ -12,6 +12,7 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public partial class Object : Item, IObjectInternal
     {
+        public new ThingFlags Flags => (ThingFlags) RawFlags;
         public ThingType Kills { get; internal set; } = ThingType.None;
         public string Name { get; internal set; } = "";
         public string Description { get; internal set; } = "";

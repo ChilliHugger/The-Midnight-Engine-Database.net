@@ -1,4 +1,5 @@
 ﻿using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 
 namespace TME.Scenario.Default.Interfaces
 {
@@ -9,6 +10,7 @@ namespace TME.Scenario.Default.Interfaces
     
     public interface IObject : IItem
     {
+        new ThingFlags Flags { get; }
         ThingType Kills { get; }
         string Name { get; }
         string Description { get; }

@@ -1,70 +1,79 @@
+using System;
 using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using AutoMapper;
 using CsvHelper;
 using CsvHelper.Configuration;
+using DatabaseExporter.Converters;
 using DatabaseExporter.Models;
+using DatabaseExporter.Models.Info;
+using DatabaseExporter.Models.Item;
 using TME.Interfaces;
+using TME.Scenario.ddr;
+using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
+using TME.Types;
 
 // ReSharper disable StringLiteralTypo
 namespace DatabaseExporter
 {
     public class CsvExporter
     {
-        private readonly IMapper _mapper;
         private readonly IVariables _variables;
         private readonly IStrings _strings;
         private readonly IEntityContainer _entityContainer;
-
+        private readonly IEntityResolver _entityResolver;
+        private string _scenario;
+        
         private string _folder = "";
         
+        
         public CsvExporter(
-            IMapper mapper,
             IVariables variables,
             IStrings strings,
-            IEntityContainer entityContainer)
+            IEntityContainer entityContainer,
+            IEntityResolver entityResolver)
         {
-            _mapper = mapper;
             _variables = variables;
             _strings = strings;
             _entityContainer = entityContainer;
+            _entityResolver = entityResolver;
         }
 
-        public void Export(string folder)
+        public void Process(string folder,string scenario)
         {
             _folder = folder;
+            _scenario = scenario;
             
             // Misc
-            OutputVariables();
-            OutputStrings();
+            Variables();
+            Strings();
             
             // Items
-            OutputRouteNodes();
-            OutputWaypoints();
-            OutputMissions();
-            OutputVictories();
-            OutputStrongholds();
-            OutputRegiments();
-            OutputObjects();
-            OutputCharacters();
+            RouteNodes();
+            Waypoints();
+            Missions();
+            Victories();
+            Strongholds();
+            Regiments();
+            Objects();
+            Characters();
             
             // Infos
-            OutputAreaInfo();
-            OutputCommandInfo();
-            OutputDirectionInfo();
-            OutputGenderInfo();
-            OutputObjectPowerInfo();
-            OutputObjectTypeInfo();
-            OutputRaceInfo();
-            OutputTerrainInfo();
-            OutputUnitInfo();
-            
-            // TODO:
-            // 
-            
+            AreaInfo();
+            CommandInfo();
+            DirectionInfo();
+            GenderInfo();
+            ObjectPowerInfo();
+            ObjectTypeInfo();
+            RaceInfo();
+            TerrainInfo();
+            UnitInfo();
         }
 
         private StreamWriter GetStream(string tag)
@@ -77,160 +86,175 @@ namespace DatabaseExporter
             HasHeaderRecord = true,
             Mode = CsvMode.NoEscape,
             Delimiter = "\t",
-            ShouldQuote = args => true
+            ShouldQuote = _ => true
+            
         };
         
-        private void OutputRouteNodes()
+        private void Export<TOut,TMap>(string tag, IEnumerable<TOut> values)
+            where TMap : ClassMap
         {
-            using var writer = GetStream("routenodes");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvRouteNodeMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvRouteNode>>(_entityContainer.RouteNodes));
+            var map = (TMap) Activator.CreateInstance(typeof(TMap));
+            Export(tag,values,map);
         }
         
-        private void OutputWaypoints()
+        private void Export<TOut>(string tag, IEnumerable<TOut> values, ClassMap map)
         {
-            using var writer = GetStream("waypoints");
+            using var writer = GetStream(tag);
             using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvWaypointMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvWaypoint>>(_entityContainer.Waypoints));
+            var enumConverter = new EnumConverter(_entityResolver);
+            csv.Context.TypeConverterCache.AddConverter<Race>(enumConverter);
+            csv.Context.TypeConverterCache.AddConverter<UnitType>(enumConverter);
+            csv.Context.TypeConverterCache.AddConverter<Gender>(enumConverter);
+            csv.Context.TypeConverterCache.AddConverter<Direction>(enumConverter);
+            csv.Context.TypeConverterCache.AddConverter<Terrain>(enumConverter);
+            csv.Context.TypeConverterCache.AddConverter<Command>(enumConverter);
+            
+            csv.Context.TypeConverterCache.AddConverter<MXId>(new MXIdConverter());
+            csv.Context.TypeConverterCache.AddConverter<Loc>(new LocationConverter());
+            csv.Context.TypeConverterCache.AddConverter<IRouteNodes>(new RouteNodesConverter());
+            csv.Context.TypeConverterCache.AddConverter<uint>(new StringIdConverter(_strings));
+            csv.Context.TypeConverterCache.AddConverter<IEntity>(new EntityConverter<IEntity>());
+            csv.Context.TypeConverterCache.AddConverter<ICharacter>(new EntityConverter<ICharacter>());
+            csv.Context.TypeConverterCache.AddConverter<IStronghold>(new EntityConverter<IStronghold>());
+            csv.Context.TypeConverterCache.AddConverter<IObject>(new EntityConverter<IObject>());
+            csv.Context.TypeConverterCache.AddConverter<IMission>(new EntityConverter<IMission>());
+            csv.Context.TypeConverterCache.AddConverter<IItem>(new EntityConverter<IItem>());
+            csv.Context.TypeConverterCache.AddConverter<IList<IEntity>>(new EntityListConverter<IList<IEntity>,IEntity>());
+            csv.Context.TypeConverterCache.AddConverter<IReadOnlyList<IObject>>(new EntityListConverter<IReadOnlyList<IObject>,IObject>());
+            
+            csv.Context.TypeConverterCache.AddConverter<LordTraits>(new FlagConverter<LordTraits>());
+            csv.Context.TypeConverterCache.AddConverter<EntityFlags>(new FlagConverter<EntityFlags>());
+            csv.Context.TypeConverterCache.AddConverter<LordFlags>(new FlagConverter<LordFlags>());
+            csv.Context.TypeConverterCache.AddConverter<RegimentFlags>(new FlagConverter<RegimentFlags>());
+            csv.Context.TypeConverterCache.AddConverter<ThingFlags>(new FlagConverter<ThingFlags>());
+            csv.Context.TypeConverterCache.AddConverter<MissionFlags>(new FlagConverter<MissionFlags>());
+            csv.Context.TypeConverterCache.AddConverter<VictoryFlags>(new FlagConverter<VictoryFlags>());
+            csv.Context.TypeConverterCache.AddConverter<TerrainInfoFlags>(new FlagConverter<TerrainInfoFlags>());
+            
+            csv.Context.RegisterClassMap(map);
+            csv.WriteRecords(values);
         }
         
-        private void OutputMissions()
+        private void RouteNodes()
         {
-            using var writer = GetStream("missions");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvMissionMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvMission>>(_entityContainer.Missions));
+            Export<IRouteNode,OutRouteNodeMap>("routenodes",_entityContainer.RouteNodes);
         }
         
-        private void OutputVictories()
+        private void Waypoints()
         {
-            using var writer = GetStream("victories");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvVictoryMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvVictory>>(_entityContainer.Victories));
+            Export<IWaypoint,OutWaypointMap>("waypoints",_entityContainer.Waypoints);
         }
         
-        private void OutputStrongholds()
+        private void Missions()
         {
-            using var writer = GetStream("strongholds");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvStrongholdMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvStronghold>>(_entityContainer.Strongholds));
+            Export<IMission,OutMissionMap>("missions",_entityContainer.Missions);
         }
         
-        private void OutputRegiments()
+        private void Victories()
         {
-            using var writer = GetStream("regiments");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvRegimentMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvRegiment>>(_entityContainer.Regiments));
+            Export<IVictory,OutVictoryMap>("victories",_entityContainer.Victories);
         }
         
-        private void OutputObjects()
+        private void Strongholds()
         {
-            using var writer = GetStream("objects");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvObjectMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvObject>>(_entityContainer.Things));
+            if (_scenario == RevengeScenario.Tag)
+            {
+                Export<IRevengeStronghold,OutStrongholdMap<IRevengeStronghold>>
+                    ("strongholds", _entityContainer.Strongholds.Cast<IRevengeStronghold>());
+            }
+            else
+            {
+                Export<IStronghold,OutStrongholdMap<IStronghold>>
+                    ("strongholds", _entityContainer.Strongholds);
+            }
         }
         
-        private void OutputCharacters()
+        private void Regiments()
         {
-            using var writer = GetStream("characters");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvCharacterMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvCharacter>>(_entityContainer.Lords));
+            Export<IRegiment,OutRegimentMap>("regiments",_entityContainer.Regiments);
         }
         
-        private void OutputVariables()
+        private void Objects()
         {
-            using var writer = GetStream("variables");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvVariableMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvDatabaseVariable>>(_variables.GetValues()).OrderBy(c=>c.Symbol));
+            if (_scenario == RevengeScenario.Tag)
+            {
+                Export<IRevengeThing,OutObjectMap<IRevengeThing>>
+                    ("objects", _entityContainer.Things.Cast<IRevengeThing>());
+            }
+            else
+            {
+                Export<IObject,OutObjectMap<IObject>>("objects", _entityContainer.Things);
+            }
         }
         
-        private void OutputStrings()
+        private void Characters()
         {
-            using var writer = GetStream("strings");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvDatabaseStringMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvDatabaseString>>(_strings.Entries).OrderBy(c=>c.Id));
+            if (_scenario == RevengeScenario.Tag)
+            {
+                Export<IRevengeLord,OutCharacterMap<IRevengeLord>>
+                    ("characters", _entityContainer.Lords.Cast<IRevengeLord>());
+            }
+            else
+            {
+                Export<ICharacter,OutCharacterMap<ICharacter>>
+                    ("characters", _entityContainer.Lords);
+            }
+        }
+        
+        private void Variables()
+        {
+            Export<DatabaseVariable, OutVariableMap>("variables", _variables.GetValues().OrderBy(c=>c.Symbol));
+        }
+        
+        private void Strings()
+        {
+            Export<DatabaseString,OutDatabaseStringMap>("strings", _strings.Entries.OrderBy(c=>c.Id.RawId).ToList());
         }
         
         // Info
-        private void OutputAreaInfo()
+        private void AreaInfo()
         {
-            using var writer = GetStream("areainfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvAreaInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvAreaInfo>>(_entityContainer.Areas));
+            Export<AreaInfo,OutAreaInfoMap>("areainfo", _entityContainer.Areas);
         }
         
-        private void OutputCommandInfo()
+        private void CommandInfo()
         {
-            using var writer = GetStream("commandinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvCommandInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvCommandInfo>>(_entityContainer.Commands));
+            Export<CommandInfo,OutCommandInfoMap>("commandinfo", _entityContainer.Commands);
         }
         
-        private void OutputDirectionInfo()
+        private void DirectionInfo()
         {
-            using var writer = GetStream("directioninfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvDirectionInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvDirectionInfo>>(_entityContainer.Directions));
+            Export<DirectionInfo,OutDirectionInfoMap>("directioninfo", _entityContainer.Directions);
         }
         
-        private void OutputGenderInfo()
+        private void GenderInfo()
         {
-            using var writer = GetStream("genderinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvGenderInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvGenderInfo>>(_entityContainer.Genders));
+            Export<GenderInfo,OutGenderInfoMap>("genderinfo", _entityContainer.Genders);
         }
         
-        private void OutputObjectPowerInfo()
+        private void ObjectPowerInfo()
         {
-            using var writer = GetStream("objectpowerinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvObjectPowerInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvObjectPowerInfo>>(_entityContainer.ObjectPowers));
+            Export<ObjectPowerInfo,OutObjectPowerInfoMap>("objectpowerinfo", _entityContainer.ObjectPowers);
         }
         
-        private void OutputObjectTypeInfo()
+        private void ObjectTypeInfo()
         {
-            using var writer = GetStream("objecttypeinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvObjectTypeInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvObjectTypeInfo>>(_entityContainer.ObjectTypes));
+            Export<ObjectTypeInfo,OutObjectTypeInfoMap>("objecttypeinfo", _entityContainer.ObjectTypes);
         }
         
-        private void OutputRaceInfo()
+        private void RaceInfo()
         {
-            using var writer = GetStream("raceinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvRaceInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvRaceInfo>>(_entityContainer.Races));
+            Export<RaceInfo,OutRaceInfoMap>("raceinfo", _entityContainer.Races);
         }
         
-        private void OutputTerrainInfo()
+        private void TerrainInfo()
         {
-            using var writer = GetStream("terraininfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvTerrainInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvTerrainInfo>>(_entityContainer.Terrains));
+            Export<TerrainInfo,OutTerrainInfoMap>("terraininfo", _entityContainer.Terrains);
         }
         
-        private void OutputUnitInfo()
+        private void UnitInfo()
         {
-            using var writer = GetStream("unitinfo");
-            using var csv = new CsvWriter(writer, _configuration);
-            csv.Context.RegisterClassMap<CsvUnitInfoMap>();
-            csv.WriteRecords(_mapper.Map<List<CsvUnitInfo>>(_entityContainer.Units));
+            Export<UnitInfo,OutUnitInfoMap>("unitinfo", _entityContainer.Units);
         }
     }
 }

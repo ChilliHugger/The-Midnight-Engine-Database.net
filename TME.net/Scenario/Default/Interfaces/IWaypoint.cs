@@ -4,7 +4,7 @@
     {
     }
     
-    public interface IWaypoint : IEntity
+    public interface IWaypoint : IItem
     {
     }
 }

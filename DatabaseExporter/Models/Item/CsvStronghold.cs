@@ -1,8 +1,11 @@
+using CsvHelper.Configuration;
+using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace DatabaseExporter.Models
+namespace DatabaseExporter.Models.Item
 {
     public class CsvStronghold : CsvItem
     {
@@ -28,38 +31,43 @@ namespace DatabaseExporter.Models
 
     }
     
-    public sealed class CsvStrongholdMap : CsvClassMap<CsvStronghold>
+    public sealed class OutStrongholdMap<T> : ClassMap<T>
+        where T : IStronghold
     {
-        public CsvStrongholdMap()
+        public OutStrongholdMap()
         {
             // CsvRecord
-            Map(m => m.Version).Index(0);
+            Map().Constant(1).Index(0).Name("Version");
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
             // CsvEntity
-            Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.EntityFlags)).Index(3);
+            Map(m => m.Flags).Index(3);
             // CsvItem
             Map(m => m.Location).Index(4);
             // CsvStronghold
-            Map(m => m.OccupyingRace).Index(5);
+            Map(m => m.OccupyingRace).Index(5).Name("Occupying Race");
             Map(m => m.Race).Index(6);
-            Map(m => m.UnitType).Index(7);
-            Map(m => m.TotalTroops).Index(8);
-            Map(m => m.MinTroops).Index(9);
-            Map(m => m.MaxTroops).Index(10);
-            Map(m => m.StrategicalSuccess).Index(11);
-            Map(m => m.OwnerSuccess).Index(12);
-            Map(m => m.EnemySuccess).Index(13);
+            Map(m => m.UnitType).Index(7).Name("Type");
+            Map(m => m.Total).Index(8);
+            Map(m => m.Min).Index(9);
+            Map(m => m.Max).Index(10);
+            Map(m => m.StrategicalSuccess).Index(11).Name("Strategical Success");
+            Map(m => m.OwnerSuccess).Index(12).Name("Owner Success");
+            Map(m => m.EnemySuccess).Index(13).Name("Enemy Success");
             Map(m => m.Influence).Index(14);
             Map(m => m.Respawn).Index(15);
-            Map(m => m.Occupier.Symbol).Index(16).Name("Occupier");
-            Map(m => m.Owner.Symbol).Index(17).Name("Owner");
+            Map(m => m.Occupier).Index(16);
+            Map(m => m.Owner).Index(17);
             Map(m => m.Terrain).Index(18);
-            Map(m => m.Killed).Index(19);
-            Map(m => m.Lost).Index(20);
+            Map(m => m.Killed).Ignore();
+            Map(m => m.Lost).Ignore();
             
             // ddr
-            Map(m => m.Energy).Index(21);
+            if (typeof(T) == typeof(IRevengeStronghold))
+            {
+                Map<IRevengeStronghold>(m => m.Energy).Index(19);
+                Map<IRevengeStronghold>(m => m.Loyalty).Index(20);
+            }
         }
     }
 }

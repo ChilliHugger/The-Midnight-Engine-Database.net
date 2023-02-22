@@ -1,11 +1,11 @@
 using System.Collections.Generic;
-using System.Linq;
+using CsvHelper.Configuration;
 using TME.Scenario.Default.Enums;
-using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.Interfaces;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace DatabaseExporter.Models
+namespace DatabaseExporter.Models.Item
 {
     public class CsvMission : CsvEntity
     {
@@ -17,36 +17,29 @@ namespace DatabaseExporter.Models
         public CsvId Scorer { get; set; }
         public MissionAction Action { get; set; }
         public CsvId ActionId { get; set; }
-        
-        // for export
-        public MissionFlags MissionFlags => (MissionFlags) Flags;
     }
     
-    public sealed class CsvMissionMap : CsvClassMap<CsvMission>
+    public sealed class OutMissionMap : ClassMap<IMission>
     {
-        public CsvMissionMap()
+        public OutMissionMap()
         {
-            static string Transform(CsvMission m)
-            {
-                var output = string.Join("|", m.References.Select(c => c.Symbol));
-                return output;
-            }
-            
             // CsvRecord
-            Map(m => m.Version).Index(0);
+            Map().Constant(1).Index(0).Name("Version");
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
             // CsvEntity
-            Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.MissionFlags)).Index(3);
+            Map(m => m.Flags).Index(3);
             // CsvMission
             Map(m => m.Priority).Index(4);
             Map(m => m.Objective).Index(5);
             Map(m => m.Condition).Index(6);
-            Map(m => m.References ).Convert( o => Transform(o.Value) ).Index(7);
+            Map(m => m.References).Index(7);
             Map(m => m.Points).Index(8);
-            Map(m => m.Scorer.Symbol).Index(9).Name("Scorer");
+            Map(m => m.Scorer).Index(9);
             Map(m => m.Action).Index(10);
-            Map(m => m.ActionId.Symbol).Index(11).Name("ActOn");
+            Map(m => m.ActionId).Index(11).Name("Action Id");
+            
+            // Ignores
         }
     }
 }

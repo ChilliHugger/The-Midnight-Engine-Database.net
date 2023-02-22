@@ -22,6 +22,7 @@ namespace TME.Scenario.Default.Items
         public Recruitment Recruitment { get; internal set; }
         #endregion
 
+        public new LordFlags Flags => (LordFlags) RawFlags;
         public Direction Looking { get; internal set; } = Direction.None;
         public Time Time { get; internal set; } = Time.None;
         public Race Race { get; internal set; } = Race.None;
@@ -33,7 +34,7 @@ namespace TME.Scenario.Default.Items
         public WaitStatus WaitStatus { get; internal set; } = WaitStatus.None;
         public MXId LastCommandId { get; internal set; } = MXId.None;
         public Command LastCommand { get; internal set; } = Command.None;
-        public List<IUnit> Units { get; internal set; } 
+        public IList<IUnit> Units { get; internal set; } 
         public ICharacter? Following { get; internal set; }
         public uint Energy { get; internal set; }
         public uint Reckless { get; internal set; }
@@ -42,6 +43,16 @@ namespace TME.Scenario.Default.Items
         public uint Cowardly { get; internal set; }
         public uint Courage { get; internal set; }
         public uint Fear { get; internal set; }
+        public uint Riders
+        {
+            get => Units[1].Total;
+            internal set => ((IUnitInternal)Units[1]).SetTotal(value);
+        }
+        public uint Warriors
+        {
+            get => Units[0].Total;
+            internal set => ((IUnitInternal)Units[0]).SetTotal(value);
+        }
         public Orders Orders { get; internal set; } = Orders.None;
         public Race Loyalty { get; internal set; } = Race.None;
         public ICharacter? Foe { get; internal set; }

@@ -1,6 +1,10 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace DatabaseExporter.Models
+
+using CsvHelper.Configuration;
+using TME.Scenario.Default.Interfaces;
+
+namespace DatabaseExporter.Models.Item
 {
     public class CsvRouteNode : CsvItem
     {
@@ -8,21 +12,20 @@ namespace DatabaseExporter.Models
         public string Right { get; set; }
     }
     
-    public sealed class CsvRouteNodeMap : CsvClassMap<CsvRouteNode>
+    public sealed class OutRouteNodeMap : ClassMap<IRouteNode>
     {
-        public CsvRouteNodeMap()
+        public OutRouteNodeMap()
         {
             // CsvRecord
-            Map(m => m.Version).Index(0);
+            Map().Constant(1).Index(0).Name("Version");
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
             // CsvEntity
-            Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.EntityFlags)).Index(3);
+            Map(m => m.Flags).Index(3);
             // CsvItem
             Map(m => m.Location).Index(4);
             // CsvRouteNode
-            Map(m => m.Left).Index(5);
-            Map(m => m.Right).Index(6);
+            Map(m => m.RouteNodes).Index(5);
         }
     }
 }

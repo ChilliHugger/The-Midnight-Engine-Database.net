@@ -1,5 +1,6 @@
 ﻿using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
@@ -10,6 +11,7 @@ namespace TME.Scenario.Default.Interfaces
     
     public interface IRegiment : IItem, IArmy
     {
+        new RegimentFlags Flags { get; }
         IEntity? Target { get; }
         Orders Orders { get; }
         uint Delay { get; }

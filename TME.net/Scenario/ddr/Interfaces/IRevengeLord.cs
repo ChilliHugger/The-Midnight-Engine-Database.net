@@ -8,9 +8,9 @@ namespace TME.Scenario.ddr.Interfaces
     public interface IRevengeLord : ICharacter
     {
         Loc LastLocation { get; }
-        IRevengeThing? DesiredObject { get; }
-        IRevengeStronghold? HomeStronghold { get; }
-        IRevengeLord? FightingAgainst { get; }
+        IObject? DesiredObject { get; }
+        IStronghold? HomeStronghold { get; }
+        ICharacter? FightingAgainst { get; }
         uint BattleLost { get; }
         MXId TargetId { get; }
         Loc TargetLocation { get; }

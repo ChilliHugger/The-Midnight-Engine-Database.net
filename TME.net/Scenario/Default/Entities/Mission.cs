@@ -6,6 +6,7 @@ using TME.Extensions;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
@@ -18,6 +19,7 @@ namespace TME.Scenario.Default.Entities
     {
         private const int MaxReferences = 5;
         
+        public new MissionFlags Flags => (MissionFlags) RawFlags;
         public int Priority { get; internal set; }
         public MissionObjective Objective { get; internal set; } = MissionObjective.None;
         public MissionCondition Condition { get; internal set; } = MissionCondition.None;

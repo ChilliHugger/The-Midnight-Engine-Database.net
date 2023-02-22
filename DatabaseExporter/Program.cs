@@ -14,8 +14,27 @@ namespace DatabaseExporter
             ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
             ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
 
+            //ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
+
         }
 
+        private static void ImportDatabase(string scenario, string input, string output)
+        {
+            var builder = new ContainerBuilder();
+
+            RegisterMapping(builder);
+
+            builder.RegisterType<CsvImporter>();
+
+            var dependencyContainer = new TMEDependencyContainer(builder);
+            dependencyContainer.Build();
+
+            var container = dependencyContainer.CurrentContainer;
+
+            var importer = container.Resolve<CsvImporter>();
+            importer.Process(input);
+        }
+        
         private static void ExportDatabase(string scenario,string directory, string output)
         {
             var builder = new ContainerBuilder();
@@ -37,7 +56,7 @@ namespace DatabaseExporter
             database.Load();
 
             var exporter = container.Resolve<CsvExporter>();
-            exporter.Export(output);
+            exporter.Process(output,scenario);
         }
 
         private static void RegisterMapping(ContainerBuilder builder)

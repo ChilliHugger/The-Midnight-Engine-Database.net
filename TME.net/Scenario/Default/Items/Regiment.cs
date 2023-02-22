@@ -10,6 +10,7 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public partial class Regiment : Item, IRegiment
     {
+        public new RegimentFlags Flags => (RegimentFlags) RawFlags;
         public IItem? Parent { get; internal set; } 
         public ArmyType ArmyType { get; private set; } = ArmyType.Regiment;
         public UnitType UnitType { get; internal set; } = UnitType.None;

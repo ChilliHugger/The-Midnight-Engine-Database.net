@@ -15,7 +15,7 @@ namespace TME.Scenario.Default.Base
     {
         #region Properties
         public uint RawFlags { get; internal set; }
-
+        public EntityFlags Flags => (EntityFlags) RawFlags;
         public EntityType Type { get; internal set; }
         public uint RawId => (uint)Id.RawId;
         public MXId Id { get; internal set; }

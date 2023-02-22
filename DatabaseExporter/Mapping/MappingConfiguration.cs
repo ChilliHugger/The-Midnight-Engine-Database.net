@@ -12,12 +12,12 @@ namespace DatabaseExporter.Mapping
             return node?.Symbol ?? "";
         }
 
-        protected static string ConvertString(string value)
-        {
-            return value.Replace("\n\r", "{crlf}")
-                    .Replace("\n", "{cr}")
-                    .Replace("\r", "{lf}")
-                ;
-        }
+        // protected static string ConvertString(string value)
+        // {
+        //     return value.Replace("\n\r", "{crlf}")
+        //             .Replace("\n", "{cr}")
+        //             .Replace("\r", "{lf}")
+        //         ;
+        // }
     }
 }

@@ -1,8 +1,9 @@
-using TME.Scenario.Default.Flags;
+using CsvHelper.Configuration;
+using TME.Scenario.Default.info;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
-namespace DatabaseExporter.Models
+namespace DatabaseExporter.Models.Info
 {
     public class CsvTerrainInfo : CsvInfo
     {
@@ -12,21 +13,18 @@ namespace DatabaseExporter.Models
         public uint Visibility { get; set; }
         public uint Obstruction { get; set; }
         public int MovementCost { get; set; }
-        
-        // for export
-        public TerrainInfoFlags TerrainInfoFlags => (TerrainInfoFlags) Flags;
     }
     
-    public sealed class CsvTerrainInfoMap : CsvClassMap<CsvTerrainInfo>
+    public sealed class OutTerrainInfoMap : ClassMap<TerrainInfo>
     {
-        public CsvTerrainInfoMap()
+        public OutTerrainInfoMap()
         {
             // CsvRecord
-            Map(m => m.Version).Index(0);
+            Map().Constant(1).Index(0).Name("Version");
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
             // CsvEntity
-            Map(m => m.Flags).Convert(m=>ConvertFlags(m.Value.TerrainInfoFlags)).Index(3);
+            Map(m => m.Flags).Index(3);
             // CsvInfo
             Map(m => m.Name).Index(4);
             // CsvRaceInfo

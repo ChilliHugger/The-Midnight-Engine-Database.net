@@ -78,8 +78,8 @@ namespace TME
             switch (context.Section)
             {
                 case DataSection.Entities:
-                    SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
                     _internalSymbolCache = new Dictionary<string, IEntity>();
+                    SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
                     return LoadMainInfo(context);
                 case DataSection.ObjectInfo:
                     return LoadObjectInfo(context);
@@ -143,6 +143,8 @@ namespace TME
             ReadInfoCollection(Areas,context);
             ReadInfoCollection(Commands,context);
 
+            SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
+            
             return true;
         }
         

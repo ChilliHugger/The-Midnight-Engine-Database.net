@@ -73,28 +73,65 @@ namespace TME
         // ReSharper disable once MemberCanBePrivate.Global
         public IEntity? EntityById(EntityType type, int index)
         {
-            if (index == 0) return null;
+            switch (type)
+            { 
+                    case EntityType.Character:
+                    case EntityType.RouteNode:
+                    case EntityType.Regiment:
+                    case EntityType.Stronghold:
+                    case EntityType.Waypoint:
+                    case EntityType.Thing:
+                    case EntityType.Mission:
+                    case EntityType.Victory:
+                        if (index == 0) return null;
+                        break;
+                    case EntityType.None:
+                        break;
+                    case EntityType.AreaInfo:
+                    case EntityType.AttributeInfo:
+                    case EntityType.DirectionInfo:
+                    case EntityType.GenderInfo:
+                    case EntityType.RaceInfo:
+                    case EntityType.TerrainInfo:
+                    case EntityType.UnitInfo:
+                    case EntityType.CommandInfo:
+                    case EntityType.ObjectPower:
+                    case EntityType.ObjectType:
+                        break;
+                    case EntityType.Army:
+                    case EntityType.LocationInfo:
+                    case EntityType.Unused1:
+                    case EntityType.Unit:
+                    case EntityType.ArmyTotal:
+                    case EntityType.Location:
+                    case EntityType.String:
+                    case EntityType.MemoryItem:
+                    case EntityType.MapLocation:
+                        return null;
+                    default:
+                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+            
             try
             {
-
-                var id = index - 1;
                 return type switch
                 {
-                    EntityType.Character => _entityContainer.Lords.ElementAt(id),
-                    EntityType.RouteNode => _entityContainer.RouteNodes.ElementAt(id),
-                    EntityType.Regiment => _entityContainer.Regiments.ElementAt(id),
-                    EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(id),
-                    EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(id),
-                    EntityType.Thing => _entityContainer.Things.ElementAt(id),
-                    EntityType.Mission => _entityContainer.Missions.ElementAt(id),
-                    EntityType.Victory => _entityContainer.Victories.ElementAt(id),
-                    EntityType.DirectionInfo => _entityContainer.Directions.ElementAt(id),
-                    EntityType.UnitInfo => _entityContainer.Units.ElementAt(id),
-                    EntityType.RaceInfo => _entityContainer.Races.ElementAt(id),
-                    EntityType.GenderInfo => _entityContainer.Genders.ElementAt(id),
-                    EntityType.TerrainInfo => _entityContainer.Terrains.ElementAt(id),
-                    EntityType.AreaInfo => _entityContainer.Areas.ElementAt(id),
-                    EntityType.CommandInfo => _entityContainer.Commands.ElementAt(id),
+                    EntityType.Character => _entityContainer.Lords.ElementAt(index-1),
+                    EntityType.RouteNode => _entityContainer.RouteNodes.ElementAt(index-1),
+                    EntityType.Regiment => _entityContainer.Regiments.ElementAt(index-1),
+                    EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(index-1),
+                    EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(index-1),
+                    EntityType.Thing => _entityContainer.Things.ElementAt(index-1),
+                    EntityType.Mission => _entityContainer.Missions.ElementAt(index-1),
+                    EntityType.Victory => _entityContainer.Victories.ElementAt(index-1),
+                    
+                    EntityType.DirectionInfo => _entityContainer.Directions.ElementAt(index),
+                    EntityType.UnitInfo => _entityContainer.Units.ElementAt(index),
+                    EntityType.RaceInfo => _entityContainer.Races.ElementAt(index),
+                    EntityType.GenderInfo => _entityContainer.Genders.ElementAt(index),
+                    EntityType.TerrainInfo => _entityContainer.Terrains.ElementAt(index),
+                    EntityType.AreaInfo => _entityContainer.Areas.ElementAt(index),
+                    EntityType.CommandInfo => _entityContainer.Commands.ElementAt(index),
                     _ => null
                 };
             }
