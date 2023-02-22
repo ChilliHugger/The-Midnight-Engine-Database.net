@@ -15,6 +15,8 @@ namespace TME.SpecTests.Mapping
         public MappingConfiguration()
         {
             CreateMap<TestCharacter, Character>(MemberList.None)
+                .ForMember(a => a.Warriors, b => b.Ignore())
+                .ForMember(a => a.Riders, b => b.Ignore())
                 .ForMember(a => a.Units, b => b.MapFrom(c =>
                     new List<IUnit>
                     {
