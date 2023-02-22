@@ -14,7 +14,7 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 1	12	TN_LITH	INTERESTING	Lith	at	{str:5}	0	10	6	0
 1	13	TN_CAVERN	INTERESTING	Cavern	at	{str:5}	0	2	6	0
 1	14	TN_MOUNTAIN	PLURAL+INTERESTING	Mountain	in	{str:5}	0	16	16	0
-1	15	TN_ARMY	NONE	Army			0	8	8	0
+1	15	TN_ARMY		Army			0	8	8	0
 1	16	TN_PLAINS2	PLURAL+ARMY	Plain	on	{str:5}	0	3	0	1
 1	17	TN_MOUNTAIN2	PLURAL+INTERESTING+ARMY	Mountain	in	{str:5}	0	16	16	8
 1	18	TN_FOREST2	INTERESTING+ARMY	Forest	in	{str:5}	0	12	13	4
@@ -31,5 +31,5 @@ Version	Id	Symbol	Flags	Name	Preposition	Description	Success	Visibility	Obstruct
 1	29	TN_FOUNTAIN	INTERESTING+ARMY	Fountain	at	{str:5}	0	6	8	2
 1	30	TN_STONE	PLURAL+INTERESTING+ARMY	Stone	at	{str:5}	0	12	6	2
 1	31	TN_ICYWASTE	PLURAL+BLOCK+INTERESTING	Icy Waste	in	the Icy Wastes	0	12	12	0
-1	32	TN_MIST	NONE	Mist	in	the Icy Mists	0	0	16	0
-1	33	TN_ARMY2	NONE	Army			0	0	8	0
+1	32	TN_MIST		Mist	in	the Icy Mists	0	0	16	0
+1	33	TN_ARMY2		Army			0	0	8	0
