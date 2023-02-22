@@ -1,15 +1,11 @@
 using Autofac;
-using Moq;
 using NUnit.Framework;
-using TME;
-using TME.Interfaces;
-using TME.Scenario.Default.Base;
 
 namespace TME.UnitTests
 {
-    public class BaseTestClass
-    {   
-        protected IContainer Container;
+    public sealed class BaseTestClass
+    {
+        private IContainer Container;
 
         [SetUp]
         public void Setup()
@@ -28,11 +24,11 @@ namespace TME.UnitTests
             AfterSetup();
         }
 
-        protected virtual void RegisterMocks(ContainerBuilder containerBuilder)
+        private void RegisterMocks(ContainerBuilder containerBuilder)
         {
         }
-        
-        protected virtual void AfterSetup()
+
+        private void AfterSetup()
         {
         }
     }

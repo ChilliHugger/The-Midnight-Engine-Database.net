@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MidnightConsole", "Midnight
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.net", "TME.net\TME.net.csproj", "{44EAFD16-9900-4A15-A054-A11B976CE5C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.UnitTests", "TME.UnitTests\TME.UnitTests.csproj", "{ED3B67B8-3CA3-474B-8E84-11031261759D}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseExporter", "DatabaseExporter\DatabaseExporter.csproj", "{09CCBB23-5949-4EDB-9C93-3647E6E58644}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.SpecTests", "TME.SpecTests\TME.SpecTests.csproj", "{7DCE0FED-EF69-44E9-A1B7-BCE1D6746D71}"
@@ -14,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.Landscaping", "TME.Landscaping\TME.Landscaping.csproj", "{C4A47CFA-D777-4F61-BAF9-150BBF5E9331}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapePNG", "LandscapePNG\LandscapePNG.csproj", "{E7F78409-4AC2-4C07-9B6B-046ABB5B8BDF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.UnitTests", "TME.UnitTests\TME.UnitTests.csproj", "{3D5450F0-2CDF-4814-8AFB-5E2045399873}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,6 @@ Global
 		{44EAFD16-9900-4A15-A054-A11B976CE5C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44EAFD16-9900-4A15-A054-A11B976CE5C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44EAFD16-9900-4A15-A054-A11B976CE5C3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED3B67B8-3CA3-474B-8E84-11031261759D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED3B67B8-3CA3-474B-8E84-11031261759D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED3B67B8-3CA3-474B-8E84-11031261759D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED3B67B8-3CA3-474B-8E84-11031261759D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{09CCBB23-5949-4EDB-9C93-3647E6E58644}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{09CCBB23-5949-4EDB-9C93-3647E6E58644}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09CCBB23-5949-4EDB-9C93-3647E6E58644}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -49,5 +45,9 @@ Global
 		{E7F78409-4AC2-4C07-9B6B-046ABB5B8BDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E7F78409-4AC2-4C07-9B6B-046ABB5B8BDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E7F78409-4AC2-4C07-9B6B-046ABB5B8BDF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
