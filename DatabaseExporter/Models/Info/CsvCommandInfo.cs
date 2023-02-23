@@ -2,16 +2,33 @@
 // ReSharper disable UnusedAutoPropertyAccessor.Global
 
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 using DatabaseExporter.Converters;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.info;
+using TME.Serialize;
 
 namespace DatabaseExporter.Models.Info
 {
     public class CsvCommandInfo : CsvInfo
     {
-        public uint SuccessTime { get; set; }
-        public uint FailureTime { get; set; }
+        [Name("Success Time")]
+        public string SuccessTime { get; set; }
+        [Name("Failure Time")]
+        public string FailureTime { get; set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(CommandInfo.Id), converter.ToId(EntityType.CommandInfo,Id)},
+                {nameof(CommandInfo.Symbol), Symbol},
+                {nameof(CommandInfo.Flags), converter.ToFlags<EntityFlags>(Flags)},
+                {nameof(CommandInfo.Name), Name},
+                {nameof(CommandInfo.SuccessTime), uint.Parse(SuccessTime)},
+                {nameof(CommandInfo.FailureTime), uint.Parse(FailureTime)},
+            };
+        }
     }
     
     public sealed class OutCommandInfoMap : ClassMap<CommandInfo>

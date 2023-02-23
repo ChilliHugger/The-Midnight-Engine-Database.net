@@ -17,15 +17,22 @@ namespace TME.Scenario.Default.Base
         #region Serialize
         public override bool Load(ISerializeContext ctx)
         {
-            if (!base.Load(ctx))
-            {
-                return false;
-            }
+            if (!base.Load(ctx)) return false;
             
             Location = ctx.Reader.ReadLoc();
 
             return true;
         }
+        
+        public override bool Load(Bundle bundle)
+        {
+            if (!base.Load(bundle)) return false;
+            
+            Location = bundle.Loc(nameof(Location));
+
+            return true;
+        }
+        
         #endregion
 
         #region Internal Helpers

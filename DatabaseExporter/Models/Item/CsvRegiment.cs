@@ -1,7 +1,11 @@
 using CsvHelper.Configuration;
+using DatabaseExporter.Converters;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
+using TME.Serialize;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -9,17 +13,24 @@ namespace DatabaseExporter.Models.Item
 {
     public class CsvRegiment : CsvItem
     {
-        public ArmyType ArmyType { get; set; } 
-        public Race Race { get; set; } 
-        public UnitType UnitType { get; set; }
+        public string Race { get; set; } 
+        public string Type { get; set; }
         public uint Total { get; set; }
-        public CsvId Target { get; set; } 
-        public Orders Orders { get; set; }
+        public string Target { get; set; } 
+        public string Orders { get; set; }
         public uint Success { get; set; }
-        public CsvId LoyaltyLord { get; set; }
-        public uint Killed { get; set; }
-        public Loc LastLocation { get; set; } 
+        public string Loyalty { get; set; }
         public uint Delay { get; set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.Regiment,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<RegimentFlags>(Flags)},
+                {nameof(Regiment.Location), converter.ToLoc(Location)},
+            };
+        }
     }
     
     public sealed class OutRegimentMap : ClassMap<IRegiment>
@@ -39,7 +50,7 @@ namespace DatabaseExporter.Models.Item
             Map(m => m.Race).Index(5);
             Map(m => m.UnitType).Index(6).Name("Type");
             Map(m => m.Total).Index(7);
-            Map(m => m.Target.Symbol).Index(8).Name("Target");
+            Map(m => m.Target).Index(8);
             Map(m => m.Orders).Index(9);
             Map(m => m.Success).Index(10);
             Map(m => m.LoyaltyLord).Index(11).Name("Loyalty");

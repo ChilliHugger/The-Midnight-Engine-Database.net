@@ -1,7 +1,13 @@
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
+using DatabaseExporter.Converters;
 using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
+using TME.Serialize;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -9,26 +15,41 @@ namespace DatabaseExporter.Models.Item
 {
     public class CsvStronghold : CsvItem
     {
-        public Race OccupyingRace { get; set; }
-        public Race Race { get; set; }
-        public UnitType UnitType { get; set; }
-        public uint TotalTroops { get; set; }
-        public uint MinTroops { get; set; }
-        public uint MaxTroops { get; set; }
+        [Name("Occupying Race")]
+        public string OccupyingRace { get; set; }
+        public string Race { get; set; }
+        [Name("Type")]
+        public string Type { get; set; }
+        public uint Total { get; set; }
+        public uint Min { get; set; }
+        public uint Max { get; set; }
+        [Name("Strategical Success")]
         public uint StrategicalSuccess { get; set; }
+        [Name("Owner Success")]
         public uint OwnerSuccess { get; set; }
+        [Name("Enemy Success")]
         public uint EnemySuccess { get; set; }
         public uint Influence { get; set; }
         public uint Respawn { get; set; }
-        public CsvId Occupier { get; set; }
-        public CsvId Owner { get; set; }
-        public Terrain Terrain { get; set; }
-        public uint Killed { get; set; }
-        public uint Lost { get; set; }
-        
+        public string Occupier { get; set; }
+        public string Owner { get; set; }
+        public string Terrain { get; set; }
+
         // Revenge
+        [Optional]
+        public string Loyalty { get; set; }
+        [Optional]
         public uint Energy { get; set; }
 
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.Stronghold,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<EntityFlags>(Flags)},
+                {nameof(Stronghold.Location), converter.ToLoc(Location)},
+            };
+        }
     }
     
     public sealed class OutStrongholdMap<T> : ClassMap<T>
@@ -45,7 +66,7 @@ namespace DatabaseExporter.Models.Item
             // CsvItem
             Map(m => m.Location).Index(4);
             // CsvStronghold
-            Map(m => m.OccupyingRace).Index(5).Name("Occupying Race");
+            Map(m => m.OccupyingRace).Index(5);
             Map(m => m.Race).Index(6);
             Map(m => m.UnitType).Index(7).Name("Type");
             Map(m => m.Total).Index(8);

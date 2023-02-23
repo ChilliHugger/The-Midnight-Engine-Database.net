@@ -29,7 +29,7 @@ namespace TME.Serialize
             where T : IEntity
         {
             var id = Reader.ReadUInt32();
-            return _entityResolver.EntityById<T>((int)id);
+            return _entityResolver.EntityById<T>(id);
         }
 
         public IEntity? ReadEntity()

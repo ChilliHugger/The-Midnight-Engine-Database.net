@@ -25,5 +25,15 @@ namespace TME.Scenario.Default.info
             
             return true;
         }
+        
+        public override bool Load(Bundle bundle)
+        {
+            if(!base.Load(bundle)) return false;
+
+            SuccessTime = bundle.UInt32(nameof(SuccessTime));
+            FailureTime = bundle.UInt32(nameof(FailureTime));
+       
+            return true;
+        }
     }
 }

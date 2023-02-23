@@ -29,6 +29,6 @@
         Victory = 24,
         MapLocation = 25,
         ObjectPower = 26,
-        ObjectType = 27,
+        ObjectType = 27
     }
 }

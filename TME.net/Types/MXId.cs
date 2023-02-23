@@ -11,7 +11,7 @@ namespace TME.Types
 
 
         public EntityType Type => (EntityType)((Value >> 24) & 0xff);
-        public int RawId => (int)(Value & 0x00ffffff);
+        public uint RawId => (uint)(Value & 0x00ffffff);
 
         public MXId(EntityType type, uint id) : base((((uint)(type) << 24) | id)) { }
 

@@ -13,7 +13,6 @@ namespace DatabaseExporter.Converters
             {
                 return $"{loc.X},{loc.Y}";
             }
-
             return "";
         }
     }

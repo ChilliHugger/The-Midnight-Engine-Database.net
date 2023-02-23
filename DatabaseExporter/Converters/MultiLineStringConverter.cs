@@ -4,7 +4,8 @@ using CsvHelper.TypeConversion;
 
 namespace DatabaseExporter.Converters
 {
-    public class MultiLineStringConverter : DefaultTypeConverter
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public sealed class MultiLineStringConverter : DefaultTypeConverter
     {
         public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)
         {
@@ -15,6 +16,13 @@ namespace DatabaseExporter.Converters
                         .Replace("\r", "{lf}");
             }
             return value.ToString();
+        }
+
+        public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
+        {
+            return text.Replace("{crlf}", "\n\r")
+                .Replace("{cr}", "\n")
+                .Replace("{lf}", "\r");
         }
     }
 }

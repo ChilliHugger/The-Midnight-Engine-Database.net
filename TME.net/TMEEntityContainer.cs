@@ -170,7 +170,7 @@ namespace TME
             throw new System.NotImplementedException();
         }
         
-        private IEnumerable<T> CreateCollection<T>(int count)
+        public IEnumerable<T> CreateCollection<T>(int count)
             where T: IEntity
         {
             var result = new T[count];

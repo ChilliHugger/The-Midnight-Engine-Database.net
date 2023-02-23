@@ -3,13 +3,25 @@
 
 using CsvHelper.Configuration;
 using DatabaseExporter.Converters;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.info;
+using TME.Serialize;
 
 namespace DatabaseExporter.Models.Info
 {
     public class CsvDirectionInfo : CsvInfo
     {
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.DirectionInfo,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<EntityFlags>(Flags)},
+                {nameof(DirectionInfo.Name), Name},
+            };
+        }
     }
     
     public sealed class OutDirectionInfoMap : ClassMap<DirectionInfo>

@@ -25,5 +25,15 @@ namespace TME.Scenario.Default.info
             BaseRestModifier = (uint) Math.Max(ctx.Reader.ReadInt32(),0); // temp bug fix
             return true;
         }
+        
+        public override bool Load(Bundle bundle)
+        {
+            if(!base.Load(bundle)) return false;
+
+            Success = bundle.UInt32(nameof(Success));
+            BaseRestModifier = bundle.UInt32(nameof(BaseRestModifier));
+
+            return true;
+        }
     }
 }

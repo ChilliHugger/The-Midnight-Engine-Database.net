@@ -19,7 +19,8 @@ namespace TME.Scenario.Default.Entities
     {
         private const int MaxReferences = 5;
         
-        public new MissionFlags Flags => (MissionFlags) RawFlags;
+        MissionFlags IMission.Flags => (MissionFlags) RawFlags;
+
         public int Priority { get; internal set; }
         public MissionObjective Objective { get; internal set; } = MissionObjective.None;
         public MissionCondition Condition { get; internal set; } = MissionCondition.None;

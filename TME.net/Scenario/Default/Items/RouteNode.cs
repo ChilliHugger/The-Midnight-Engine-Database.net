@@ -7,7 +7,7 @@ namespace TME.Scenario.Default.Items
 {
     public class RouteNode : Item, IRouteNode
     {
-        public IRouteNodes RouteNodes { get; }
+        public IRouteNodes RouteNodes { get; internal set; }
 
         public RouteNode(IRouteNodes routeNodes) : base(EntityType.RouteNode)
         {
@@ -21,8 +21,13 @@ namespace TME.Scenario.Default.Items
             RouteNodes.Load(ctx);
             
             return true;
-
         }
-
+        
+        public override bool Load(Bundle bundle)
+        {
+            if (!base.Load(bundle)) return false;
+            
+            return RouteNodes.Load(bundle);
+        }
     }
 }

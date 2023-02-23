@@ -1,32 +1,30 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 using CsvHelper.Configuration;
 using DatabaseExporter.Converters;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.info;
+using TME.Serialize;
 
 namespace DatabaseExporter.Models.Info
 {
     public class CsvAreaInfo : CsvInfo
     {
-        public string Prefix { get; set; } 
-    }
-    
-    public sealed class InAreaInfoMap : ClassMap<CsvAreaInfo>
-    {
-        public InAreaInfoMap()
+        public string Prefix { get;  set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
         {
-            // CsvRecord
-            Map(m => m.Id).Index(0).Name("Version");
-            Map(m => m.Id).Index(1);
-            Map(m => m.Symbol).Index(2);
-            // CsvEntity
-            Map(m => m.Flags).Index(3).Name("Flags");
-            // CsvInfo
-            Map(m => m.Name).Index(4);
-            // CsvAreaInfo
-            Map(m => m.Prefix).Index(5);
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.AreaInfo,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<EntityFlags>(Flags)},
+                {nameof(AreaInfo.Name), Name},
+                {nameof(AreaInfo.Prefix), Prefix}
+            };
         }
     }
     
@@ -34,15 +32,15 @@ namespace DatabaseExporter.Models.Info
     {
         public OutAreaInfoMap()
         {
-            // CsvRecord
+            // Record
             Map().Constant(1).Name("Version");
             Map(m => m.Id).Index(1);
             Map(m => m.Symbol).Index(2);
-            // CsvEntity
+            // Entity
             Map(m => m.Flags).Index(3);
-            // CsvInfo
+            // Info
             Map(m => m.Name).Index(4);
-            // CsvAreaInfo
+            // AreaInfo
             Map(m => m.Prefix).Index(5);
         }
     }

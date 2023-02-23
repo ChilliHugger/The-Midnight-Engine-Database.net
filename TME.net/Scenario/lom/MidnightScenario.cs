@@ -2,6 +2,7 @@ using Autofac;
 using TME.Interfaces;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 
 namespace TME.Scenario.lom
 {
@@ -47,7 +48,7 @@ namespace TME.Scenario.lom
             _variables.sv_max_friend_armies_in_location = 128;
             _variables.sv_max_strongholds_in_location = 1;
             _variables.sv_max_routenodes_in_location = 1;
-            _variables.sv_max_armies_in_location =
+            _variables.sv_max_armies_in_location = 
                 _variables.sv_max_foe_armies_in_location + _variables.sv_max_friend_armies_in_location;
         }
     }

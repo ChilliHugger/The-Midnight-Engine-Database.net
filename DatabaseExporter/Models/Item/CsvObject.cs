@@ -1,7 +1,13 @@
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
+using DatabaseExporter.Converters;
 using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
+using TME.Serialize;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -9,16 +15,29 @@ namespace DatabaseExporter.Models.Item
 {
     public class CsvObject : CsvItem
     {
-        public ThingType Kills { get; set; } 
+        public string Kills { get; set; } 
         public string Name { get; set; }
         public string Description { get; set; }
-        public CsvId UseDescription { get; set; }
-        public CsvId CarriedBy { get; set; }
+        [Name("Use Description")]
+        public string UseDescription { get; set; }
+        [Name("Carried By")]
+        public string CarriedBy { get; set; }
         
         // ddr
-        public ObjectType ObjectType { get; set; }
-        public ObjectPower ObjectPower { get; set; }
+        [Name("Type"), Optional]
+        public string ObjectType { get; set; }
+        [Name("Power"), Optional]
+        public string ObjectPower { get; set; }
         
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.Thing,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<ThingFlags>(Flags)},
+                {nameof(Object.Location), converter.ToLoc(Location)},
+            };
+        }
     }
     
     public sealed class OutObjectMap<T> : ClassMap<T>

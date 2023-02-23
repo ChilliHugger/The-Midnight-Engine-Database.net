@@ -4,57 +4,62 @@
 using System.Collections.Generic;
 using System.Linq;
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 using DatabaseExporter.Converters;
 using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
+using TME.Serialize;
 using TME.Types;
 
 namespace DatabaseExporter.Models.Item
 {
     public class CsvCharacter : CsvItem
     {
-        public Direction Looking { get; set; }
-        public Time Time { get; set; }
-        public Race Race { get; set; }
-        public Gender Gender { get; set; }
+        public string Looking { get; set; }
+        public uint Time { get; set; }
+        public string Race { get; set; }
+        public string Gender { get; set; }
+        [Name("Long Name")]
         public string LongName { get; set; }
+        [Name("Short Name")]
         public string ShortName { get; set; }
-        public List<CsvId> Carrying { get; set; }
-        //public CsvId KilledBy { get; set; }
-        public WaitStatus WaitStatus { get; set; } 
-        //public CsvId LastCommandId { get; set; }
-        //public Command LastCommand { get; set; }
-        public List<CsvUnit> Units { get; set; } 
-        public CsvId Following { get; set; }
+        public string Carrying { get; set; }
+        public string Following { get; set; }
         public uint Energy { get; set; }
         public uint Reckless { get; set; }
-        //public uint Followers { get; set; }
         public uint Strength { get; set; }
         public uint Cowardly { get; set; }
         public uint Courage { get; set; }
         public uint Fear { get; set; }
-        public Orders Orders { get; set; } 
-        public Race Loyalty { get; set; }
-        public CsvId Foe { get; set; }
-        public CsvId Liege { get; set; }
+        public string Orders { get; set; } 
+        public string Loyalty { get; set; }
+        public string Foe { get; set; }
+        public string Liege { get; set; }
         public uint Despondency { get; set; }
-        public LordTraits Traits { get; set; }
+        public string Traits { get; set; }
 
-        // for export
-        public CsvUnit Warriors => Units.First(u => u.Type == UnitType.Warrior);
-        public CsvUnit Riders => Units.First(u => u.Type == UnitType.Rider);
-        //public LordFlags LordFlags => (LordFlags) Flags;
-        
+        public uint Warriors { get; set; }
+        public uint Riders { get; set; }
+
         // ddr
-        public CsvId Home { get; set; }
-        public CsvId DesiredObject { get; set; }
-        //public Loc LastLocation { get; internal set; } = Loc.Zero;
-        //public IRevengeLord? FightingAgainst { get; internal set; }
-        //public uint BattleLost { get; internal set; }
-        //public MXId TargetId { get; internal set; } = MXId.None;
-        //public Loc TargetLocation { get; internal set; } = Loc.Zero;
+        [Name("Home"), Optional]
+        public string Home { get; set; }
+        [Name("Desired Object"), Optional]
+        public string DesiredObject { get; set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.Character,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<LordFlags>(Flags)},
+                {nameof(Character.Location), converter.ToLoc(Location)},
+            };
+        }
     }
     
     public sealed class OutCharacterMap<T> : ClassMap<T>

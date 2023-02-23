@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.Default.Enums;
@@ -57,7 +58,7 @@ namespace TME
             return _entityContainer.SymbolCache.TryGetValue( symbol, out var entity) ? entity : default;
         }
         
-        public T? EntityById<T>(int id)
+        public T? EntityById<T>(uint id)
             where T : IEntity
         {
             if (_typeMappings.TryGetValue(typeof(T), out var entityType))
@@ -71,59 +72,27 @@ namespace TME
         public IEntity? EntityById(MXId id) => EntityById(id.Type, id.RawId);
 
         // ReSharper disable once MemberCanBePrivate.Global
-        public IEntity? EntityById(EntityType type, int index)
+        public IEntity? EntityById(EntityType type, uint id)
         {
-            switch (type)
-            { 
-                    case EntityType.Character:
-                    case EntityType.RouteNode:
-                    case EntityType.Regiment:
-                    case EntityType.Stronghold:
-                    case EntityType.Waypoint:
-                    case EntityType.Thing:
-                    case EntityType.Mission:
-                    case EntityType.Victory:
-                        if (index == 0) return null;
-                        break;
-                    case EntityType.None:
-                        break;
-                    case EntityType.AreaInfo:
-                    case EntityType.AttributeInfo:
-                    case EntityType.DirectionInfo:
-                    case EntityType.GenderInfo:
-                    case EntityType.RaceInfo:
-                    case EntityType.TerrainInfo:
-                    case EntityType.UnitInfo:
-                    case EntityType.CommandInfo:
-                    case EntityType.ObjectPower:
-                    case EntityType.ObjectType:
-                        break;
-                    case EntityType.Army:
-                    case EntityType.LocationInfo:
-                    case EntityType.Unused1:
-                    case EntityType.Unit:
-                    case EntityType.ArmyTotal:
-                    case EntityType.Location:
-                    case EntityType.String:
-                    case EntityType.MemoryItem:
-                    case EntityType.MapLocation:
-                        return null;
-                    default:
-                        throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            var index = (int) id;
+            if (!type.IsZeroBased())
+            {
+                if (index == 0) return null;
+                index -= 1;
             }
             
             try
             {
                 return type switch
                 {
-                    EntityType.Character => _entityContainer.Lords.ElementAt(index-1),
-                    EntityType.RouteNode => _entityContainer.RouteNodes.ElementAt(index-1),
-                    EntityType.Regiment => _entityContainer.Regiments.ElementAt(index-1),
-                    EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(index-1),
-                    EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(index-1),
-                    EntityType.Thing => _entityContainer.Things.ElementAt(index-1),
-                    EntityType.Mission => _entityContainer.Missions.ElementAt(index-1),
-                    EntityType.Victory => _entityContainer.Victories.ElementAt(index-1),
+                    EntityType.Character => _entityContainer.Lords.ElementAt(index),
+                    EntityType.RouteNode => _entityContainer.RouteNodes.ElementAt(index),
+                    EntityType.Regiment => _entityContainer.Regiments.ElementAt(index),
+                    EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(index),
+                    EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(index),
+                    EntityType.Thing => _entityContainer.Things.ElementAt(index),
+                    EntityType.Mission => _entityContainer.Missions.ElementAt(index),
+                    EntityType.Victory => _entityContainer.Victories.ElementAt(index),
                     
                     EntityType.DirectionInfo => _entityContainer.Directions.ElementAt(index),
                     EntityType.UnitInfo => _entityContainer.Units.ElementAt(index),

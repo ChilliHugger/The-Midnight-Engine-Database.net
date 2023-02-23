@@ -5,6 +5,8 @@ using System.Linq;
 using CsvHelper;
 using CsvHelper.Configuration;
 using CsvHelper.TypeConversion;
+using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 
 namespace DatabaseExporter.Converters
 {
@@ -13,8 +15,8 @@ namespace DatabaseExporter.Converters
         
         public override object ConvertFromString(string text, IReaderRow row, MemberMapData memberMapData)
         {
-            if(text.ToLower().Trim()=="none") return 0;
-            return 0;
+            if(text.ToLower().Trim()=="none") return EntityFlags.None;
+            return EntityFlags.None;
         }
 
         public override string ConvertToString(object input, IWriterRow row, MemberMapData memberMapData)

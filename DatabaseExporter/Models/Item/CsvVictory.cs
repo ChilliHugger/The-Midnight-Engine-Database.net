@@ -1,5 +1,10 @@
 using CsvHelper.Configuration;
+using DatabaseExporter.Converters;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Serialize;
 
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
@@ -8,8 +13,17 @@ namespace DatabaseExporter.Models.Item
     public class CsvVictory : CsvEntity
     {
         public int Priority { get; set; }
-        public CsvId Mission { get; set; }
-        public CsvId String { get; set; }
+        public string Mission { get; set; }
+        public string String { get; set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.Victory,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<VictoryFlags>(Flags)},
+            };
+        }
     }
     
     public sealed class OutVictoryMap : ClassMap<IVictory>

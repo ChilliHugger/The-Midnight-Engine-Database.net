@@ -27,5 +27,16 @@ namespace TME.Scenario.Default.info
             
             return true;
         }
+        
+        public override bool Load(Bundle bundle)
+        {
+            if(!base.Load(bundle)) return false;
+
+            PersonalPronoun = bundle.String(nameof(PersonalPronoun));
+            PossessivePronoun = bundle.String(nameof(PossessivePronoun));
+            SingularPronoun = bundle.String(nameof(SingularPronoun));
+       
+            return true;
+        }
     }
 }

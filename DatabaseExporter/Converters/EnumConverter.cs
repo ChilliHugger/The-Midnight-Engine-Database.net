@@ -23,7 +23,7 @@ namespace DatabaseExporter.Converters
             where T : Enum 
             where TInfo : IEntity
         {
-            return _entityResolver.EntityById<TInfo>((int)enumValue.Raw())?.Symbol;
+            return _entityResolver.EntityById<TInfo>(enumValue.Raw())?.Symbol;
         }
         
         public override string ConvertToString(object value, IWriterRow row, MemberMapData memberMapData)

@@ -156,7 +156,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             {
                 return thingType;
             }
-            var thing = _entityResolver.EntityById<IObject>((int)thingType)!;
+            var thing = _entityResolver.EntityById<IObject>(thingType.Raw())!;
             return thing.CanFight 
                 ? thingType 
                 : ThingType.None ;
@@ -164,7 +164,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         
         private TerrainInfo GetTerrainInfo(Terrain terrain)
         {
-            return _entityResolver.EntityById<TerrainInfo>((int)terrain)!;
+            return _entityResolver.EntityById<TerrainInfo>(terrain.Raw())!;
         }
 
         private Loc FindLookingTowards(Loc location, Direction direction)

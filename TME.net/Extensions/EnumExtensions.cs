@@ -45,5 +45,48 @@ namespace TME.Extensions
         {
             return terrain.IsTunnelEntrance();
         }
+        
+        public static bool IsZeroBased(this EntityType type)
+        {
+            switch (type)
+            {
+                case EntityType.AreaInfo:
+                case EntityType.AttributeInfo:
+                case EntityType.DirectionInfo:
+                case EntityType.GenderInfo:
+                case EntityType.RaceInfo:
+                case EntityType.TerrainInfo:
+                case EntityType.UnitInfo:
+                case EntityType.CommandInfo:
+                case EntityType.ObjectPower:
+                case EntityType.ObjectType:
+                case EntityType.String:
+                    return true;
+                
+                case EntityType.None:
+                case EntityType.LocationInfo:
+                case EntityType.Unused1:
+                case EntityType.ArmyTotal:
+                case EntityType.MemoryItem:
+                case EntityType.MapLocation:
+                case EntityType.Location:
+                case EntityType.Unit:
+                case EntityType.Army:
+                    return false;
+                    
+                case EntityType.Thing:
+                case EntityType.Character:
+                case EntityType.Regiment:
+                case EntityType.RouteNode:
+                case EntityType.Stronghold:
+                case EntityType.Waypoint:
+                case EntityType.Mission:
+                case EntityType.Victory:
+                    return false;
+                
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
     }
 }

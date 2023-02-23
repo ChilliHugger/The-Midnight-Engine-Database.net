@@ -1,15 +1,17 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
+﻿// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
+
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.info
 {
-    [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class RaceInfo : Info
+    public partial class RaceInfo : Info
     {
+        public const float RidingMultiplierFactor = 10000.0f;
+            
         private const uint MovementNone = 0;
         private const uint MovementDownsDoomguard = MovementNone;
         private const uint MovementDowns = 1;
@@ -36,7 +38,7 @@ namespace TME.Scenario.Default.info
 
         public Race Race => (Race) RawId;
         
-        public float RidingMovementMultiplier => (float)RidingMultiplier / 10000.0f;
+        public float RidingMovementMultiplier => (float)RidingMultiplier / RidingMultiplierFactor;
         
         // TODO require race/terrain table here
         public uint TerrainMovementModifier( Terrain terrain )
@@ -61,64 +63,6 @@ namespace TME.Scenario.Default.info
         public RaceInfo() : base(EntityType.RaceInfo)
         {
         }
-        
-        public override bool Load(ISerializeContext ctx)
-        {
-            if (!base.Load(ctx)) return false;
 
-            DefaultSoldiersName = ctx.Reader.ReadString();
-            Success = ctx.Reader.ReadUInt32();
-            InitialMovement = ctx.Reader.ReadUInt32();
-            DiagonalModifier = ctx.Reader.ReadUInt32();
-            RidingMultiplier = ctx.Reader.ReadUInt32();
-            MovementMax = ctx.Reader.ReadUInt32();
-            BaseRestAmount = ctx.Reader.ReadUInt32();
-            StrongholdStartups = ctx.Reader.ReadUInt32();
-            
-            MistTimeAffect = ctx.Reader.ReadInt32();
-            MistDespondencyAffect = ctx.Reader.ReadInt32();
-            BaseEnergyCost = ctx.Reader.ReadInt32();
-            BaseEnergyCostHorse = ctx.Reader.ReadInt32();
-
-            // TODO: Fix database error correctly
-            if (IsSymbol("RA_MORKIN"))
-            {
-                BaseEnergyCost = 2;
-                BaseEnergyCostHorse = 4;
-            }
-            
-            if ( ctx.IsDatabase )
-            {
-                (BaseEnergyCost, BaseEnergyCostHorse) = (BaseEnergyCostHorse, BaseEnergyCost);
-            }
-            //
-            
-            return true;
-        }
-        
-// #if defined(_DDR_)
-//    L7354 - correct
-//    DB TERRAIN_CITY,   TERRAIN_CITY          ;moonprince
-//    DB TERRAIN_PLAINS, TERRAIN_PLAINS        ;free
-//    DB TERRAIN_TOWER,  TERRAIN_TOWER         ;wise
-//    DB TERRAIN_FOREST, TERRAIN_FOREST        ;fey
-//    DB TERRAIN_HILLS,  TERRAIN_HILLS         ;barbarian
-//    DB TERRAIN_PLAINS, TERRAIN_PLAINS        ;icelord
-//    DB TERRAIN_FOREST                        ;fey
-//    DB TERRAIN_MOUNTAINS                     ;giant
-//    DB TERRAIN_PLAINS                        ;heartstealer
-//    DB TERRAIN_FROZENWASTE                   ;dwarf
-    
-//    L7354A - C64?
-//    DB TERRAIN_MOUNTAINS, TERRAIN_MOUNTAINS  ;moonprince
-//    DB TERRAIN_PLAINS,    TERRAIN_PLAINS     ;free
-//    DB TERRAIN_FOREST,    TERRAIN_FOREST     ;wise
-//    DB TERRAIN_FOREST,    TERRAIN_FOREST     ;fey
-//    DB TERRAIN_FOREST,    TERRAIN_FOREST     ;barbarian
-//    DB TERRAIN_PLAINS,    TERRAIN_PLAINS     ;icelord
-//    DB TERRAIN_FOREST                        ;fey
-//    DB TERRAIN_MOUNTAINS                     ;giant
-//    DB TERRAIN_PLAINS                        ;heartstealer
-//    DB TERRAIN_FROZENWASTE                   ;dwarf
     }
 }

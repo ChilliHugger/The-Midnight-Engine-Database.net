@@ -1,3 +1,4 @@
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.ddr;
 using TME.Scenario.ddr.Interfaces;
@@ -49,7 +50,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         
         protected TerrainInfo GetTerrainInfo(Terrain terrain)
         {
-            return _entityResolver.EntityById<TerrainInfo>((int) terrain)!;
+            return _entityResolver.EntityById<TerrainInfo>(terrain.Raw())!;
         }
     }
 }

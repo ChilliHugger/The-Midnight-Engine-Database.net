@@ -40,5 +40,19 @@ namespace TME.Scenario.Default.info
 
             return true;
         }
+        
+        public override bool Load(Bundle bundle)
+        {
+            if(!base.Load(bundle)) return false;
+
+            Preposition = bundle.String(nameof(Preposition));
+            Description = bundle.String(nameof(Description));
+            Success = bundle.UInt32(nameof(Success));
+            Visibility = bundle.UInt32(nameof(Visibility));
+            Obstruction = bundle.UInt32(nameof(Obstruction));
+            MovementCost = bundle.Int32(nameof(MovementCost));
+       
+            return true;
+        }
     }
 }

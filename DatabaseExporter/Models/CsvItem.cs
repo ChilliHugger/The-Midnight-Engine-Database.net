@@ -6,6 +6,6 @@ namespace DatabaseExporter.Models
 {
     public class CsvItem : CsvEntity
     {
-        public Loc Location { get; set; }
+        public string Location { get; set; }
     }
 }

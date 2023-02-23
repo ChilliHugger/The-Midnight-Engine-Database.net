@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
@@ -306,7 +307,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         
         private TerrainInfo GetTerrainInfo(Terrain terrain)
         {
-            return _entityResolver.EntityById<TerrainInfo>((int) terrain)!;
+            return _entityResolver.EntityById<TerrainInfo>(terrain.Raw())!;
         }
 
         private void CheckCourageEnterBattle()

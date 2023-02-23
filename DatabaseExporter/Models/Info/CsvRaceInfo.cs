@@ -1,27 +1,65 @@
 // ReSharper disable ClassNeverInstantiated.Global
 // ReSharper disable UnusedAutoPropertyAccessor.Global
+// ReSharper disable MemberCanBePrivate.Global
 
 using CsvHelper.Configuration;
+using CsvHelper.Configuration.Attributes;
 using DatabaseExporter.Converters;
+using TME.Scenario.Default.Base;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.info;
+using TME.Serialize;
 
 namespace DatabaseExporter.Models.Info
 {
     public class CsvRaceInfo : CsvInfo
     {
+        [Name("Default Soldiers Name")]
         public string DefaultSoldiersName { get; set; }
         public uint Success { get; set; }
+        [Name("Initial Movement")]
         public uint InitialMovement { get; set; }
+        [Name("Diagonal Movement")]
         public uint DiagonalModifier { get; set; }
+        [Name("Riding Multiplier")]
         public float RidingMultiplier { get; set; }
+        [Name("Movement Max")]
         public uint MovementMax { get; set; }
+        [Name("Rest Amount")]
         public uint BaseRestAmount { get; set; }
+        [Name("Stronghold Startups")]
         public uint StrongholdStartups { get; set; }
+        [Name("Mist Time Adjustment")]
         public int MistTimeAffect { get; set; }
+        [Name("Mist Despondency Adjustment")]
         public int MistDespondencyAffect { get; set; }
+        [Name("Energy Amount")]
         public int BaseEnergyCost { get; set; }
+        [Name("Energy Amount Riding")]
         public int BaseEnergyCostHorse { get; set; }
+        
+        public override Bundle ToBundle(CsvImportConverter converter)
+        {
+            return new Bundle {
+                {nameof(Entity.Id), converter.ToId(EntityType.RaceInfo,Id)},
+                {nameof(Entity.Symbol), Symbol},
+                {nameof(Entity.Flags), converter.ToFlags<EntityFlags>(Flags)},
+                {nameof(RaceInfo.Name), Name},
+                {nameof(RaceInfo.DefaultSoldiersName), DefaultSoldiersName},
+                {nameof(RaceInfo.Success), Success},
+                {nameof(RaceInfo.InitialMovement), InitialMovement},
+                {nameof(RaceInfo.DiagonalModifier), DiagonalModifier},
+                {nameof(RaceInfo.RidingMultiplier), (uint)(RidingMultiplier * RaceInfo.RidingMultiplierFactor)},
+                {nameof(RaceInfo.MovementMax), MovementMax},
+                {nameof(RaceInfo.BaseRestAmount), BaseRestAmount},
+                {nameof(RaceInfo.StrongholdStartups), StrongholdStartups},
+                {nameof(RaceInfo.MistTimeAffect), MistTimeAffect},
+                {nameof(RaceInfo.MistDespondencyAffect), MistDespondencyAffect},
+                {nameof(RaceInfo.BaseEnergyCost), BaseEnergyCost},
+                {nameof(RaceInfo.BaseEnergyCostHorse), BaseEnergyCostHorse},
+            };
+        }
     }
     
     public sealed class OutRaceInfoMap : ClassMap<RaceInfo>
