@@ -28,19 +28,19 @@ namespace TME.Serialize
         public T? ReadEntity<T>()
             where T : IEntity
         {
-            var id = Reader.ReadUInt32();
+            var id = Reader.UInt32();
             return _entityResolver.EntityById<T>(id);
         }
 
         public IEntity? ReadEntity()
         {
-            var id = Reader.ReadUInt32();
+            var id = Reader.UInt32();
             return (IEntity?)_entityResolver.EntityById(id);
         }
 
         public DatabaseString? ReadString()
         {
-            var id = Reader.ReadUInt32();
+            var id = Reader.UInt32();
             return _strings.GetById(new MXId(EntityType.String, id));
         }
     }

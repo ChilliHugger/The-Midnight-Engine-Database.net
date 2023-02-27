@@ -7,27 +7,27 @@ namespace TME.Serialize
     public interface ISerializeReader
     {
         int PeekInt32();
-        T ReadEnum<T>();
+        T Enum<T>();
 
-        short ReadInt16();
-        ushort ReadUInt16();
-        int ReadInt32();
-        uint ReadUInt32();
-        ulong ReadUInt64();
-        string ReadString();
-        Size ReadSize();
-        Loc ReadLoc();
-        Time ReadTime();
-        Direction ReadDirection();
-        Race ReadRace();
-        Gender ReadGender();
-        WaitStatus ReadWaitStatus();
-        Orders ReadOrders();
-        ArmyType ReadArmyType();
-        UnitType ReadUnitType();
-        ThingType ReadThingType();
-        Terrain ReadTerrain();
-        MXId ReadMXId();
-        MXId ReadMXId(EntityType type);
+        short Int16();
+        ushort UInt16();
+        int Int32();
+        uint UInt32();
+        ulong UInt64();
+        string String();
+        Size Size();
+        Loc Loc();
+        Time Time();
+        Direction Direction();
+        Race Race();
+        Gender Gender();
+        WaitStatus WaitStatus();
+        Orders Orders();
+        ArmyType ArmyType();
+        UnitType UnitType();
+        ThingType ThingType();
+        Terrain Terrain();
+        MXId MXId();
+        MXId MXId(EntityType type);
     }
 }

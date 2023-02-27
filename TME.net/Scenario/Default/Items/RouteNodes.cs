@@ -19,9 +19,9 @@ namespace TME.Scenario.Default.Items
             return true;
         }
         
-        public bool Load(Bundle bundle)
+        public bool Load(IBundleReader bundle)
         {
-            if (bundle.TryGetValue(nameof(Nodes), out var value))
+            if (bundle.Raw.TryGetValue(nameof(Nodes), out var value))
             {
                 if (value is IRouteNode?[] nodes)
                 {

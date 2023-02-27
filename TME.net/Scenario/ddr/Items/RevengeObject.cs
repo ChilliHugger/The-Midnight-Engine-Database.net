@@ -19,10 +19,10 @@ namespace TME.Scenario.ddr.Items
             if (!base.Load(ctx)) return false;
 
             ObjectType = (ctx.Version > 10)
-                ? ctx.Reader.ReadEnum<ObjectType>()
+                ? ctx.Reader.Enum<ObjectType>()
                 : ObjectType.None;
             ObjectPower = (ctx.Version > 10)
-                ? ctx.Reader.ReadEnum<ObjectPower>()
+                ? ctx.Reader.Enum<ObjectPower>()
                 : ObjectPower.None;
 
             // TODO: This should be actual entry in the database

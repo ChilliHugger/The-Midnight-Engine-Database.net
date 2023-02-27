@@ -54,10 +54,10 @@ namespace TME.Scenario.Default.Scenario
         #region Serialize
         public bool Load(ISerializeContext ctx)
         {
-            Total = ctx.Reader.ReadUInt32();
-            Energy = ctx.Reader.ReadUInt32();
-            Lost = ctx.Reader.ReadUInt32();
-            Killed = ctx.Reader.ReadUInt32();
+            Total = ctx.Reader.UInt32();
+            Energy = ctx.Reader.UInt32();
+            Lost = ctx.Reader.UInt32();
+            Killed = ctx.Reader.UInt32();
             return true;
         }
 

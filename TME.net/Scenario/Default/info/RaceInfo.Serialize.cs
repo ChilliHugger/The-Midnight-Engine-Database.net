@@ -8,18 +8,18 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
 
-            DefaultSoldiersName = ctx.Reader.ReadString();
-            Success = ctx.Reader.ReadUInt32();
-            InitialMovement = ctx.Reader.ReadUInt32();
-            DiagonalModifier = ctx.Reader.ReadUInt32();
-            RidingMultiplier = ctx.Reader.ReadUInt32();
-            MovementMax = ctx.Reader.ReadUInt32();
-            BaseRestAmount = ctx.Reader.ReadUInt32();
-            StrongholdStartups = ctx.Reader.ReadUInt32();
-            MistTimeAffect = ctx.Reader.ReadInt32();
-            MistDespondencyAffect = ctx.Reader.ReadInt32();
-            BaseEnergyCost = ctx.Reader.ReadInt32();
-            BaseEnergyCostHorse = ctx.Reader.ReadInt32();
+            DefaultSoldiersName = ctx.Reader.String();
+            Success = ctx.Reader.UInt32();
+            InitialMovement = ctx.Reader.UInt32();
+            DiagonalModifier = ctx.Reader.UInt32();
+            RidingMultiplier = ctx.Reader.UInt32();
+            MovementMax = ctx.Reader.UInt32();
+            BaseRestAmount = ctx.Reader.UInt32();
+            StrongholdStartups = ctx.Reader.UInt32();
+            MistTimeAffect = ctx.Reader.Int32();
+            MistDespondencyAffect = ctx.Reader.Int32();
+            BaseEnergyCost = ctx.Reader.Int32();
+            BaseEnergyCostHorse = ctx.Reader.Int32();
 
             // TODO: Fix database error correctly
             if (IsSymbol("RA_MORKIN"))
@@ -37,7 +37,7 @@ namespace TME.Scenario.Default.info
             return true;
         }
 
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

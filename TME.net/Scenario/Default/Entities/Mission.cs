@@ -41,9 +41,9 @@ namespace TME.Scenario.Default.Entities
         {
             if (!base.Load(ctx)) return false;
 
-            Priority = ctx.Reader.ReadInt32();
-            Objective = ctx.Reader.ReadEnum<MissionObjective>();
-            Condition = ctx.Reader.ReadEnum<MissionCondition>();
+            Priority = ctx.Reader.Int32();
+            Objective = ctx.Reader.Enum<MissionObjective>();
+            Condition = ctx.Reader.Enum<MissionCondition>();
 
             References.Clear();
 
@@ -52,10 +52,33 @@ namespace TME.Scenario.Default.Entities
                 .WhereNotNull()
                 .ToList();
             
-            Points = ctx.Reader.ReadInt32();
+            Points = ctx.Reader.Int32();
             Scorer = ctx.ReadEntity();
-            Action = ctx.Reader.ReadEnum<MissionAction>();
+            Action = ctx.Reader.Enum<MissionAction>();
             ActionId = ctx.ReadEntity();
+            
+            return true;
+        }
+        
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+
+            // Priority = bundle.Int32();
+            // Objective = bundle.Enum<MissionObjective>();
+            // Condition = bundle.Enum<MissionCondition>();
+            //
+            // References.Clear();
+            //
+            // // References = Enumerable.Range(0, MaxReferences)
+            // //     .Select(_ => bundle.Entity())
+            // //     .WhereNotNull()
+            // //     .ToList();
+            //
+            // Points = bundle.Int32();
+            // Scorer = bundle.Entity();
+            // Action = bundle.Enum<MissionAction>();
+            // ActionId = bundle.Entity();
             
             return true;
         }

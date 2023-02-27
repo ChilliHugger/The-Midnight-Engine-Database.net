@@ -19,12 +19,12 @@ namespace TME.Scenario.Default.Base
         {
             if (!base.Load(ctx)) return false;
             
-            Location = ctx.Reader.ReadLoc();
+            Location = ctx.Reader.Loc();
 
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;
             

@@ -11,9 +11,9 @@ namespace TME.Scenario.Default.Base
 
         public virtual bool Load(ISerializeContext ctx)
         {
-            Id = ctx.Reader.ReadMXId(Type);
-            Symbol = ctx.Reader.ReadString();
-            RawFlags = ctx.Reader.ReadUInt32();
+            Id = ctx.Reader.MXId(Type);
+            Symbol = ctx.Reader.String();
+            RawFlags = ctx.Reader.UInt32();
             return true;
         }
 
@@ -22,7 +22,7 @@ namespace TME.Scenario.Default.Base
             throw new NotImplementedException();
         }
 
-        public virtual bool Load(Bundle bundle)
+        public virtual bool Load(IBundleReader bundle)
         {
             Id = bundle.Id(nameof(Id));
             Symbol = bundle.String(nameof(Symbol));

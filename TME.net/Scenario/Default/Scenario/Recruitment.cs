@@ -14,8 +14,8 @@ namespace TME.Scenario.Default.Scenario
         #region Serialize
         public bool Load(ISerializeContext ctx)
         {
-            Key = ctx.Reader.ReadUInt32();
-            By = ctx.Reader.ReadUInt32();
+            Key = ctx.Reader.UInt32();
+            By = ctx.Reader.UInt32();
             return true;
         }
 

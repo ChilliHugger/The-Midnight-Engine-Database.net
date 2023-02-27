@@ -21,12 +21,12 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
 
-            Success = ctx.Reader.ReadUInt32();
-            BaseRestModifier = (uint) Math.Max(ctx.Reader.ReadInt32(),0); // temp bug fix
+            Success = ctx.Reader.UInt32();
+            BaseRestModifier = (uint) Math.Max(ctx.Reader.Int32(),0); // temp bug fix
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

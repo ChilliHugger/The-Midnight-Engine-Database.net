@@ -13,8 +13,8 @@ namespace TME.Scenario.Default.Scenario
         #region Serialize
         public bool Load(ISerializeContext ctx)
         {
-            Location = ctx.Reader.ReadLoc();
-            Slew = ctx.Reader.ReadUInt32();
+            Location = ctx.Reader.Loc();
+            Slew = ctx.Reader.UInt32();
             return true;
         }
 

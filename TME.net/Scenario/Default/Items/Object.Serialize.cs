@@ -13,11 +13,11 @@ namespace TME.Scenario.Default.Items
             if (!base.Load(ctx)) return false;
 
 
-            Name = ctx.Reader.ReadString();
+            Name = ctx.Reader.String();
             CarriedBy = ctx.ReadEntity() as IItem;
-            Description = ctx.Reader.ReadString();
-            Kills = ctx.Reader.ReadThingType();
-            UseDescription = ctx.Reader.ReadUInt32();
+            Description = ctx.Reader.String();
+            Kills = ctx.Reader.ThingType();
+            UseDescription = ctx.Reader.UInt32();
 
             return true;
         }

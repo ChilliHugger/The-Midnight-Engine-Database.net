@@ -90,22 +90,22 @@ namespace TME
 
         public bool LoadMainInfo(ISerializeContext context)
         {
-            var characters = context.Reader.ReadInt32();
-            var regiments = context.Reader.ReadInt32();
-            var routenodes = context.Reader.ReadInt32();
-            var strongholds = context.Reader.ReadInt32();
-            var places = context.Reader.ReadInt32();
-            var objects = context.Reader.ReadInt32();
-            var missions = context.Reader.ReadInt32();
-            var victories = context.Reader.ReadInt32();
-            var directions = context.Reader.ReadInt32();
-            var units = context.Reader.ReadInt32();
-            var races = context.Reader.ReadInt32();
-            var genders = context.Reader.ReadInt32();
-            var terrains = context.Reader.ReadInt32();
-            var areas = context.Reader.ReadInt32();
-            var commands = context.Reader.ReadInt32();
-            var variables = context.Reader.ReadInt32();
+            var characters = context.Reader.Int32();
+            var regiments = context.Reader.Int32();
+            var routenodes = context.Reader.Int32();
+            var strongholds = context.Reader.Int32();
+            var places = context.Reader.Int32();
+            var objects = context.Reader.Int32();
+            var missions = context.Reader.Int32();
+            var victories = context.Reader.Int32();
+            var directions = context.Reader.Int32();
+            var units = context.Reader.Int32();
+            var races = context.Reader.Int32();
+            var genders = context.Reader.Int32();
+            var terrains = context.Reader.Int32();
+            var areas = context.Reader.Int32();
+            var commands = context.Reader.Int32();
+            var variables = context.Reader.Int32();
 
             _variables.sv_variables = variables;
             
@@ -153,11 +153,11 @@ namespace TME
             // chunk 4
             if (context.Scenario is RevengeScenario && context.Version > 10)
             {
-                var types = context.Reader.ReadInt32();
+                var types = context.Reader.Int32();
                 ObjectTypes = CreateCollection<ObjectTypeInfo>(types).ToList().AsReadOnly();
                 ReadInfoCollection(ObjectTypes, context);
                 
-                var powers = context.Reader.ReadInt32();
+                var powers = context.Reader.Int32();
                 ObjectPowers = CreateCollection<ObjectPowerInfo>(powers).ToList().AsReadOnly();
                 ReadInfoCollection(ObjectPowers, context);
             }

@@ -13,19 +13,19 @@ namespace TME.Scenario.Default.Items
         {
             if (!base.Load(ctx)) return false;
 
-            Race = ctx.Reader.ReadRace();
-            UnitType = ctx.Reader.ReadUnitType();
-            Total = ctx.Reader.ReadUInt32();
+            Race = ctx.Reader.Race();
+            UnitType = ctx.Reader.UnitType();
+            Total = ctx.Reader.UInt32();
             Target = ctx.ReadEntity();
-            Orders = ctx.Reader.ReadOrders();
-            Success = ctx.Reader.ReadUInt32();
+            Orders = ctx.Reader.Orders();
+            Success = ctx.Reader.UInt32();
             LoyaltyLord = ctx.ReadEntity<ICharacter>();
-            Killed = ctx.Reader.ReadUInt32();
+            Killed = ctx.Reader.UInt32();
             LastLocation = (ctx.Version > 3)
-                ? ctx.Reader.ReadLoc()
+                ? ctx.Reader.Loc()
                 : Loc.Zero;
             Delay = (ctx.Version > 6)
-                ? ctx.Reader.ReadUInt32()
+                ? ctx.Reader.UInt32()
                 : 0;
 
             Lost = 0;

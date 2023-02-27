@@ -27,9 +27,9 @@ namespace TME.Scenario.Default.Entities
         {
             if( !base.Load(ctx) ) return false;
 
-            Priority = ctx.Reader.ReadInt32();
+            Priority = ctx.Reader.Int32();
             Mission = ctx.ReadEntity<IMission>();
-            String = ctx.Reader.ReadUInt32();
+            String = ctx.Reader.UInt32();
             return true;
         }
     }

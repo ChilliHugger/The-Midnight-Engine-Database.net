@@ -69,7 +69,7 @@ namespace TME
                 // chunk 0
                 _serializeContext.Section = DataSection.None;
                 
-                var magicNo = reader.ReadUInt32();
+                var magicNo = reader.UInt32();
                 if (magicNo != TMEMagicNo)
                 {
                     var number = BinaryPrimitives.ReverseEndianness(TMEMagicNo);
@@ -85,14 +85,14 @@ namespace TME
                 // chunk 1
                 _serializeContext.Section = DataSection.Header;
 
-                ScenarioId = reader.ReadUInt32();
+                ScenarioId = reader.UInt32();
                 if (ScenarioId != scenarioInfo.Id)
                 {
                     _logger.LogError($"Database ScenarioId '{ScenarioId}' does not match '{scenarioInfo.Id}'");
                     return false;
                 }
 
-                Version = reader.ReadUInt32();
+                Version = reader.UInt32();
                 if (Version < scenarioInfo.DatabaseVersion)
                 {
                     _logger.LogError(
@@ -100,7 +100,7 @@ namespace TME
                     return false;
                 }
                 
-                Header = reader.ReadString();
+                Header = reader.String();
                 
                 // chunk 2
                 _serializeContext.Section = DataSection.SaveGameHeader;

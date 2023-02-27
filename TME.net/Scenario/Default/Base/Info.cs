@@ -20,12 +20,12 @@ namespace TME.Scenario.Default.Base
         {
             if (!base.Load(ctx)) return false;
 
-            Name = ctx.Reader.ReadString();
+            Name = ctx.Reader.String();
             
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

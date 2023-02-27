@@ -20,13 +20,13 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
             
-            SuccessTime = ctx.Reader.ReadUInt32();
-            FailureTime = ctx.Reader.ReadUInt32();
+            SuccessTime = ctx.Reader.UInt32();
+            FailureTime = ctx.Reader.UInt32();
             
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

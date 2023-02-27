@@ -21,14 +21,14 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
             
-            PersonalPronoun = ctx.Reader.ReadString();
-            PossessivePronoun = ctx.Reader.ReadString();
-            SingularPronoun = ctx.Reader.ReadString();
+            PersonalPronoun = ctx.Reader.String();
+            PossessivePronoun = ctx.Reader.String();
+            SingularPronoun = ctx.Reader.String();
             
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

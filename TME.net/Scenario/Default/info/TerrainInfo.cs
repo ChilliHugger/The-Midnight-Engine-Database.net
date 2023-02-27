@@ -31,17 +31,17 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
 
-            Preposition = ctx.Reader.ReadString();
-            Description = ctx.Reader.ReadString();
-            Success = ctx.Reader.ReadUInt32();
-            Visibility = ctx.Reader.ReadUInt32();
-            Obstruction = ctx.Reader.ReadUInt32();
-            MovementCost = ctx.Reader.ReadInt32();
+            Preposition = ctx.Reader.String();
+            Description = ctx.Reader.String();
+            Success = ctx.Reader.UInt32();
+            Visibility = ctx.Reader.UInt32();
+            Obstruction = ctx.Reader.UInt32();
+            MovementCost = ctx.Reader.Int32();
 
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

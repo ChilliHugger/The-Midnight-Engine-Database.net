@@ -343,9 +343,9 @@ namespace TME.Scenario.Default.Base
             
             for ( var ii=0; ii<sv_variables; ii++ ) {
 
-                var name = context.Reader.ReadString();
-                var value = context.Reader.ReadString();
-                _ = context.Reader.ReadInt32();
+                var name = context.Reader.String();
+                var value = context.Reader.String();
+                _ = context.Reader.Int32();
 
                 if (_propertyMapping.TryGetValue(name, out var propertyName))
                 {

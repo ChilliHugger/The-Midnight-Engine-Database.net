@@ -32,7 +32,7 @@ namespace TME
                 return true;
             }
             
-            var count = context.Reader.ReadUInt32();
+            var count = context.Reader.UInt32();
 
             Entries = Enumerable.Range(0, (int) count)
                 .Select( _ => Create(context) )

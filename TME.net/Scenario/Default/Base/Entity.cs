@@ -11,7 +11,7 @@ namespace TME.Scenario.Default.Base
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public partial class Entity : IEntityInternal, ISerializable, IBundleReader
+    public partial class Entity : IEntityInternal, ISerializable, IBundle
     {
         public uint RawFlags { get; internal set; }
         public EntityType Type { get; internal set; }

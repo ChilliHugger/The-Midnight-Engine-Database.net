@@ -25,9 +25,9 @@ namespace TME.Types
         
         public bool Load(ISerializeContext context)
         {
-            Id = context.Reader.ReadMXId(EntityType.String);
-            Symbol = context.Reader.ReadString();
-            Text = context.Reader.ReadString();
+            Id = context.Reader.MXId(EntityType.String);
+            Symbol = context.Reader.String();
+            Text = context.Reader.String();
             return true;
         }
 

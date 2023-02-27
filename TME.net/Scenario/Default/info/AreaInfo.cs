@@ -21,12 +21,12 @@ namespace TME.Scenario.Default.info
         {
             if (!base.Load(ctx)) return false;
 
-            Prefix = ctx.Reader.ReadString();
+            Prefix = ctx.Reader.String();
             
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;
 

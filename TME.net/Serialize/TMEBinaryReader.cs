@@ -30,55 +30,55 @@ namespace TME.Serialize
         }
         
         //
-        public short ReadInt16() => _reader.ReadInt16();
-        public ushort ReadUInt16() => _reader.ReadUInt16();
-        public int ReadInt32() => _reader.ReadInt32();
-        public uint ReadUInt32() => _reader.ReadUInt32();
-        public ulong ReadUInt64() => _reader.ReadUInt64();
+        public short Int16() => _reader.ReadInt16();
+        public ushort UInt16() => _reader.ReadUInt16();
+        public int Int32() => _reader.ReadInt32();
+        public uint UInt32() => _reader.ReadUInt32();
+        public ulong UInt64() => _reader.ReadUInt64();
 
-        public string ReadString()
+        public string String()
         {
             var length = _reader.ReadUInt16();
             var chars = _reader.ReadChars(length);
             return new string(chars);
         }
 
-        public Size ReadSize()
+        public Size Size()
         {
             var w = _reader.ReadInt32();
             var h = _reader.ReadInt32();
             return new Size(w, h);
         }
 
-        public Loc ReadLoc()
+        public Loc Loc()
         {
             var x = _reader.ReadInt32();
             var y = _reader.ReadInt32();
             return new Loc(x, y);
         }
 
-        public MXId ReadMXId()
+        public MXId MXId()
         {
             return _reader.ReadUInt32();
         }
-        public MXId ReadMXId(EntityType type)
+        public MXId MXId(EntityType type)
         {
             var id = _reader.ReadUInt32();
             return new MXId(type,id);
         }
 
-        public T ReadEnum<T>() => (T)(object)_reader.ReadUInt32();
+        public T Enum<T>() => (T)(object)_reader.ReadUInt32();
         
-        public Time ReadTime() => _reader.ReadUInt32();
-        public Direction ReadDirection() => (Direction)_reader.ReadUInt32();
-        public Race ReadRace() => (Race)_reader.ReadUInt32();
-        public Gender ReadGender() => (Gender)_reader.ReadUInt32();
-        public WaitStatus ReadWaitStatus() => (WaitStatus)_reader.ReadUInt32();
-        public Orders ReadOrders() => (Orders)_reader.ReadUInt32();
-        public ArmyType ReadArmyType() => (ArmyType)_reader.ReadUInt32();
-        public UnitType ReadUnitType() => (UnitType)_reader.ReadUInt32();
-        public Terrain ReadTerrain() => (Terrain)_reader.ReadUInt32();
-        public ThingType ReadThingType() => (ThingType)_reader.ReadUInt32();
+        public Time Time() => _reader.ReadUInt32();
+        public Direction Direction() => (Direction)_reader.ReadUInt32();
+        public Race Race() => (Race)_reader.ReadUInt32();
+        public Gender Gender() => (Gender)_reader.ReadUInt32();
+        public WaitStatus WaitStatus() => (WaitStatus)_reader.ReadUInt32();
+        public Orders Orders() => (Orders)_reader.ReadUInt32();
+        public ArmyType ArmyType() => (ArmyType)_reader.ReadUInt32();
+        public UnitType UnitType() => (UnitType)_reader.ReadUInt32();
+        public Terrain Terrain() => (Terrain)_reader.ReadUInt32();
+        public ThingType ThingType() => (ThingType)_reader.ReadUInt32();
         
     }
 }

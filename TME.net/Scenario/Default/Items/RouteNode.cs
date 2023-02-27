@@ -23,7 +23,7 @@ namespace TME.Scenario.Default.Items
             return true;
         }
         
-        public override bool Load(Bundle bundle)
+        public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;
             

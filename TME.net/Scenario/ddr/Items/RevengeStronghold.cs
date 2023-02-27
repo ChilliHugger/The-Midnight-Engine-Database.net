@@ -18,7 +18,7 @@ namespace TME.Scenario.ddr.Items
             if (!base.Load(ctx)) return false;
 
             Energy = ctx.Version > 9
-                ? ctx.Reader.ReadUInt32()
+                ? ctx.Reader.UInt32()
                 : 180;
 
             return true;

@@ -30,7 +30,7 @@ namespace TME
         
         public bool LoadFullMapFromStream(TMEBinaryReader stream)
         {
-            var magicNo = stream.ReadUInt32();
+            var magicNo = stream.UInt32();
 
             if (magicNo == TMEMagicNo)
             {
@@ -43,13 +43,13 @@ namespace TME
                 return false;
             }
 
-            var version = stream.ReadUInt32();
+            var version = stream.UInt32();
             if (version != MapVersion)
             {
                 return false;
             }
 
-            var header = stream.ReadString();
+            var header = stream.String();
             if (header != MapHeader)
             {
                 return false;
@@ -61,14 +61,14 @@ namespace TME
 
         public bool LoadSaveMapFromStream(TMEBinaryReader stream)
         {
-            _size = stream.ReadSize();
+            _size = stream.Size();
             _totalSize = _size.Width * _size.Height;
 
             _data = new MapLoc[_totalSize];
 
             for (var ii = 0; ii < _totalSize; ii++)
             {
-                _data[ii].Bits = stream.ReadUInt64();
+                _data[ii].Bits = stream.UInt64();
             }
 
             CalculateVisibleArea();

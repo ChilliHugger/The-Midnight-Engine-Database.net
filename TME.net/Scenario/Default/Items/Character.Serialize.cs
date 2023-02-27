@@ -15,26 +15,26 @@ namespace TME.Scenario.Default.Items
         {
             if (!base.Load(ctx)) return false;
 
-            LongName = ctx.Reader.ReadString();
-            ShortName = ctx.Reader.ReadString();
-            Looking = ctx.Reader.ReadDirection();
-            Time = ctx.Reader.ReadTime();
+            LongName = ctx.Reader.String();
+            ShortName = ctx.Reader.String();
+            Looking = ctx.Reader.Direction();
+            Time = ctx.Reader.Time();
 
             Units.FirstOrDefault()?.Load(ctx);
             Units.LastOrDefault()?.Load(ctx);
 
             BattleInfo.Load(ctx);
 
-            Reckless = ctx.Reader.ReadUInt32();
-            Energy = (uint) Math.Max(ctx.Reader.ReadInt32(),0); // temp fix
-            Strength = ctx.Reader.ReadUInt32();
-            Cowardly = ctx.Reader.ReadUInt32();
-            Courage = ctx.Reader.ReadUInt32();
-            Fear = ctx.Reader.ReadUInt32();
+            Reckless = ctx.Reader.UInt32();
+            Energy = (uint) Math.Max(ctx.Reader.Int32(),0); // temp fix
+            Strength = ctx.Reader.UInt32();
+            Cowardly = ctx.Reader.UInt32();
+            Courage = ctx.Reader.UInt32();
+            Fear = ctx.Reader.UInt32();
 
             Recruitment.Load(ctx);
 
-            Race = ctx.Reader.ReadRace();
+            Race = ctx.Reader.Race();
 
             var carried = ctx.ReadEntity<IObject>();
             Carrying = carried == null
@@ -43,28 +43,28 @@ namespace TME.Scenario.Default.Items
             
             KilledBy = ctx.ReadEntity<IObject>();
 
-            Gender = ctx.Reader.ReadGender();
+            Gender = ctx.Reader.Gender();
 
-            Loyalty = ctx.Reader.ReadRace();
+            Loyalty = ctx.Reader.Race();
 
             Liege = ctx.ReadEntity<ICharacter>();
 
             Foe = ctx.ReadEntity<ICharacter>();
 
-            WaitStatus = ctx.Reader.ReadWaitStatus();
+            WaitStatus = ctx.Reader.WaitStatus();
 
-            Orders = ctx.Reader.ReadOrders();
+            Orders = ctx.Reader.Orders();
 
-            Despondency = ctx.Reader.ReadUInt32();
+            Despondency = ctx.Reader.UInt32();
 
-            Traits = ctx.Reader.ReadEnum<LordTraits>();
+            Traits = ctx.Reader.Enum<LordTraits>();
 
             Following = ctx.Version > 2
                 ? ctx.ReadEntity<ICharacter>()
                 : null;
 
             Followers = ctx.Version > 4
-                ? ctx.Reader.ReadUInt32()
+                ? ctx.Reader.UInt32()
                 : 0;
             
             return true;

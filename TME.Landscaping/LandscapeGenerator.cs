@@ -105,7 +105,7 @@ namespace TME.Landscaping
         {
             
             var mapLoc = _map.GetAt(new Loc(x, y));
-            var terrainInfo = _entityResolver.EntityById<TerrainInfo>((int)mapLoc.Terrain.Raw());
+            var terrainInfo = _entityResolver.EntityById<TerrainInfo>(mapLoc.Terrain.Raw());
             if (terrainInfo == null) {
                 return null;
             }

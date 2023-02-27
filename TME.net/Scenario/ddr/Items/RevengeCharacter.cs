@@ -50,7 +50,7 @@ namespace TME.Scenario.ddr.Items
             if (!base.Load(ctx)) return false;
 
             LastLocation = (ctx.Version > 10 && ctx.IsSaveGame)
-                ? ctx.Reader.ReadLoc()
+                ? ctx.Reader.Loc()
                 : Loc.Zero;
 
             HomeStronghold = ctx.ReadEntity<IStronghold>();
@@ -60,7 +60,7 @@ namespace TME.Scenario.ddr.Items
                 : null;
 
             BattleLost = ctx.IsSaveGame
-                ? ctx.Reader.ReadUInt32()
+                ? ctx.Reader.UInt32()
                 : 0;
             
             return true;
