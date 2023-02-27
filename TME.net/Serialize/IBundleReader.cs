@@ -1,5 +1,7 @@
+using System;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Interfaces;
 using TME.Types;
 
 namespace TME.Serialize
@@ -9,7 +11,7 @@ namespace TME.Serialize
         public Bundle Raw { get; }
         
         //int PeekInt32();
-        public T Enum<T>(string name);
+        public T Enum<T>(string name) where T : Enum;
 
         public short Int16(string name);
         public ushort UInt16(string name);
@@ -29,11 +31,12 @@ namespace TME.Serialize
         public UnitType UnitType(string name);
         public ThingType ThingType(string name);
         public Terrain Terrain(string name);
-        public MXId MXId(string name);
-        public MXId MXId(EntityType type, string name);
+
         
         public MXId Id(string name);
-        public T Flags<T>(string name);
+        public T Flags<T>(string name) where T : Enum;
+        public T? Entity<T>(string name) where T : IEntity;
 
+        public T[] EntityArray<T>(string name) where T : IEntity;
     }
 }

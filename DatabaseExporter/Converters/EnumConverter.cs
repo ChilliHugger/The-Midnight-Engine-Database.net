@@ -7,6 +7,8 @@ using TME.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
+using TME.Types;
+using Object = TME.Scenario.Default.Items.Object;
 
 namespace DatabaseExporter.Converters
 {
@@ -52,10 +54,10 @@ namespace DatabaseExporter.Converters
             {
                 return Resolve<CommandInfo,Command>(command);
             }
-            //if (value is Orders orders)
-            //{
-            //    return Resolve<OrdersI,Command>(command);
-            //}
+            if (value is ThingType thing && thing != ThingType.None)
+            {
+                return Resolve<IObject,ThingType>(thing);
+            }
             return "";
         }
     }

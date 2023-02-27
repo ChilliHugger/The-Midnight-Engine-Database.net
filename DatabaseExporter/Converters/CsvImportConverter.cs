@@ -13,11 +13,13 @@ namespace DatabaseExporter.Converters;
 [SuppressMessage("Performance", "CA1822:Mark members as static")]
 public class CsvImportConverter
 {
-    public IEntityResolver EntityResolver { get; set; }
+    private readonly IStrings _strings;
+    private readonly IEntityResolver _entityResolver;
 
-    public CsvImportConverter(IEntityResolver entityResolver)
+    public CsvImportConverter(IEntityResolver entityResolver, IStrings strings )
     {
-        EntityResolver = entityResolver;
+        _strings = strings;
+        _entityResolver = entityResolver;
     }
 
     public MXId ToId(EntityType type, int id) => new MXId(type, (uint) id);
@@ -36,13 +38,35 @@ public class CsvImportConverter
         return new Loc(values[0], values[1]);
     }
 
+    public IEntity ToEntity<T>(string symbol)
+        where T : IEntity
+    {
+        return _entityResolver.EntityBySymbol<T>(symbol);
+    }
+
+    public DatabaseString ToString(string symbol)
+    {
+        return _strings.GetBySymbol(symbol);
+    }
+
+    
     public T[] ToArray<T>(string value)
         where T : IEntity
     {
         return value
-            .Split(",")
+            .Split(',','|')
             .Select(s => s.Trim())
-            .Select(s => EntityResolver.EntityBySymbol<T>(s))
+            .Select(s => _entityResolver.EntityBySymbol<T>(s))
             .ToArray();
+    }
+    
+    public T ToEnum<T>(string symbol)
+        where T : Enum
+    {
+        if (string.IsNullOrWhiteSpace(symbol)) return default;
+        
+        var info = _entityResolver.EntityBySymbol<IInfo>(symbol);
+        return (T) (object)(info?.Id.RawId ?? 0);
+
     }
 }

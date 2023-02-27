@@ -1,8 +1,10 @@
-﻿using System;
+﻿// ReSharper disable FieldCanBeMadeReadOnly.Global
 namespace TME.Types
 {
     public struct Size
     {
+        public static readonly Size Zero = new Size(0,0);
+        
         public int Width;
         public int Height;
 

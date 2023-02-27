@@ -19,7 +19,7 @@ namespace TME.Scenario.Default.Entities
     {
         private const int MaxReferences = 5;
         
-        MissionFlags IMission.Flags => (MissionFlags) RawFlags;
+        public new MissionFlags Flags => (MissionFlags) RawFlags;
 
         public int Priority { get; internal set; }
         public MissionObjective Objective { get; internal set; } = MissionObjective.None;
@@ -64,21 +64,23 @@ namespace TME.Scenario.Default.Entities
         {
             if (!base.Load(bundle)) return false;
 
-            // Priority = bundle.Int32();
-            // Objective = bundle.Enum<MissionObjective>();
-            // Condition = bundle.Enum<MissionCondition>();
-            //
+            Priority = bundle.Int32(nameof(Priority));
+            Objective = bundle.Enum<MissionObjective>(nameof(Objective));
+            Condition = bundle.Enum<MissionCondition>(nameof(Condition));
+            
             // References.Clear();
-            //
-            // // References = Enumerable.Range(0, MaxReferences)
-            // //     .Select(_ => bundle.Entity())
-            // //     .WhereNotNull()
-            // //     .ToList();
-            //
-            // Points = bundle.Int32();
-            // Scorer = bundle.Entity();
-            // Action = bundle.Enum<MissionAction>();
-            // ActionId = bundle.Entity();
+            // if (bundle.Raw.TryGetValue(nameof(References), out var value))
+            // {
+            //     if (value is IEntity[] nodes)
+            //     {
+            //         References = nodes;
+            //     }
+            // }
+            References = bundle.EntityArray<IEntity>(nameof(References));
+            Points = bundle.Int32(nameof(Points));
+            Scorer = bundle.Entity<IEntity>(nameof(Scorer));
+            Action = bundle.Enum<MissionAction>(nameof(Action));
+            ActionId = bundle.Entity<IEntity>(nameof(ActionId));
             
             return true;
         }

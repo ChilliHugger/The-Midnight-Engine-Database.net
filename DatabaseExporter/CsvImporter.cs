@@ -45,11 +45,11 @@ namespace DatabaseExporter
         {
             _folder = folder;
             
+            _strings = new CsvStrings();
             _entityContainer = new CsvEntityContainer();
             _entityResolver = new TMEEntityResolver(_entityContainer);
-            _importConverter = new CsvImportConverter(_entityResolver);
             _symbolCache = new Dictionary<string, IEntity>();
-            _strings = new CsvStrings();
+            _importConverter = new CsvImportConverter(_entityResolver, _strings);
             
             // misc
             Strings();
@@ -90,6 +90,7 @@ namespace DatabaseExporter
         private readonly CsvConfiguration _configuration = new(CultureInfo.InvariantCulture)
         {
             HasHeaderRecord = true,
+            MissingFieldFound = null,
             Mode = CsvMode.NoEscape,
             Delimiter = "\t",
             ShouldQuote = _ => true
@@ -143,9 +144,10 @@ namespace DatabaseExporter
             foreach (var entity in input)
             {
                 var resolved = _entityResolver.EntityById<TOut>((uint) entity.Id);
-                if (resolved is IBundleReader item)
+                if (resolved is IBundle item)
                 {
-                    item.Load(entity.ToBundle(_importConverter));
+                    var reader = new TMEBundleReader(entity.ToBundle(_importConverter), _entityResolver);
+                    item.Load(reader);
                 }
             }
         }

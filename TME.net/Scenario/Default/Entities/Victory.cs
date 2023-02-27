@@ -32,5 +32,15 @@ namespace TME.Scenario.Default.Entities
             String = ctx.Reader.UInt32();
             return true;
         }
+
+        public override bool Load(IBundleReader bundle)
+        {
+            if( !base.Load(bundle) ) return false;
+
+            Priority = bundle.Int32(nameof(Priority));
+            Mission = bundle.Entity<IMission>(nameof(Mission));
+            String = bundle.UInt32(nameof(String));
+            return true;
+        }
     }
 }

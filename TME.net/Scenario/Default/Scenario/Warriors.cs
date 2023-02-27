@@ -7,5 +7,9 @@ namespace TME.Scenario.Default.Scenario
         public Warriors() : base(UnitType.Warrior)
         {
         }
+        
+        public Warriors(uint total) : base(UnitType.Rider,total)
+        {
+        }
     }
 }

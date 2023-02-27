@@ -12,7 +12,7 @@ namespace TME.Scenario.Default.Scenario
     {
 
         #region Properties
-        public UnitType Type { get; internal set; }
+        public UnitType Type { get; internal init; }
 
         public uint Total { get; internal set; }
 
@@ -28,6 +28,12 @@ namespace TME.Scenario.Default.Scenario
             Type = type;
         }
 
+        public Unit(UnitType type, uint total)
+        {
+            Type = type;
+            Total = total;
+        }
+        
         #region Internal Helpers
         void IUnitInternal.AddLoses(uint value)
         {

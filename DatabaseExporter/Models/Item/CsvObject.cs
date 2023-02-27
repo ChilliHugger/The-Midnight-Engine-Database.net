@@ -1,7 +1,12 @@
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 using CsvHelper.Configuration;
 using CsvHelper.Configuration.Attributes;
 using DatabaseExporter.Converters;
 using TME.Scenario.ddr.Interfaces;
+using TME.Scenario.ddr.Items;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
@@ -9,8 +14,6 @@ using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.Serialize;
 
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace DatabaseExporter.Models.Item
 {
     public class CsvObject : CsvItem
@@ -22,7 +25,6 @@ namespace DatabaseExporter.Models.Item
         public string UseDescription { get; set; }
         [Name("Carried By")]
         public string CarriedBy { get; set; }
-        
         // ddr
         [Name("Type"), Optional]
         public string ObjectType { get; set; }
@@ -36,6 +38,14 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Entity.Symbol), Symbol},
                 {nameof(Entity.Flags), converter.ToFlags<ThingFlags>(Flags)},
                 {nameof(Object.Location), converter.ToLoc(Location)},
+                
+                {nameof(Object.Kills), Kills},
+                {nameof(Object.Name), Name},
+                {nameof(Object.Description), Description},
+                {nameof(Object.UseDescription), converter.ToString(UseDescription)?.Id.RawId}, 
+                {nameof(Object.CarriedBy), converter.ToEntity<IItem>(CarriedBy)},
+                {nameof(RevengeObject.ObjectType), converter.ToEnum<ObjectType>(ObjectType)},
+                {nameof(RevengeObject.ObjectPower), converter.ToEnum<ObjectPower>(ObjectPower)},
             };
         }
     }
@@ -67,6 +77,11 @@ namespace DatabaseExporter.Models.Item
             {
                 Map<IRevengeThing>(m => m.ObjectType).Index(10).Name("Type");
                 Map<IRevengeThing>(m => m.ObjectPower).Index(11).Name("Power");
+            }
+            else
+            {
+                Map().Constant("").Index(10).Name("Type");
+                Map().Constant("").Index(11).Name("Power");
             }
 
             Map(m => m.CanDrop).Ignore();

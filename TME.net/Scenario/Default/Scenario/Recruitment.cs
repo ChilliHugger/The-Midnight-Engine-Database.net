@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics.CodeAnalysis;
-using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario
@@ -19,6 +18,13 @@ namespace TME.Scenario.Default.Scenario
             return true;
         }
 
+        public bool Load(IBundleReader bundle)
+        {
+            Key = bundle.UInt32(nameof(Key));
+            By = bundle.UInt32(nameof(By));
+            return true;
+        }
+        
         public bool Save()
         {
             throw new NotImplementedException();

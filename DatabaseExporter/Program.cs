@@ -13,12 +13,11 @@ namespace DatabaseExporter
     {
         static void Main()
         {
-            //ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
-            //ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
+            ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
+            ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
 
             ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
-
-            
+            ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_ddr", "../../../../data/ddr2");
         }
 
         private static void ImportDatabase(string scenarioTag, string directory, string output)

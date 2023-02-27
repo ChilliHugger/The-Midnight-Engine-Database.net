@@ -34,6 +34,26 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+
+            Race = bundle.Race(nameof(Race));
+            UnitType = bundle.UnitType(nameof(UnitType));
+            Total = bundle.UInt32(nameof(Total));
+            Target = bundle.Entity<IEntity>(nameof(Target));
+            Orders = bundle.Orders(nameof(Orders));
+            Success = bundle.UInt32(nameof(Success));
+            LoyaltyLord = bundle.Entity<ICharacter>(nameof(LoyaltyLord));
+            Killed = 0;
+            LastLocation = Location;
+            Delay = bundle.UInt32(nameof(Delay));
+            Lost = 0;
+            TargetLocation = Loc.Zero;
+
+            return true;
+        }
+
         public override bool Save()
         {
             throw new NotImplementedException();

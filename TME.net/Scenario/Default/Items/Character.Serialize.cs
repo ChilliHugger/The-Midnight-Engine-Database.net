@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Scenario;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.Items
@@ -70,6 +71,45 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+
+            LongName = bundle.String(nameof(LongName));
+            ShortName = bundle.String(nameof(ShortName));
+            Looking = bundle.Direction(nameof(Looking));
+            Time = bundle.Time(nameof(Time));
+
+            Units[0] = new Warriors { Total = bundle.UInt32(nameof(Scenario.Warriors)) };
+            Units[1] = new Riders{ Total = bundle.UInt32(nameof(Scenario.Riders)) };
+            
+            Reckless = bundle.UInt32(nameof(Reckless));
+            Energy = bundle.UInt32(nameof(Energy));
+            Strength = bundle.UInt32(nameof(Strength));
+            Cowardly = bundle.UInt32(nameof(Cowardly));
+            Courage = bundle.UInt32(nameof(Courage));
+            Fear = bundle.UInt32(nameof(Fear));
+
+            Recruitment.Load(bundle);
+            
+            Race = bundle.Race(nameof(Race));
+            Carrying = bundle.EntityArray<IObject>(nameof(Carrying));
+            KilledBy = bundle.Entity<IObject>(nameof(KilledBy));
+            Gender = bundle.Gender(nameof(Gender));
+            Loyalty = bundle.Race(nameof(Loyalty));
+            Liege = bundle.Entity<ICharacter>(nameof(Liege));
+            Foe = bundle.Entity<ICharacter>(nameof(Foe));
+            WaitStatus = bundle.WaitStatus(nameof(WaitStatus));
+            Orders = bundle.Orders(nameof(Orders));
+            Despondency = bundle.UInt32(nameof(Despondency));
+            Traits = bundle.Enum<LordTraits>(nameof(Traits));
+            Following = bundle.Entity<ICharacter>(nameof(Following));
+            Followers = 0;
+            
+            return true;
+        }
+        
+        
         public override bool Save()
         {
             throw new NotImplementedException();

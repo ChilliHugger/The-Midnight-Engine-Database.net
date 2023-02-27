@@ -1,3 +1,7 @@
+// ReSharper disable MemberCanBePrivate.Global
+// ReSharper disable ClassNeverInstantiated.Global
+// ReSharper disable UnusedAutoPropertyAccessor.Global
+
 using CsvHelper.Configuration;
 using DatabaseExporter.Converters;
 using TME.Scenario.Default.Base;
@@ -7,8 +11,6 @@ using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
 using TME.Serialize;
 
-// ReSharper disable ClassNeverInstantiated.Global
-// ReSharper disable UnusedAutoPropertyAccessor.Global
 namespace DatabaseExporter.Models.Item
 {
     public class CsvRegiment : CsvItem
@@ -17,7 +19,7 @@ namespace DatabaseExporter.Models.Item
         public string Type { get; set; }
         public uint Total { get; set; }
         public string Target { get; set; } 
-        public string Orders { get; set; }
+        public Orders Orders { get; set; }
         public uint Success { get; set; }
         public string Loyalty { get; set; }
         public uint Delay { get; set; }
@@ -29,6 +31,15 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Entity.Symbol), Symbol},
                 {nameof(Entity.Flags), converter.ToFlags<RegimentFlags>(Flags)},
                 {nameof(Regiment.Location), converter.ToLoc(Location)},
+                
+                {nameof(Regiment.Race), converter.ToEnum<Race>(Race)},
+                {nameof(Regiment.UnitType), converter.ToEnum<UnitType>(Type)},
+                {nameof(Regiment.Total), Total},
+                {nameof(Regiment.Target), converter.ToEntity<IEntity>(Target)},
+                {nameof(Regiment.Orders), Orders},
+                {nameof(Regiment.Success), Success},
+                {nameof(Regiment.LoyaltyLord), converter.ToEntity<ICharacter>(Loyalty)},
+                {nameof(Regiment.Delay), Delay},
             };
         }
     }

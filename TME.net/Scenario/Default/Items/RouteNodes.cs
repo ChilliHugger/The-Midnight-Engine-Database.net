@@ -21,15 +21,8 @@ namespace TME.Scenario.Default.Items
         
         public bool Load(IBundleReader bundle)
         {
-            if (bundle.Raw.TryGetValue(nameof(Nodes), out var value))
-            {
-                if (value is IRouteNode?[] nodes)
-                {
-                    Nodes = nodes;
-                }
-                return true;
-            }
-            return false;
+            Nodes = bundle.EntityArray<IRouteNode>(nameof(Nodes));
+            return true;
         }
 
         public bool Save()

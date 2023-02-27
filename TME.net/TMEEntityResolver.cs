@@ -46,16 +46,19 @@ namespace TME
         public T? EntityBySymbol<T>(string symbol)
             where T : IEntity
         {
-            if(_entityContainer.SymbolCache.TryGetValue( symbol, out var entity))
+            if(!string.IsNullOrWhiteSpace(symbol)) 
             {
-                return (T?)entity;
+                if (_entityContainer.SymbolCache.TryGetValue(symbol, out var entity))
+                {
+                    return (T?) entity;
+                }
             }
             return default;
         }
         
         public IEntity? EntityBySymbol(string symbol)
         {
-            return _entityContainer.SymbolCache.TryGetValue( symbol, out var entity) ? entity : default;
+            return EntityBySymbol<IEntity>(symbol);
         }
         
         public T? EntityById<T>(uint id)

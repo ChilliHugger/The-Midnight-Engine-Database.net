@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
+using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
 
@@ -8,7 +9,7 @@ namespace TME.Scenario.Default.Base
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
-    public class Info : Entity
+    public class Info : Entity, IInfo
     {
         public string Name { get; internal set; } = "";
 

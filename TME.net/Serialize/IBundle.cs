@@ -1,7 +1,4 @@
 using System.Collections.Generic;
-using TME.Scenario.Default.Base;
-using TME.Scenario.Default.Enums;
-using TME.Types;
 
 namespace TME.Serialize
 {

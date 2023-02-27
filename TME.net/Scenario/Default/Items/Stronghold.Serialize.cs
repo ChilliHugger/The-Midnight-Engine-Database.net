@@ -32,6 +32,31 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+            
+            OccupyingRace = bundle.Race(nameof(OccupyingRace));
+            Race = bundle.Race(nameof(Race));
+            UnitType = bundle.UnitType(nameof(Enums.UnitType));
+            Total = bundle.UInt32(nameof(Total));
+            Min = bundle.UInt32(nameof(Min));
+            Max = bundle.UInt32(nameof(Max));
+            StrategicalSuccess = bundle.UInt32(nameof(StrategicalSuccess));
+            OwnerSuccess = bundle.UInt32(nameof(OwnerSuccess));
+            EnemySuccess = bundle.UInt32(nameof(EnemySuccess));
+            Influence = bundle.UInt32(nameof(Influence));
+            Respawn = bundle.UInt32(nameof(Respawn));
+            Occupier = bundle.Entity<ICharacter>(nameof(Occupier));
+            Owner = bundle.Entity<ICharacter>(nameof(Owner));
+            Terrain = bundle.Terrain(nameof(Terrain));
+            Killed = 0;
+            Lost = 0;
+
+            return true;
+        }
+
+
         public override bool Save()
         {
             throw new NotImplementedException();
