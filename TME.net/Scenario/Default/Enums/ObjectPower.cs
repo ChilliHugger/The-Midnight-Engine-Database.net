@@ -7,22 +7,22 @@
         Protection = 2,
         Battle = 3,
         Swiftness = 4,
-        Control = 5, // mooon ring
+        Control = 5, // moon ring
         Fear = 6, // ice crown
 
         Attack,
-        Attack_ddr,
+        AttackRevenge,
         Shelter,
-        Shelter_ddr,
+        ShelterRevenge,
         Guidance,
-        Guidance_ddr,
+        GuidanceRevenge,
         NoEnergy,
         FullEnergy,
         Night,
         Dawn,
         Horse,
-        FullEespondance,
-        NoEespondance,
+        FullDespondence,
+        NoDespondence,
         FullTiredness,
         NoTiredness,
 

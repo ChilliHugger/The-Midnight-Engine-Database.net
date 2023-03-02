@@ -12,7 +12,7 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
     public partial class Object : Item, IObjectInternal
     {
-        public new ThingFlags Flags => (ThingFlags) RawFlags;
+        public new ObjectFlags Flags => (ObjectFlags) RawFlags;
         public ThingType Kills { get; internal set; } = ThingType.None;
         public string Name { get; internal set; } = "";
         public string Description { get; internal set; } = "";
@@ -20,20 +20,20 @@ namespace TME.Scenario.Default.Items
         public IItem? CarriedBy { get; internal set; }
         
         #region Flags
-        public bool CanDrop => IsFlags(ThingFlags.Drop);
-        public bool CanFight => IsFlags(ThingFlags.Fight);
-        public bool CanPickup => IsFlags(ThingFlags.Pickup);
-        public bool CanRemove => IsFlags(ThingFlags.Remove);
-        public bool CanSee => IsFlags(ThingFlags.See);
-        public bool HelpsRecruitment => IsFlags(ThingFlags.Recruitment);
+        public bool CanDrop => IsFlags(ObjectFlags.Drop);
+        public bool CanFight => IsFlags(ObjectFlags.Fight);
+        public bool CanPickup => IsFlags(ObjectFlags.Pickup);
+        public bool CanRemove => IsFlags(ObjectFlags.Remove);
+        public bool CanSee => IsFlags(ObjectFlags.See);
+        public bool HelpsRecruitment => IsFlags(ObjectFlags.Recruitment);
         public bool IsCarried => CarriedBy != null;
-        public bool IsRandomStart => IsFlags(ThingFlags.RandomStart);
-        public bool IsSpecial => IsFlags(ThingFlags.Special);
-        public bool IsUnique => IsFlags(ThingFlags.Unique);
-        public bool IsWeapon => IsFlags(ThingFlags.Weapon);
+        public bool IsRandomStart => IsFlags(ObjectFlags.RandomStart);
+        public bool IsSpecial => IsFlags(ObjectFlags.Special);
+        public bool IsUnique => IsFlags(ObjectFlags.Unique);
+        public bool IsWeapon => IsFlags(ObjectFlags.Weapon);
         #endregion
         
-        public Object() : base(EntityType.Thing)
+        public Object() : base(EntityType.Object)
         {
         }
         

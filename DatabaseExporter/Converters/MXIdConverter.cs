@@ -44,7 +44,7 @@ namespace DatabaseExporter.Converters
                 "string" => EntityType.String,
                 "character" => EntityType.Character,
                 "mission" => EntityType.Mission,
-                "object" => EntityType.Thing,
+                "object" => EntityType.Object,
                 "regiment" => EntityType.Regiment,
                 "routenode" => EntityType.RouteNode,
                 "stronghold" => EntityType.Stronghold,

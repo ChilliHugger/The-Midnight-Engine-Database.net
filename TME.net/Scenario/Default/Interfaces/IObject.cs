@@ -10,7 +10,7 @@ namespace TME.Scenario.Default.Interfaces
     
     public interface IObject : IItem
     {
-        new ThingFlags Flags { get; }
+        new ObjectFlags Flags { get; }
         ThingType Kills { get; }
         string Name { get; }
         string Description { get; }

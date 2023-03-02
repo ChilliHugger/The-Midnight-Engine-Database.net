@@ -7,7 +7,7 @@
         AttributeInfo = 2,
         DirectionInfo = 3,
         GenderInfo = 4,
-        Thing = 5,
+        Object = 5,
         RaceInfo = 6,
         TerrainInfo = 7,
         UnitInfo = 8,

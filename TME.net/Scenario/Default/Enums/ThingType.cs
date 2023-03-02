@@ -33,7 +33,7 @@
 
         CrownVarenand = 22,
         CrownCarudrium,
-        SpellThigror,
+        SpellThigrorn,
         RunesFinorn,
         CrownImiriel
     }

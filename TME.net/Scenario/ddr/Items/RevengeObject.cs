@@ -26,7 +26,7 @@ namespace TME.Scenario.ddr.Items
                 : ObjectPower.None;
 
             // TODO: This should be actual entry in the database
-            SetFlags(ThingFlags.Special, CheckIsSpecial());
+            SetFlags(ObjectFlags.Special, CheckIsSpecial());
             
             return true;
         }

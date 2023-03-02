@@ -16,8 +16,8 @@ Version	Id	Symbol	Flags	Location	Kills	Name	Description	Use Description	Carried 
 1	15	OB_MOONRING2	PICKUP+WEAPON+UNIQUE	0,0	OB_SKULKRIN	Moon	the {obj:name} {obj:type}	SS_FIGHT3	CH_LUXOR	Ring	Control
 1	16	OB_CLAWS		0,0		Claws	the Claws of Night			None	Night
 1	17	OB_FLAMES		0,0		Flames	the Flames of Dawn			None	Dawn
-1	18	OB_THORNS		0,0		Thorns	the Thorns of Despair			None	FullEespondance
-1	19	OB_BLOOD		0,0		Blood	the Blood of Courage			None	NoEespondance
+1	18	OB_THORNS		0,0		Thorns	the Thorns of Despair			None	FullDespondence
+1	19	OB_BLOOD		0,0		Blood	the Blood of Courage			None	NoDespondence
 1	20	OB_LANGUOR		0,0		Languor	the Langour of Death			None	FullTiredness
 1	21	OB_SPRINGS		0,0		Springs	the Springs of Life			None	FullTiredness
 1	22	OB_CROWN_VARENAND	PICKUP+DROP+UNIQUE+RANDOMSTART+SPECIAL	0,0		Varenand	{str:86}			Crown	Persuasion

@@ -85,7 +85,7 @@ namespace TME.UnitTests
                 Assert.That(entities.Lords.All(i => IsValidItemType(EntityType.Character, i)), "Lords have not loaded");
                 Assert.That(entities.Strongholds.All(i => IsValidItemType(EntityType.Stronghold, i)), "Strongholds have not loaded");
                 Assert.That(entities.Waypoints.All(i => IsValidItemType(EntityType.Waypoint, i)), "Waypoints have not loaded");
-                Assert.That(entities.Things.All(i => IsValidItemType(EntityType.Thing, i)), "Things have not loaded");
+                Assert.That(entities.Things.All(i => IsValidItemType(EntityType.Object, i)), "Things have not loaded");
             });
         }
 

@@ -65,8 +65,8 @@ namespace TME.SpecTests.Drivers
             
             if (thing is Object item)
             {
-                item.Id = new MXId(EntityType.Thing,(uint)thingType);
-                item.SetFlags(ThingFlags.Unique, unique);
+                item.Id = new MXId(EntityType.Object,(uint)thingType);
+                item.SetFlags(ObjectFlags.Unique, unique);
             }
 
             return thing;

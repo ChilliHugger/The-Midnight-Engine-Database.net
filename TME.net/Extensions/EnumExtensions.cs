@@ -74,7 +74,7 @@ namespace TME.Extensions
                 case EntityType.Army:
                     return false;
                     
-                case EntityType.Thing:
+                case EntityType.Object:
                 case EntityType.Character:
                 case EntityType.Regiment:
                 case EntityType.RouteNode:

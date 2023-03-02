@@ -24,8 +24,8 @@ namespace TME
             { typeof(IStronghold), EntityType.Stronghold },   
             { typeof(IRevengeStronghold), EntityType.Stronghold },
             { typeof(IWaypoint), EntityType.Waypoint },
-            { typeof(IObject), EntityType.Thing },
-            { typeof(IRevengeThing), EntityType.Thing },
+            { typeof(IObject), EntityType.Object },
+            { typeof(IRevengeThing), EntityType.Object },
             { typeof(IMission), EntityType.Mission },
             { typeof(IVictory), EntityType.Victory },
             
@@ -93,7 +93,7 @@ namespace TME
                     EntityType.Regiment => _entityContainer.Regiments.ElementAt(index),
                     EntityType.Stronghold => _entityContainer.Strongholds.ElementAt(index),
                     EntityType.Waypoint => _entityContainer.Waypoints.ElementAt(index),
-                    EntityType.Thing => _entityContainer.Things.ElementAt(index),
+                    EntityType.Object => _entityContainer.Things.ElementAt(index),
                     EntityType.Mission => _entityContainer.Missions.ElementAt(index),
                     EntityType.Victory => _entityContainer.Victories.ElementAt(index),
                     

@@ -51,7 +51,7 @@ public class CsvConverterFactory
             cache.AddConverter<EntityFlags>(new FlagConverter<EntityFlags>());
             cache.AddConverter<LordFlags>(new FlagConverter<LordFlags>());
             cache.AddConverter<RegimentFlags>(new FlagConverter<RegimentFlags>());
-            cache.AddConverter<ThingFlags>(new FlagConverter<ThingFlags>());
+            cache.AddConverter<ObjectFlags>(new FlagConverter<ObjectFlags>());
             cache.AddConverter<MissionFlags>(new FlagConverter<MissionFlags>());
             cache.AddConverter<VictoryFlags>(new FlagConverter<VictoryFlags>());
             cache.AddConverter<TerrainInfoFlags>(new FlagConverter<TerrainInfoFlags>());

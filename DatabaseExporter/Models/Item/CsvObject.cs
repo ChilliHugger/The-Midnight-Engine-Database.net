@@ -34,9 +34,9 @@ namespace DatabaseExporter.Models.Item
         public override Bundle ToBundle(CsvImportConverter converter)
         {
             return new Bundle {
-                {nameof(Entity.Id), converter.ToId(EntityType.Thing,Id)},
+                {nameof(Entity.Id), converter.ToId(EntityType.Object,Id)},
                 {nameof(Entity.Symbol), Symbol},
-                {nameof(Entity.Flags), converter.ToFlags<ThingFlags>(Flags)},
+                {nameof(Entity.Flags), converter.ToFlags<ObjectFlags>(Flags)},
                 {nameof(Object.Location), converter.ToLoc(Location)},
                 
                 {nameof(Object.Kills), Kills},

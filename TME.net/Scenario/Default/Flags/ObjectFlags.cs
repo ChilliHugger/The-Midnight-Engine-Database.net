@@ -3,7 +3,7 @@
 namespace TME.Scenario.Default.Flags
 {
     [Flags]
-    public enum ThingFlags : uint
+    public enum ObjectFlags : uint
     {
         Fight       = 1 << 0,   // object can be fought
         Pickup      = 1 << 1,   // object can be picked up
