@@ -15,6 +15,8 @@ namespace TME.Serialize
         public IScenario? Scenario { get; set; } = default;
         
         public ISerializeReader Reader { get; set; }
+        public ISerializeWriter Writer { get; set; }
+        
         private readonly IEntityResolver _entityResolver;
         private readonly IStrings _strings;
 
@@ -23,6 +25,7 @@ namespace TME.Serialize
             _entityResolver = entityResolver;
             _strings = strings;
             Reader = new NullReader();
+            Writer = new NullWriter();
         }
 
         public T? ReadEntity<T>()
@@ -32,6 +35,12 @@ namespace TME.Serialize
             return _entityResolver.EntityById<T>(id);
         }
 
+        public void WriteEntity<T>(T? entity)
+            where T : IEntity
+        {
+            Writer.UInt32(entity?.RawId ?? 0);
+        }
+        
         public IEntity? ReadEntity()
         {
             var id = Reader.UInt32();

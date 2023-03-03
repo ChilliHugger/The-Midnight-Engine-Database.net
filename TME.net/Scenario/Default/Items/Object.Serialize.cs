@@ -22,11 +22,32 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
-        public override bool Save()
+        public override bool Save(ISerializeContext ctx)
         {
-            throw new NotImplementedException();
-        }
+            if (!base.Save(ctx)) return false;
+            
+             ctx.Writer.String(Name);
+             ctx.Writer.MXId(CarriedBy);
+             ctx.Writer.String(Description);
+             ctx.Writer.Enum(Kills);
+             ctx.Writer.UInt32(UseDescription);
 
+            return true;
+        }
+        
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+            
+            Name = bundle.String(nameof(Name));
+            CarriedBy = bundle.Entity<IItem>(nameof(CarriedBy));
+            Description = bundle.String(nameof(Description));
+            Kills = bundle.ThingType(nameof(Kills));
+            UseDescription = bundle.UInt32(nameof(UseDescription));
+
+            return true;
+        }
+        
         #endregion
     }
 }

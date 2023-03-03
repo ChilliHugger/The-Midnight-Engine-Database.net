@@ -5,6 +5,8 @@ namespace TME.Scenario.Default.Enums
         None = 0,
         Header,
         SaveGameHeader,
+        Counts,
+        VariableCount,
         Entities,
         Strings,
         Variables,

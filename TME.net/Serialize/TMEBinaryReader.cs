@@ -6,21 +6,21 @@ using TME.Types;
 
 namespace TME.Serialize
 {
-    public class TMEBinaryReader : ISerializeReader, IDisposable
+    public sealed class TMEBinaryReader : ISerializeReader, IDisposable
     {
         private readonly BinaryReader _reader;
-        public bool EnableByteSwap { get; set; }
+        //public bool EnableByteSwap { get; set; }
 
         public TMEBinaryReader(Stream stream)
         {
             _reader = new BinaryReader(stream);
         }
-
+        
         public void Dispose()
         {
             _reader.Dispose();
         }
-
+        
         public int PeekInt32()
         {
             var pos = _reader.BaseStream.Position;

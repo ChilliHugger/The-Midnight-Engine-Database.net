@@ -18,9 +18,11 @@ namespace TME.Scenario.Default.Scenario
             return true;
         }
 
-        public bool Save()
+        public bool Save(ISerializeContext ctx)
         {
-            throw new NotImplementedException();
+            ctx.Writer.Loc(Location);
+            ctx.Writer.UInt32(Slew);
+            return true;
         }
         #endregion
     }

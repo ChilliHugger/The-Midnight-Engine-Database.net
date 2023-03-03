@@ -1,4 +1,5 @@
 using System;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
@@ -37,7 +38,7 @@ namespace TME.Serialize
 
         public MXId Id(string name) => Get(name,MXId.None);
 
-        public T Flags<T>(string name) where T : Enum =>Enum<T>(name);
+        public T Flags<T>(string name) where T : Enum => Enum<T>(name);
 
         public Loc Loc(string name) =>  Get(name, Scenario.Default.Base.Loc.Zero);
         
@@ -69,7 +70,7 @@ namespace TME.Serialize
             {
                 return (T)value!;
             }
-            return default;
+            return (T)(object)(uint)0;
         }
 
         public short Int16(string name) => Get<short>(name,0);

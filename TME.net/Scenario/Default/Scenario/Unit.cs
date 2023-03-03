@@ -67,9 +67,13 @@ namespace TME.Scenario.Default.Scenario
             return true;
         }
 
-        public bool Save()
+        public bool Save(ISerializeContext ctx)
         {
-            throw new NotImplementedException();
+            ctx.Writer.UInt32(Total);
+            ctx.Writer.UInt32(Energy);
+            ctx.Writer.UInt32(Lost);
+            ctx.Writer.UInt32(Killed);
+            return true;
         }
         #endregion
 

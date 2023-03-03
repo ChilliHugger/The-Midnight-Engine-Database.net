@@ -36,6 +36,26 @@ namespace TME.Scenario.Default.info
             
             return true;
         }
+        
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.String(DefaultSoldiersName);
+            ctx.Writer.UInt32(Success);
+            ctx.Writer.UInt32(InitialMovement);
+            ctx.Writer.UInt32(DiagonalModifier);
+            ctx.Writer.UInt32(RidingMultiplier);
+            ctx.Writer.UInt32(MovementMax);
+            ctx.Writer.UInt32(BaseRestAmount);
+            ctx.Writer.UInt32(StrongholdStartups);
+            ctx.Writer.Int32(MistTimeAffect);
+            ctx.Writer.Int32(MistDespondencyAffect);
+            ctx.Writer.Int32(BaseEnergyCost);
+            ctx.Writer.Int32(BaseEnergyCostHorse);
+            
+            return true;
+        }
 
         public override bool Load(IBundleReader bundle)
         {

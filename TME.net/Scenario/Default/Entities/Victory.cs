@@ -33,6 +33,16 @@ namespace TME.Scenario.Default.Entities
             return true;
         }
 
+        public override bool Save(ISerializeContext ctx)
+        {
+            if( !base.Save(ctx) ) return false;
+
+            ctx.Writer.Int32(Priority);
+            ctx.WriteEntity(Mission);
+            ctx.Writer.UInt32(String);
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if( !base.Load(bundle) ) return false;

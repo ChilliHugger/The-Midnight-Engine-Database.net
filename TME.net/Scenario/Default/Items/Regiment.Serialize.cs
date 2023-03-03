@@ -34,6 +34,24 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.Enum(Race);
+            ctx.Writer.Enum(UnitType);
+            ctx.Writer.UInt32(Total);
+            ctx.Writer.MXId(Target);
+            ctx.Writer.Enum(Orders);
+            ctx.Writer.UInt32(Success);
+            ctx.WriteEntity(LoyaltyLord);
+            ctx.Writer.UInt32(Killed);
+            ctx.Writer.Loc(LastLocation);
+            ctx.Writer.UInt32(Delay);
+            
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;
@@ -53,12 +71,7 @@ namespace TME.Scenario.Default.Items
 
             return true;
         }
-
-        public override bool Save()
-        {
-            throw new NotImplementedException();
-        }
-
+        
         #endregion
     }
 }

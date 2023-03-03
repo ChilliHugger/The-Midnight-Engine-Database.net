@@ -71,6 +71,48 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.String(LongName);
+            ctx.Writer.String(ShortName);
+            ctx.Writer.Enum(Looking);
+            ctx.Writer.Time(Time);
+            
+            Units.FirstOrDefault()?.Save(ctx);
+            Units.LastOrDefault()?.Save(ctx);
+
+            BattleInfo.Save(ctx);
+
+            ctx.Writer.UInt32(Reckless);
+            ctx.Writer.UInt32(Energy); 
+            ctx.Writer.UInt32(Strength);
+            ctx.Writer.UInt32(Cowardly);
+            ctx.Writer.UInt32(Courage);
+            ctx.Writer.UInt32(Fear);
+
+            Recruitment.Save(ctx);
+            
+            ctx.Writer.Enum(Race);
+
+            ctx.WriteEntity(Carrying.FirstOrDefault());
+            
+            ctx.WriteEntity(KilledBy);
+            ctx.Writer.Enum(Gender);
+            ctx.Writer.Enum(Loyalty);
+            ctx.WriteEntity(Liege);
+            ctx.WriteEntity(Foe);
+            ctx.Writer.Enum(WaitStatus);
+            ctx.Writer.Enum(Orders);
+            ctx.Writer.UInt32(Despondency);
+            ctx.Writer.Enum(Traits);
+            ctx.WriteEntity(Following);
+            ctx.Writer.UInt32(Followers);
+            
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;
@@ -107,12 +149,6 @@ namespace TME.Scenario.Default.Items
             Followers = 0;
             
             return true;
-        }
-        
-        
-        public override bool Save()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

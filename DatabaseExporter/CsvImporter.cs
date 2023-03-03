@@ -10,6 +10,7 @@ using DatabaseExporter.Converters;
 using DatabaseExporter.Models;
 using DatabaseExporter.Models.Info;
 using DatabaseExporter.Models.Item;
+using Microsoft.Extensions.Logging;
 using TME;
 using TME.Extensions;
 using TME.Interfaces;
@@ -28,9 +29,11 @@ namespace DatabaseExporter
         private string _folder = "";
 
         private CsvEntityContainer _entityContainer;
+        private CsvVariables _variables;
+        private CsvStrings _strings;
+
         private TMEEntityResolver _entityResolver;
         private Dictionary<string, IEntity> _symbolCache;
-        private CsvStrings _strings;
         private CsvImportConverter _importConverter;
         
         private readonly List<Action> _finalActions = new ();
@@ -41,10 +44,11 @@ namespace DatabaseExporter
             _container = container;
         }
 
-        public void Process(string folder, string scenario)
+        public void Process(IScenario scenario, string folder, string output)
         {
             _folder = folder;
             
+            _variables = new CsvVariables();
             _strings = new CsvStrings();
             _entityContainer = new CsvEntityContainer();
             _entityResolver = new TMEEntityResolver(_entityContainer);
@@ -80,8 +84,37 @@ namespace DatabaseExporter
             _entityContainer.SymbolCache = _symbolCache;
             
             _finalActions.ForEach(a => a());
+
+            Save(scenario, output);
         }
 
+        private bool Save(IScenario scenario, string output)
+        {
+            var path = Path.Combine(output, "database");
+                
+            using var writer = new TMEBinaryWriter(File.Open(path, FileMode.Create));
+
+            var ctx = new SerializeContext(_entityResolver, _strings)
+            {
+                Writer = writer,
+                Version = scenario.Info.DatabaseVersion,
+                IsDatabase = true,
+                IsSaveGame = false,
+                Scenario = scenario
+            };
+
+            var logger = _container.CurrentContainer.Resolve<ILogger<TMEDatabase>>();
+            var databaseWriter = new TMEDatabaseWriter(logger, new List<object>
+            {
+                _strings,
+                _entityContainer,
+                _variables
+            });
+
+            return databaseWriter.Save(ctx);
+        }
+        
+        
         private StreamReader GetStream(string tag)
         {
             return new StreamReader(Path.Combine(_folder, tag) + ".tsv");
@@ -121,7 +154,14 @@ namespace DatabaseExporter
         
         private void Variables()
         {
-            //var results = Import<CsvDatabaseVariable>(FileNames.Variables);
+            var results = Import<CsvDatabaseVariable>(FileNames.Variables);
+            var variables = results.Select(v => new DatabaseVariable
+                {
+                    Symbol = v.Symbol,
+                    Value = v.Value
+                }
+            );
+            _variables.Entries = variables;
         }
         
         void ImportThen<TIn, TOut>(string filename, Action<IReadOnlyList<TOut>> action)

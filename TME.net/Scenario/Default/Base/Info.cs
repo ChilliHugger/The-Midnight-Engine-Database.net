@@ -25,7 +25,16 @@ namespace TME.Scenario.Default.Base
             
             return true;
         }
-        
+
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.String(Name);
+            
+            return true;
+        }
+
         public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;

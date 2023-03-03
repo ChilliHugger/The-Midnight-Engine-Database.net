@@ -1,9 +1,17 @@
 ﻿using System;
 namespace TME.Serialize
 {
-    public interface ISerializable
+    public interface ISerializableLoad
     {
         bool Load(ISerializeContext context);
-        bool Save();
+    }
+    
+    public interface ISerializableSave
+    {
+        bool Save(ISerializeContext context);
+    }
+    
+    public interface ISerializable : ISerializableLoad, ISerializableSave
+    {
     }
 }

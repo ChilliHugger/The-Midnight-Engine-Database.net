@@ -23,6 +23,15 @@ namespace TME.Scenario.Default.Items
             return true;
         }
         
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            RouteNodes.Save(ctx);
+            
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;

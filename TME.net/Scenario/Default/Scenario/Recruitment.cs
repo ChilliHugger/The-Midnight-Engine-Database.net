@@ -25,9 +25,11 @@ namespace TME.Scenario.Default.Scenario
             return true;
         }
         
-        public bool Save()
+        public bool Save(ISerializeContext ctx)
         {
-            throw new NotImplementedException();
+            ctx.Writer.UInt32(Key);
+            ctx.Writer.UInt32(By);
+            return true;
         }
         #endregion
     }

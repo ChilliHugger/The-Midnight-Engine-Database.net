@@ -31,9 +31,12 @@ namespace TME.Types
             return true;
         }
 
-        public bool Save()
+        public bool Save(ISerializeContext context)
         {
-            throw new System.NotImplementedException();
+            context.Writer.MXId(Id);
+            context.Writer.String(Symbol);
+            context.Writer.String(Text);
+            return true;
         }
         
         public override string ToString()

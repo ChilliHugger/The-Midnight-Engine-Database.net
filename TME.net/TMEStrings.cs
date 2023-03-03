@@ -9,7 +9,7 @@ using TME.Types;
 namespace TME
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class TMEStrings : IStrings, ISerializable
+    public class TMEStrings : IStrings, ISerializableLoad
     {
         private Dictionary<string, DatabaseString> _symbolMap = new();
         private Dictionary<MXId, DatabaseString> _idMap = new();
@@ -49,11 +49,6 @@ namespace TME
         {
             var s = new DatabaseString();
             return s.Load(context) ? s : null;
-        }
-        
-        public bool Save()
-        {
-            throw new System.NotImplementedException();
         }
     }
 }

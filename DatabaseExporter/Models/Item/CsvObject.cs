@@ -39,10 +39,10 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Entity.Flags), converter.ToFlags<ObjectFlags>(Flags)},
                 {nameof(Object.Location), converter.ToLoc(Location)},
                 
-                {nameof(Object.Kills), Kills},
+                {nameof(Object.Kills), converter.ToEnum<ThingType>(Kills)},
                 {nameof(Object.Name), Name},
                 {nameof(Object.Description), Description},
-                {nameof(Object.UseDescription), converter.ToString(UseDescription)?.Id.RawId}, 
+                {nameof(Object.UseDescription), converter.ToString(UseDescription)?.Id.RawId ?? 0}, 
                 {nameof(Object.CarriedBy), converter.ToEntity<IItem>(CarriedBy)},
                 {nameof(RevengeObject.ObjectType), converter.ToEnum<ObjectType>(ObjectType)},
                 {nameof(RevengeObject.ObjectPower), converter.ToEnum<ObjectPower>(ObjectPower)},

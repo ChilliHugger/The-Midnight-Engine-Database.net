@@ -14,10 +14,9 @@ using TME.Types;
 namespace TME
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class TMEEntityContainer : IEntityContainer, ISerializable
+    public class TMEEntityContainer : IEntityContainer, ISerializableLoad
     {
         private readonly IDependencyContainer _container;
-        private readonly IVariables _variables;
         private IDictionary<string, IEntity> _internalSymbolCache = new Dictionary<string, IEntity>();
         
         public IReadOnlyDictionary<string,IEntity> SymbolCache { get; internal set; }
@@ -41,12 +40,9 @@ namespace TME
         public IReadOnlyList<ObjectTypeInfo> ObjectTypes { get; internal set; }
         public IReadOnlyList<ObjectPowerInfo> ObjectPowers { get; internal set; }
         
-        public TMEEntityContainer(
-            IVariables variables,
-            IDependencyContainer container)
+        public TMEEntityContainer(IDependencyContainer container)
         {
             _container = container;
-            _variables = variables;
             
             // Items
             Lords = new List<ICharacter>().AsReadOnly();
@@ -75,20 +71,24 @@ namespace TME
 
         public bool Load(ISerializeContext context)
         {
-            switch (context.Section)
+            switch (context)
             {
-                case DataSection.Entities:
+                case {Section: DataSection.Counts}:
+                    return LoadCounts(context);
+                
+                case {Section: DataSection.Entities}:
                     _internalSymbolCache = new Dictionary<string, IEntity>();
                     SymbolCache = new ReadOnlyDictionary<string, IEntity>(_internalSymbolCache);
                     return LoadMainInfo(context);
-                case DataSection.ObjectInfo:
+                case {Section: DataSection.ObjectInfo}:
                     return LoadObjectInfo(context);
+                
                 default:
                     return true;
             }
         }
 
-        public bool LoadMainInfo(ISerializeContext context)
+        public bool LoadCounts(ISerializeContext context)
         {
             var characters = context.Reader.Int32();
             var regiments = context.Reader.Int32();
@@ -105,9 +105,6 @@ namespace TME
             var terrains = context.Reader.Int32();
             var areas = context.Reader.Int32();
             var commands = context.Reader.Int32();
-            var variables = context.Reader.Int32();
-
-            _variables.sv_variables = variables;
             
             Lords = CreateCollection<ICharacter>(characters).ToList().AsReadOnly();
             Regiments = CreateCollection<IRegiment>(regiments).ToList().AsReadOnly();
@@ -117,7 +114,6 @@ namespace TME
             Things = CreateCollection<IObject>(objects).ToList().AsReadOnly();
             Missions = CreateCollection<IMission>(missions).ToList().AsReadOnly();
             Victories = CreateCollection<IVictory>(victories).ToList().AsReadOnly();
-
             Directions = CreateCollection<DirectionInfo>(directions).ToList().AsReadOnly();
             Units = CreateCollection<UnitInfo>(units).ToList().AsReadOnly();
             Races = CreateCollection<RaceInfo>(races).ToList().AsReadOnly();
@@ -125,7 +121,12 @@ namespace TME
             Terrains = CreateCollection<TerrainInfo>(terrains).ToList().AsReadOnly();
             Areas = CreateCollection<AreaInfo>(areas).ToList().AsReadOnly();
             Commands = CreateCollection<CommandInfo>(commands).ToList().AsReadOnly();
-            
+
+            return true;
+        }
+
+        public bool LoadMainInfo(ISerializeContext context)
+        {
             ReadCollection(Lords, context);
             ReadCollection(Regiments, context);
             ReadCollection(RouteNodes, context);
@@ -163,11 +164,6 @@ namespace TME
             }
 
             return true;
-        }
-        
-        public bool Save()
-        {
-            throw new System.NotImplementedException();
         }
         
         public IEnumerable<T> CreateCollection<T>(int count)

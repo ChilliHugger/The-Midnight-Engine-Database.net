@@ -17,9 +17,12 @@ namespace TME.Scenario.Default.Base
             return true;
         }
 
-        public virtual bool Save()
+        public virtual bool Save(ISerializeContext ctx)
         {
-            throw new NotImplementedException();
+            ctx.Writer.UInt32(Id.RawId);
+            ctx.Writer.String(Symbol);
+            ctx.Writer.UInt32(RawFlags);
+            return true;
         }
 
         public virtual bool Load(IBundleReader bundle)

@@ -41,6 +41,20 @@ namespace TME.Scenario.Default.info
             return true;
         }
         
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.String(Preposition);
+            ctx.Writer.String(Description);
+            ctx.Writer.UInt32(Success);
+            ctx.Writer.UInt32(Visibility);
+            ctx.Writer.UInt32(Obstruction);
+            ctx.Writer.Int32(MovementCost);
+
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if(!base.Load(bundle)) return false;

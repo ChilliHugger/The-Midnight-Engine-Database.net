@@ -1,10 +1,7 @@
-﻿using System;
-using Autofac;
+﻿using Autofac;
 using TME;
 using TME.Interfaces;
 using TME.Scenario.ddr;
-using TME.Scenario.Default.Enums;
-using TME.Scenario.Default.Flags;
 using TME.Scenario.lom;
 
 namespace DatabaseExporter
@@ -18,6 +15,9 @@ namespace DatabaseExporter
 
             ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
             ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_ddr", "../../../../data/ddr2");
+            
+            //ExportDatabase(MidnightScenario.Tag,"../../../../data/lom2","../../../../data/lom2");
+
         }
 
         private static void ImportDatabase(string scenarioTag, string directory, string output)
@@ -32,12 +32,11 @@ namespace DatabaseExporter
             var container = dependencyContainer.CurrentContainer;
 
             var engine = container.Resolve<IEngine>();
-            //var database = container.Resolve<IDatabase>();
 
             engine.SetScenario(scenarioTag);
 
             var importer = container.Resolve<CsvImporter>();
-            importer.Process(directory, scenarioTag);
+            importer.Process(engine.Scenario, directory, output);
         }
         
         private static void ExportDatabase(string scenarioTag,string directory, string output)

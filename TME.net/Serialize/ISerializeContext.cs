@@ -14,8 +14,11 @@ namespace TME.Serialize
         IScenario? Scenario { get; set; }
         
         ISerializeReader Reader { get; set; }
+        ISerializeWriter Writer { get; set; }
         
         T? ReadEntity<T>() where T : IEntity;
+        void WriteEntity<T>(T? entity) where T : IEntity;
+        
         IEntity? ReadEntity();
         DatabaseString? ReadString();
 

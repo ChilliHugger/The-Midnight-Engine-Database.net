@@ -32,6 +32,29 @@ namespace TME.Scenario.Default.Items
             return true;
         }
 
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.Enum(OccupyingRace);
+            ctx.Writer.Enum(Race);
+            ctx.Writer.Enum(UnitType);
+            ctx.Writer.UInt32(Total);
+            ctx.Writer.UInt32(Min);
+            ctx.Writer.UInt32(Max);
+            ctx.Writer.UInt32(StrategicalSuccess);
+            ctx.Writer.UInt32(OwnerSuccess);
+            ctx.Writer.UInt32(EnemySuccess);
+            ctx.Writer.UInt32(Influence);
+            ctx.Writer.UInt32(Respawn);
+            ctx.WriteEntity(Occupier);
+            ctx.WriteEntity(Owner);
+            ctx.Writer.Enum(Terrain);
+            ctx.Writer.UInt32(Killed);
+            
+            return true;
+        }
+        
         public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;
@@ -54,12 +77,6 @@ namespace TME.Scenario.Default.Items
             Lost = 0;
 
             return true;
-        }
-
-
-        public override bool Save()
-        {
-            throw new NotImplementedException();
         }
 
         #endregion

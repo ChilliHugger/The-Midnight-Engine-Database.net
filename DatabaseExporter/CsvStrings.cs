@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using TME.Interfaces;
+using TME.Scenario.Default.Enums;
+using TME.Serialize;
 using TME.Types;
 
 namespace DatabaseExporter;
 
-public class CsvStrings : IStrings
+public class CsvStrings : IStrings, ISerializableSave
 {
     private Dictionary<string, DatabaseString> _symbolMap = new();
     private Dictionary<MXId, DatabaseString> _idMap = new();
@@ -29,5 +31,22 @@ public class CsvStrings : IStrings
     public DatabaseString GetBySymbol(string symbol)
     {
         return _symbolMap.TryGetValue(symbol, out var result) ? result : default;
+    }
+
+    public bool Save(ISerializeContext context)
+    {
+        if (context.Section != DataSection.Strings)
+        {
+            return true;
+        }
+        
+        context.Writer.UInt32((uint)Entries.Count);
+        
+        foreach (var v in Entries.OrderBy(v=>v.Id.RawId))
+        {
+            v.Save(context);
+        }
+
+        return true;
     }
 }

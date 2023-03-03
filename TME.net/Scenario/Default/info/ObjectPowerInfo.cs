@@ -12,11 +12,5 @@ namespace TME.Scenario.Default.info
         public ObjectPowerInfo() : base(EntityType.ObjectPower)
         {
         }
-        
-        public override bool Load(ISerializeContext ctx)
-        {
-            if (!base.Load(ctx)) return false;
-            return true;
-        }
     }
 }

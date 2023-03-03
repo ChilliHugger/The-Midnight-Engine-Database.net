@@ -11,7 +11,7 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Base
 {
-    public class Variables : IVariables, ISerializable
+    public class Variables : IVariables, ISerializableLoad
     {
         private readonly ILogger _logger;
         private readonly Dictionary<string, string> _propertyMapping;
@@ -334,38 +334,41 @@ namespace TME.Scenario.Default.Base
 
         public bool Load(ISerializeContext context)
         {
+            if (context.Section == DataSection.VariableCount)
+            {
+                sv_variables = context.Reader.Int32();
+                Initialise();
+                return true;
+            }
+            
             if (context.Section != DataSection.Variables)
             {
                 return true;
             }
             
-            Initialise();
+            var variable = new DatabaseVariable();
             
-            for ( var ii=0; ii<sv_variables; ii++ ) {
-
-                var name = context.Reader.String();
-                var value = context.Reader.String();
-                _ = context.Reader.Int32();
-
-                if (_propertyMapping.TryGetValue(name, out var propertyName))
+            for ( var ii=0; ii<sv_variables; ii++ )
+            {
+                if (!variable.Load(context))
                 {
-                    Console.WriteLine($"Variable['{name}']={value}");
-                    SetValue(propertyName,value);
+                    _logger.LogError("Error loading variable: {index}", ii);
+                }
+                
+                if (_propertyMapping.TryGetValue(variable.Symbol, out var propertyName))
+                {
+                    Console.WriteLine($"Variable['{variable.Symbol}']={variable.Value}");
+                    SetValue(propertyName,variable.Value);
                 }
                 else
                 {
-                    _logger.LogWarning($"Unsupported Variable['{name}']={value}");
+                    _logger.LogWarning("Unsupported Variable['{name}']={value}", variable.Symbol, variable.Value);
                 }
             }
 
             return true;
         }
         
-        public bool Save()
-        {
-            throw new NotImplementedException();
-        }
-
         public List<DatabaseVariable> GetValues()
         {
             return (

@@ -59,7 +59,32 @@ namespace TME.Scenario.Default.Entities
             
             return true;
         }
-        
+
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.Int32(Priority);
+            ctx.Writer.Enum(Objective);
+            ctx.Writer.Enum(Condition);
+            
+            for(int ii=0; ii<MaxReferences; ii++)
+            {
+                var id = (ii < References.Count) ? References[ii].Id : MXId.None;
+                ctx.Writer.MXId(id);
+            }
+            
+            ctx.Writer.Int32(Points);
+            ctx.Writer.MXId(Scorer);
+            ctx.Writer.Enum(Action);
+            ctx.Writer.MXId(ActionId);
+
+            
+            
+            return true;
+        }
+
+
         public override bool Load(IBundleReader bundle)
         {
             if (!base.Load(bundle)) return false;

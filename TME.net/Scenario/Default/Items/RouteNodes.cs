@@ -19,6 +19,14 @@ namespace TME.Scenario.Default.Items
             return true;
         }
         
+        public bool Save(ISerializeContext ctx)
+        {
+            ctx.WriteEntity(Nodes[0]);
+            ctx.WriteEntity(Nodes[1]);
+            
+            return true;
+        }
+        
         public bool Load(IBundleReader bundle)
         {
             Nodes = bundle.EntityArray<IRouteNode>(nameof(Nodes));
