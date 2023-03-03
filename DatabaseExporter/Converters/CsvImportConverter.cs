@@ -65,11 +65,6 @@ public class CsvImportConverter
     {
         if (string.IsNullOrWhiteSpace(symbol)) return default;
 
-        // if (typeof(T) == typeof(ThingType))
-        // {
-        //     var item = _entityResolver.EntityBySymbol<Item>(symbol);
-        //     return (T) (object)(item?.Id.RawId ?? 0);
-        // }
         
         var info = _entityResolver.EntityBySymbol<IEntity>(symbol);
         return (T) (object)(info?.Id.RawId ?? 0);

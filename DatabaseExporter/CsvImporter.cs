@@ -79,7 +79,7 @@ namespace DatabaseExporter
             Regiments();
             Objects();
             Characters();
-            
+
             // Final
             _entityContainer.SymbolCache = _symbolCache;
             

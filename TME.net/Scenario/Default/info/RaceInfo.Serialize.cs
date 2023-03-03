@@ -28,10 +28,10 @@ namespace TME.Scenario.Default.info
                 BaseEnergyCostHorse = 4;
             }
             
-            if ( ctx.IsDatabase )
-            {
-                (BaseEnergyCost, BaseEnergyCostHorse) = (BaseEnergyCostHorse, BaseEnergyCost);
-            }
+            //if ( ctx.IsDatabase )
+            //{
+            //    (BaseEnergyCost, BaseEnergyCostHorse) = (BaseEnergyCostHorse, BaseEnergyCost);
+            //}
             //
             
             return true;

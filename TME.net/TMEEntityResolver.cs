@@ -36,6 +36,8 @@ namespace TME
             { typeof(TerrainInfo), EntityType.TerrainInfo },
             { typeof(AreaInfo), EntityType.AreaInfo },
             { typeof(CommandInfo), EntityType.CommandInfo },
+            { typeof(ObjectPowerInfo), EntityType.ObjectPower },   
+            { typeof(ObjectTypeInfo), EntityType.ObjectType },
         };
         
         public TMEEntityResolver(IEntityContainer entityContainer)
@@ -104,6 +106,9 @@ namespace TME
                     EntityType.TerrainInfo => _entityContainer.Terrains.ElementAt(index),
                     EntityType.AreaInfo => _entityContainer.Areas.ElementAt(index),
                     EntityType.CommandInfo => _entityContainer.Commands.ElementAt(index),
+                    EntityType.ObjectPower => _entityContainer.ObjectPowers.ElementAt(index),
+                    EntityType.ObjectType => _entityContainer.ObjectTypes.ElementAt(index),
+
                     _ => null
                 };
             }

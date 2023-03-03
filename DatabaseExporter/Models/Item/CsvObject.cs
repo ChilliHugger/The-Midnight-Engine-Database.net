@@ -33,6 +33,8 @@ namespace DatabaseExporter.Models.Item
         
         public override Bundle ToBundle(CsvImportConverter converter)
         {
+            //var test = converter.ToEnum<ObjectPower>(ObjectPower);
+            
             return new Bundle {
                 {nameof(Entity.Id), converter.ToId(EntityType.Object,Id)},
                 {nameof(Entity.Symbol), Symbol},

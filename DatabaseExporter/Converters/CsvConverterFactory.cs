@@ -33,7 +33,9 @@ public class CsvConverterFactory
             cache.AddConverter<Terrain>(enumConverter);
             cache.AddConverter<Command>(enumConverter);
             cache.AddConverter<ThingType>(enumConverter);
-            
+            cache.AddConverter<ObjectPower>(enumConverter);
+            cache.AddConverter<ObjectType>(enumConverter);
+
             cache.AddConverter<MXId>(new MXIdConverter());
             cache.AddConverter<Loc>(new LocationConverter());
             cache.AddConverter<IRouteNodes>(new RouteNodesConverter());

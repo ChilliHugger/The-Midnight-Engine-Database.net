@@ -31,6 +31,26 @@ namespace TME.Scenario.ddr.Items
             return true;
         }
 
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.Enum(ObjectType);
+            ctx.Writer.Enum(ObjectPower);
+            
+            return true;
+        }
+        
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+
+            ObjectType = bundle.Enum<ObjectType>(nameof(ObjectType));
+            ObjectPower = bundle.Enum<ObjectPower>(nameof(ObjectPower));
+            
+            return true;
+        }
+        
         private bool CheckIsSpecial()
         {
             return IsSymbol("OB_CROWN_VARENAND") ||

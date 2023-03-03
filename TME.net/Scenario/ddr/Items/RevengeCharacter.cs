@@ -49,7 +49,7 @@ namespace TME.Scenario.ddr.Items
         {
             if (!base.Load(ctx)) return false;
 
-            LastLocation = (ctx.Version > 10 && ctx.IsSaveGame)
+            LastLocation = ctx is {Version: > 10, IsSaveGame: true}
                 ? ctx.Reader.Loc()
                 : Loc.Zero;
 
@@ -62,6 +62,35 @@ namespace TME.Scenario.ddr.Items
             BattleLost = ctx.IsSaveGame
                 ? ctx.Reader.UInt32()
                 : 0;
+            
+            return true;
+        }
+
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            if (ctx.IsSaveGame)
+            {
+                ctx.Writer.Loc(LastLocation);
+            }
+
+            ctx.WriteEntity(HomeStronghold);
+            ctx.WriteEntity(DesiredObject);
+
+            if (!ctx.IsSaveGame) return true;
+            
+            ctx.WriteEntity(FightingAgainst); 
+            ctx.Writer.UInt32(BattleLost);
+            return true;
+        }
+        
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+            
+            HomeStronghold = bundle.Entity<IStronghold>(nameof(HomeStronghold));
+            DesiredObject = bundle.Entity<IObject>(nameof(DesiredObject));
             
             return true;
         }

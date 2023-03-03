@@ -58,6 +58,14 @@ namespace DatabaseExporter.Converters
             {
                 return Resolve<IObject,ThingType>(thing);
             }
+            if (value is ObjectType objectType)
+            {
+                return Resolve<ObjectTypeInfo,ObjectType>(objectType);
+            }
+            if (value is ObjectPower objectPower)
+            {
+                return Resolve<ObjectPowerInfo,ObjectPower>(objectPower);
+            }
             return "";
         }
     }

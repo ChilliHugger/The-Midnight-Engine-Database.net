@@ -13,10 +13,11 @@ namespace DatabaseExporter
             ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
             ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
 
-            ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
-            ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_ddr", "../../../../data/ddr2");
+            //ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
+            //ImportDatabase(RevengeScenario.Tag, "../../../../data/csv_ddr", "../../../../data/ddr2");
             
             //ExportDatabase(MidnightScenario.Tag,"../../../../data/lom2","../../../../data/lom2");
+            //ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr2","../../../../data/ddr2");
 
         }
 

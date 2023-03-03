@@ -23,6 +23,24 @@ namespace TME.Scenario.ddr.Items
 
             return true;
         }
+        
+        public override bool Save(ISerializeContext ctx)
+        {
+            if (!base.Save(ctx)) return false;
+
+            ctx.Writer.UInt32(Energy);
+          
+            return true;
+        }
+        
+        public override bool Load(IBundleReader bundle)
+        {
+            if (!base.Load(bundle)) return false;
+
+            Energy = bundle.UInt32(nameof(Energy));
+
+            return true;
+        }
     }
     
 }

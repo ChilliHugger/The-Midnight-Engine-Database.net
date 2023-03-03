@@ -152,16 +152,15 @@ namespace TME
         public bool LoadObjectInfo(ISerializeContext context)
         {
             // chunk 4
-            if (context.Scenario is RevengeScenario && context.Version > 10)
-            {
-                var types = context.Reader.Int32();
-                ObjectTypes = CreateCollection<ObjectTypeInfo>(types).ToList().AsReadOnly();
-                ReadInfoCollection(ObjectTypes, context);
+            if (context is not {Scenario: RevengeScenario, Version: > 10}) return true;
+            
+            var types = context.Reader.Int32();
+            ObjectTypes = CreateCollection<ObjectTypeInfo>(types).ToList().AsReadOnly();
+            ReadInfoCollection(ObjectTypes, context);
                 
-                var powers = context.Reader.Int32();
-                ObjectPowers = CreateCollection<ObjectPowerInfo>(powers).ToList().AsReadOnly();
-                ReadInfoCollection(ObjectPowers, context);
-            }
+            var powers = context.Reader.Int32();
+            ObjectPowers = CreateCollection<ObjectPowerInfo>(powers).ToList().AsReadOnly();
+            ReadInfoCollection(ObjectPowers, context);
 
             return true;
         }
