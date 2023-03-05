@@ -12,6 +12,7 @@ using DatabaseExporter.Models.Info;
 using DatabaseExporter.Models.Item;
 using Microsoft.Extensions.Logging;
 using TME;
+using TME.Database;
 using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.Default.Enums;

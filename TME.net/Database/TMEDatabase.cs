@@ -9,7 +9,7 @@ using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
-namespace TME
+namespace TME.Database
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]

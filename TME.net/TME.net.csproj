@@ -14,12 +14,10 @@
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Database" />
     <Folder Include="Scenario\" />
     <Folder Include="Interfaces\" />
     <Folder Include="Types\" />
     <Folder Include="Scenario\Default\" />
-    <Folder Include="Scenario\Default\Processors\" />
     <Folder Include="Scenario\Default\Scenario\" />
     <Folder Include="Serialize\" />
   </ItemGroup>

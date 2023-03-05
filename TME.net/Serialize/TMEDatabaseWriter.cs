@@ -4,6 +4,7 @@ using System.Linq;
 using TME.Scenario.Default.Enums;
 using TME.Types;
 using Microsoft.Extensions.Logging;
+using TME.Database;
 using TME.Interfaces;
 
 namespace TME.Serialize
