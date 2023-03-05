@@ -135,7 +135,7 @@ namespace TME
 
             loc.Thing = (ThingType)thing.RawId;
 
-            if (thing.IsUnique && thing is IMappableInternal mappable )
+            if (thing.IsUnique() && thing is IMappableInternal mappable )
             {
                 loc.HasObject = true;
                 mappable.UpdateLocation(location);

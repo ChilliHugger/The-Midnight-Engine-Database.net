@@ -14,19 +14,5 @@ namespace TME.Scenario.Default.Interfaces
         
         ObjectPower ObjectPower { get; }
         ObjectType ObjectType { get; }
-
-        #region Flags
-        bool CanDrop { get; }
-        bool CanFight { get; }
-        bool CanPickup { get; }
-        bool CanRemove { get; }
-        bool CanSee { get; }
-        bool HelpsRecruitment { get; }
-        bool IsCarried { get; }
-        bool IsRandomStart { get; }
-        bool IsSpecial { get; }
-        bool IsUnique { get; }
-        bool IsWeapon { get; }
-        #endregion
     }
 }

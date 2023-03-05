@@ -1,4 +1,5 @@
-﻿using TME.Interfaces;
+﻿using TME.Extensions;
+using TME.Interfaces;
 using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
@@ -37,7 +38,7 @@ namespace TME.Scenario.Default.Actions
             loc.Thing = (ThingType)thing.RawId;
 
             // update the map with unique objects
-            if (thing.IsUnique && thing is IMappableInternal mappable)
+            if (thing.IsUnique() && thing is IMappableInternal mappable)
             {
                 loc.HasObject = true;
                 mappable.UpdateLocation(currentLocation);
@@ -49,7 +50,7 @@ namespace TME.Scenario.Default.Actions
 
         }
 
-        public bool CanExecute(IObject arg) => arg.IsCarried;
+        public bool CanExecute(IObject arg) => arg.IsCarried();
         
     }
 }

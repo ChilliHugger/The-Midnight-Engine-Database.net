@@ -77,18 +77,6 @@ namespace DatabaseExporter.Models.Item
 
             Map(m => m.ObjectType).Index(10).Name("Type");
             Map(m => m.ObjectPower).Index(11).Name("Power");
-   
-            Map(m => m.CanDrop).Ignore();
-            Map(m => m.CanFight).Ignore();
-            Map(m => m.CanPickup).Ignore();
-            Map(m => m.CanRemove).Ignore();
-            Map(m => m.CanSee).Ignore();
-            Map(m => m.HelpsRecruitment).Ignore();
-            Map(m => m.IsCarried).Ignore();
-            Map(m => m.IsRandomStart).Ignore();
-            Map(m => m.IsSpecial).Ignore();
-            Map(m => m.IsUnique).Ignore();
-            Map(m => m.IsWeapon).Ignore();
         }
     }
 }

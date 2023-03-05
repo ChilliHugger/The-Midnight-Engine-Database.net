@@ -157,7 +157,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
                 return thingType;
             }
             var thing = _entityResolver.EntityById<IObject>(thingType.Raw())!;
-            return thing.CanFight 
+            return thing.CanFight() 
                 ? thingType 
                 : ThingType.None ;
         }
@@ -192,7 +192,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         private IObject? FindObjectAtLocation(Loc location)
         {
             return _entityContainer.Things
-                    .FirstOrDefault(t => !t.IsCarried && t.Location == location);
+                    .FirstOrDefault(t => !t.IsCarried() && t.Location == location);
         }
         
         // private static ILord? WhoHasObject(IThing thing)
