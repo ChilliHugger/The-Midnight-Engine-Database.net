@@ -7,14 +7,6 @@ namespace TME.Scenario.ddr.Interfaces
 {
     public interface IRevengeLord : ICharacter
     {
-        Loc LastLocation { get; }
-        IObject? DesiredObject { get; }
-        IStronghold? HomeStronghold { get; }
-        ICharacter? FightingAgainst { get; }
-        uint BattleLost { get; }
-        MXId TargetId { get; }
-        Loc TargetLocation { get; }
-        
         UnitType ArmyType { get; }
         IUnit? Unit { get; }
         uint ArmySize { get; }
