@@ -79,13 +79,13 @@ namespace TME.Scenario.Default.LocationInfoBuilders
             _lord = _ahead.Owner;
             
             // if the character is dead then nothing else is possible
-            if (_lord.IsDead)
+            if (_lord.IsDead())
             {
                 return _flags;
             }
             
             // if the character is hidden then nothing else is possible
-            if (_lord.IsHidden)
+            if (_lord.IsHidden())
             {
                 SetFlags(LocationInfoFlags.Hide, true);
                 return _flags;
@@ -194,10 +194,10 @@ namespace TME.Scenario.Default.LocationInfoBuilders
         
         private void CheckHide()
         {
-            var allowHide = _lord.IsAllowedHide && 
-                            !_lord.HasArmy && 
-                            !_lord.IsFollowing && 
-                            !_lord.HasFollowers;
+            var allowHide = _lord.IsAllowedHide() && 
+                            !_lord.HasArmy() && 
+                            !_lord.IsFollowing() && 
+                            !_lord.HasFollowers();
             
             // can we hide ?
             // 1. Only if we are allowed to an we have no armies
@@ -320,7 +320,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
         private void CheckFollowingEnterBattle()
         {
-            if (_lord.IsFollowing)
+            if (_lord.IsFollowing())
             {
                 SetFlags(LocationInfoFlags.EnterBattle, false);
             }

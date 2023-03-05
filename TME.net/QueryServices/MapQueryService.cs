@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Interfaces;
@@ -19,21 +20,13 @@ namespace TME.QueryServices
             _entityContainer = entityContainer;
         }
         
-        // TODO: Ideally this would not be a flag, but would
-        // be checking in the lord is recruited by the CommanderInChief
-        // of the lord making the request
-        private static bool IsRecruited(ICharacter lord)
-        {
-            return lord.IsRecruited;
-        }
-
         public IReadOnlyList<ICharacter> LordsAtLocation(Loc location, bool inTunnel)
         {
             return _entityContainer
                 .Lords
-                .Where(l => l.IsAlive &&
-                            l.IsInTunnel == inTunnel &&
-                            !l.IsHidden &&
+                .Where(l => l.IsAlive() &&
+                            l.IsInTunnel() == inTunnel &&
+                            !l.IsHidden() &&
                             l.Location == location).ToList();
         }
         
@@ -41,10 +34,10 @@ namespace TME.QueryServices
         {
             return _entityContainer
                 .Lords
-                .Where(l => l.IsAlive &&
-                            !IsRecruited(l) &&
-                            l.IsInTunnel == inTunnel &&
-                            !l.IsHidden &&
+                .Where(l => l.IsAlive() &&
+                            !l.IsRecruited() &&
+                            l.IsInTunnel() == inTunnel &&
+                            !l.IsHidden() &&
                             l.Location == location).ToList();
         }
 
@@ -52,10 +45,10 @@ namespace TME.QueryServices
         {
             return _entityContainer
                 .Lords
-                .Where(l => l.IsAlive &&
-                            IsRecruited(l) &&
-                            l.IsInTunnel == inTunnel &&
-                            !l.IsHidden &&
+                .Where(l => l.IsAlive() &&
+                            l.IsRecruited() &&
+                            l.IsInTunnel() == inTunnel &&
+                            !l.IsHidden() &&
                             l.Location == location).ToList();
         }
         

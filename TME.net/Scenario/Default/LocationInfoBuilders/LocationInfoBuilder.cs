@@ -137,14 +137,14 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
         private ICharacter? CheckStubbornFollowerBattle()
         {
-            return _lord?.HasFollowers == true
-                ? _entityContainer.Lords.FirstOrDefault(l => l.Following == _lord && l.IsCoward)
+            return _lord?.HasFollowers() == true
+                ? _entityContainer.Lords.FirstOrDefault(l => l.Following == _lord && l.IsCoward())
                 : null;
         }
         
         private ICharacter? CheckStubbornMove()
         {
-            return _lord?.HasFollowers == true
+            return _lord?.HasFollowers() == true
                 ? _entityContainer.Lords
                     .FirstOrDefault(l => l.Following == _lord && !_characterMoveForwardRule.Check(l))
                 : null;

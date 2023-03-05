@@ -1,3 +1,4 @@
+using TME.Extensions;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Rules.Interfaces;
 
@@ -21,7 +22,7 @@ namespace TME.Scenario.Default.Rules
             // dead men don't walk!
             // or should be sleeping!
             // completely and utterly shattered?
-            if (character.IsDead || 
+            if (character.IsDead() || 
                 character.IsNight || 
                 character.Energy <= _variables.sv_energy_cannot_continue )
             {
@@ -30,7 +31,7 @@ namespace TME.Scenario.Default.Rules
 
             // hidden under a rock?
             // if auto unhide turned on then we must unhide and carry on
-            if (character.IsHidden && !_variables.sv_auto_unhide)
+            if (character.IsHidden() && !_variables.sv_auto_unhide)
             {
                 if (!_variables.sv_auto_unhide)
                     return false;
