@@ -13,7 +13,7 @@ using TME.Types;
 namespace TME.Scenario.Default.Items
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public partial class Character : Item, ICharacterInternal
+    public partial class Character : Item, ICharacter
     {
 
         #region "DI"
@@ -113,26 +113,5 @@ namespace TME.Scenario.Default.Items
             Units = new List<IUnit> { new Warriors(), new Riders()};
             Carrying = new List<IObject>();
         }
-
-        #region Internal Helpers
-        void ICharacterInternal.UpdateTime(Time time)
-        {
-            Time = time;
-        }
-
-        void ICharacterInternal.RemoveCarriedObject(IObject thing)
-        {
-            var oldObjects = new List<IObject>(Carrying);
-            oldObjects.Remove(thing);
-            Carrying = oldObjects.AsReadOnly();
-        }
-
-        void ICharacterInternal.SetCarrying(IEnumerable<IObject> carried)
-        {
-            Carrying = carried.ToList().AsReadOnly();
-        }
-        #endregion
     }
-
-
 }

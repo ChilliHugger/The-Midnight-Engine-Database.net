@@ -14,13 +14,13 @@ namespace TME.Scenario.Default.Items
         public Race Race { get; internal set; } = Race.None;
         public UnitType UnitType { get; internal set; } = UnitType.None;
         public uint Total { get; internal set; }
-        public uint Min { get; private set; }
-        public uint Max { get; private set; }
-        public uint StrategicalSuccess { get; private set; }
-        public uint OwnerSuccess { get; private set; }
-        public uint EnemySuccess { get; private set; }
-        public uint Influence { get; private set; }
-        public uint Respawn { get; private set; }
+        public uint Min { get; internal set; }
+        public uint Max { get; internal set; }
+        public uint StrategicalSuccess { get; internal set; }
+        public uint OwnerSuccess { get; internal set; }
+        public uint EnemySuccess { get; internal set; }
+        public uint Influence { get; internal set; }
+        public uint Respawn { get; internal set; }
         public ICharacter? Occupier { get; internal set; }
         public ICharacter? Owner { get; internal set; }
         public Terrain Terrain { get; internal set; } = Terrain.None;

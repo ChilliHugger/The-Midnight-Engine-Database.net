@@ -6,12 +6,12 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface ICharacterInternal : ICharacter
-    {
-        void UpdateTime(Time time);
-        void RemoveCarriedObject(IObject thing);
-        void SetCarrying(IEnumerable<IObject> carried);
-    }
+    // internal interface ICharacterInternal : ICharacter
+    // {
+    //     void UpdateTime(Time time);
+    //     void RemoveCarriedObject(IObject thing);
+    //     void SetCarrying(IEnumerable<IObject> carried);
+    // }
     
     public interface ICharacter : IItem
     {

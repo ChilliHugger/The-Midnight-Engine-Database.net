@@ -10,7 +10,7 @@ namespace TME.Scenario.Default.Items
     [SuppressMessage("ReSharper", "UnassignedGetOnlyAutoProperty")]
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public partial class Object : Item, IObjectInternal
+    public partial class Object : Item, IObject
     {
         public new ObjectFlags Flags => (ObjectFlags) RawFlags;
         public ThingType Kills { get; internal set; } = ThingType.None;
@@ -35,11 +35,6 @@ namespace TME.Scenario.Default.Items
         
         public Object() : base(EntityType.Object)
         {
-        }
-        
-        public void UpdateCarriedBy(IItem? carriedBy)
-        {
-            CarriedBy = carriedBy;
         }
     }
 }

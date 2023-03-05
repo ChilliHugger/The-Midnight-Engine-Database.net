@@ -2,6 +2,7 @@
 using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Types;
 
 namespace TME.Scenario.Default.Actions
@@ -20,7 +21,7 @@ namespace TME.Scenario.Default.Actions
         //
         public IResult Execute(IObject arg)
         {
-            if (arg is not IObjectInternal thing || !CanExecute(thing))
+            if (arg is not Object thing || !CanExecute(thing))
             {
                 return Failure.Default;
             }
@@ -30,7 +31,7 @@ namespace TME.Scenario.Default.Actions
             var loc = _map.GetAt(currentLocation);
 
             // this object is no longer being carried
-            thing.UpdateCarriedBy(null);
+            thing.CarriedBy = null;
 
             // drop the object at the current location
             loc.Thing = (ThingType)thing.RawId;

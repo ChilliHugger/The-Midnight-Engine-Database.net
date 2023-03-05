@@ -1,8 +1,10 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Commands.Interfaces;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Types;
 
 namespace TME.Scenario.Default.Commands
@@ -49,16 +51,18 @@ namespace TME.Scenario.Default.Commands
                 return Failure.Default;
             }
 
-            if (character is not ICharacterInternal characterInternal)
+            if (character is not Character characterInternal)
             {
                 return Failure.Default;
             }
             
             // Commands take time
-            characterInternal.UpdateTime(character.Time + Duration);
+            characterInternal.Time = character.Time + Duration;
 
             // lord no longer has the object
-            characterInternal.RemoveCarriedObject(carriedObject);
+            characterInternal.Carrying = character.Carrying
+                .Where(c => c != carriedObject)
+                .ToList().AsReadOnly();
                             
             return Success.Default;
 

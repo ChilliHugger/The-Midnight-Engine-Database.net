@@ -16,7 +16,7 @@ using TME.Types;
 
 namespace MidnightConsole
 {
-    internal class Program
+    internal static class Program
     {
         static void Main(string[] args)
         {
@@ -31,7 +31,7 @@ namespace MidnightConsole
             var variables = container.Resolve<IVariables>();
      
             engine.SetScenario(RevengeScenario.Tag);
-            database.Directory = "data/ddr";
+            database.Directory = "../../../../data/ddr";
             if (!database.Load())
             {
                 Console.WriteLine("Unable to load Database");

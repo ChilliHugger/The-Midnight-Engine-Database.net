@@ -46,14 +46,14 @@ namespace TME.SpecTests.Drivers
             var lord = _mainHooks.Container.Resolve<ICharacter>();
             var thing = GivenAnObjectOfType(thingType,unique);
 
-            if (lord is ICharacterInternal internalLord)
+            if (lord is Character internalLord)
             {
-                internalLord.SetCarrying(new List<IObject>{thing});
+                internalLord.Carrying = new List<IObject>{thing};
             }
 
-            if (thing is IObjectInternal internalThing)
+            if (thing is Object internalThing)
             {
-                internalThing.UpdateCarriedBy(lord);
+                internalThing.CarriedBy = lord;
             }
 
             return (lord, thing);

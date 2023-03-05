@@ -6,6 +6,7 @@ using NUnit.Framework;
 using TechTalk.SpecFlow;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 using TME.Scenario.Default.Scenario;
 using TME.SpecTests.Context;
 using TME.SpecTests.Drivers;
@@ -152,17 +153,19 @@ namespace TME.SpecTests.Steps
         
         private void SetupLordTime(ICharacter lord)
         {
-            if (lord is ICharacterInternal internalLord)
+            if (lord is Character internalLord)
             {
-                internalLord.UpdateTime(_time);
+                internalLord.Time = _time;
             }
         }
         
         private void RemoveObjectFromLord(ICharacter lord, IObject thing)
         {
-            if (lord is ICharacterInternal internalLord)
+            if (lord is Character internalLord)
             {
-                internalLord.RemoveCarriedObject(thing);
+                internalLord.Carrying = lord.Carrying
+                    .Where(c => c != thing)
+                    .ToList().AsReadOnly();
             }
         }
         

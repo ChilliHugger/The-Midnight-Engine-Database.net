@@ -12,7 +12,7 @@ namespace TME.Scenario.Default.Items
     {
         public new RegimentFlags Flags => (RegimentFlags) RawFlags;
         public IItem? Parent { get; internal set; } 
-        public ArmyType ArmyType { get; private set; } = ArmyType.Regiment;
+        public ArmyType ArmyType { get; internal set; } = ArmyType.Regiment;
         public UnitType UnitType { get; internal set; } = UnitType.None;
         public Race Race { get; internal set; } = Race.None;
         public Race LoyaltyRace => LoyaltyLord?.Loyalty ?? Race;

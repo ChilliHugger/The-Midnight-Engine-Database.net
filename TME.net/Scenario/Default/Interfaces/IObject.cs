@@ -3,11 +3,6 @@ using TME.Scenario.Default.Flags;
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IObjectInternal : IObject, IItemInternal
-    {
-        void UpdateCarriedBy(IItem? carriedBy);
-    }
-    
     public interface IObject : IItem
     {
         new ObjectFlags Flags { get; }
