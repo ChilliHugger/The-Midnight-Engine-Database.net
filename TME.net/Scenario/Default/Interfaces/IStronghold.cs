@@ -2,11 +2,7 @@
 
 namespace TME.Scenario.Default.Interfaces
 {
-	internal interface IStrongholdInternal : IStronghold, IItemInternal
-	{
-	}
-	
-    public interface IStronghold : IItem
+	public interface IStronghold : IItem
     {
 		Race OccupyingRace { get; }
 		Race Race { get; }
@@ -25,6 +21,10 @@ namespace TME.Scenario.Default.Interfaces
 		uint Killed { get; }
 		uint Lost { get; }
 	    Race LoyaltyRace { get; }
+	    
+	    // Revenge
+	    uint Energy { get; }
+	    Race Loyalty { get; }
 
 	}
 }

@@ -40,7 +40,6 @@ namespace TME.Scenario.ddr
         public void Register(ContainerBuilder containerBuilder)
         {
             containerBuilder.RegisterType<RevengeCharacter>().As<ICharacter>().WithAttributeFiltering();
-            containerBuilder.RegisterType<RevengeStronghold>().As<IStronghold>();
         }
         
         public void InitialiseAfterGameLoad()

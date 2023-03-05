@@ -41,8 +41,7 @@ namespace TME.Scenario.Default.LocationInfoBuilders
 
             if (_engine.Scenario is RevengeScenario)
             {
-                var ddrStronghold = stronghold as IRevengeStronghold;
-                isLoyal = ddrStronghold!.Loyalty == Luxor.Loyalty;
+                isLoyal = stronghold.Loyalty == Luxor.Loyalty;
             }
 
             return isLoyal;

@@ -29,7 +29,11 @@ namespace TME.Scenario.Default.Items
 
         // TODO: Check in battle code that this is correct and not Race.None
         public Race LoyaltyRace => Owner?.Race ?? OccupyingRace; 
-
+        
+        // Revenge
+        public uint Energy { get; internal set; }
+        public Race Loyalty => Occupier?.Race ?? Race.None;
+        
         public Stronghold() : base(EntityType.Stronghold)
         {
         }

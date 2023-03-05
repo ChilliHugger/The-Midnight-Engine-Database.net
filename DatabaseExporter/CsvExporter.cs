@@ -123,16 +123,9 @@ namespace DatabaseExporter
         
         private void Strongholds()
         {
-            if (_scenario == RevengeScenario.Tag)
-            {
-                Export<IRevengeStronghold,OutStrongholdMap<IRevengeStronghold>>
-                    (FileNames.Strongholds, _entityContainer.Strongholds.Cast<IRevengeStronghold>());
-            }
-            else
-            {
-                Export<IStronghold,OutStrongholdMap<IStronghold>>
-                    (FileNames.Strongholds, _entityContainer.Strongholds);
-            }
+
+            Export<IStronghold,OutStrongholdMap<IStronghold>>
+                (FileNames.Strongholds, _entityContainer.Strongholds);
         }
         
         private void Regiments()

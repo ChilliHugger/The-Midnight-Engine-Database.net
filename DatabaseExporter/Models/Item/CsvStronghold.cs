@@ -67,8 +67,8 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Stronghold.Terrain), converter.ToEnum<Terrain>(Terrain)},
                 {nameof(Stronghold.Killed), 0},
                 {nameof(Stronghold.Lost), 0},
-                {nameof(RevengeStronghold.Loyalty), converter.ToEnum<Race>(Loyalty)},
-                {nameof(RevengeStronghold.Energy), Energy},
+                {nameof(Stronghold.Loyalty), converter.ToEnum<Race>(Loyalty)},
+                {nameof(Stronghold.Energy), Energy},
             };
         }
     }
@@ -105,17 +105,8 @@ namespace DatabaseExporter.Models.Item
             Map(m => m.Killed).Ignore();
             Map(m => m.Lost).Ignore();
             
-            // ddr
-            if (typeof(T) == typeof(IRevengeStronghold))
-            {
-                Map<IRevengeStronghold>(m => m.Energy).Index(19);
-                Map<IRevengeStronghold>(m => m.Loyalty).Index(20);
-            }
-            else
-            {
-                Map().Index(19).Constant(0).Name("Energy");
-                Map().Index(20).Constant("").Name("Loyalty");
-            }
+            Map(m => m.Energy).Index(19);
+            Map(m => m.Loyalty).Index(20);
         }
     }
 }

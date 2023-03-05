@@ -22,7 +22,6 @@ namespace TME
             { typeof(IRegiment), EntityType.Regiment },
             { typeof(IRouteNode), EntityType.RouteNode },
             { typeof(IStronghold), EntityType.Stronghold },   
-            { typeof(IRevengeStronghold), EntityType.Stronghold },
             { typeof(IWaypoint), EntityType.Waypoint },
             { typeof(IObject), EntityType.Object },
             { typeof(IMission), EntityType.Mission },

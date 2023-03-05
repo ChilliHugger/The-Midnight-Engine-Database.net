@@ -1,4 +1,5 @@
 using System;
+using TME.Scenario.ddr;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
@@ -29,6 +30,13 @@ namespace TME.Scenario.Default.Items
             Killed = ctx.Reader.UInt32();
             Lost = 0;
 
+            if (ctx.Scenario?.Info.Symbol == RevengeScenario.Tag || ctx.Version > 19)
+            {
+                Energy = ctx.Version > 9
+                    ? ctx.Reader.UInt32()
+                    : 180;
+            }
+
             return true;
         }
 
@@ -52,6 +60,8 @@ namespace TME.Scenario.Default.Items
             ctx.Writer.Enum(Terrain);
             ctx.Writer.UInt32(Killed);
             
+            // Revenge / Version 20
+            ctx.Writer.UInt32(Energy);
             return true;
         }
         
@@ -75,7 +85,8 @@ namespace TME.Scenario.Default.Items
             Terrain = bundle.Terrain(nameof(Terrain));
             Killed = 0;
             Lost = 0;
-
+            Energy = bundle.UInt32(nameof(Energy));
+            
             return true;
         }
 
