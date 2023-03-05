@@ -85,8 +85,8 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Character.Riders), Riders},
                 {nameof(Character.Recruitment.Key), RecruitmentKey},
                 {nameof(Character.Recruitment.By), RecruitmentBy},
-                {nameof(IRevengeLord.HomeStronghold), converter.ToEntity<IStronghold>(Home)},
-                {nameof(IRevengeLord.DesiredObject), converter.ToEntity<IObject>(DesiredObject)},
+                {nameof(Character.HomeStronghold), converter.ToEntity<IStronghold>(Home)},
+                {nameof(Character.DesiredObject), converter.ToEntity<IObject>(DesiredObject)},
             };
         }
     }
@@ -135,18 +135,9 @@ namespace DatabaseExporter.Models.Item
             Map(m => m.Traits).Index(28);
             
             // ddr
-            if (typeof(T) == typeof(IRevengeLord))
-            {
-                Map<IRevengeLord>(m => m.HomeStronghold).Index(29).Name("Home");
-                Map<IRevengeLord>(m => m.DesiredObject).Index(30).Name("Desired Object");
-            }
-            else
-            {
-                Map().Constant("").Index(29).Name("Home");
-                Map().Constant("").Index(30).Name("Desired Object");
-            }
-
-
+            Map(m => m.HomeStronghold).Index(29).Name("Home");
+            Map(m => m.DesiredObject).Index(30).Name("Desired Object");
+            
             //Map(m => m.KilledBy.Symbol).Index(12).Name("KilledBy");
             //Map(m => m.LastCommandId.Symbol).Index(14).Name("KilledBy");
             //Map(m => m.Followers).Index(15);

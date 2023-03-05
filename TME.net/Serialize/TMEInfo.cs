@@ -9,7 +9,7 @@ namespace TME.Serialize
         public static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
         public const string TMEDatabaseHeader = "MidnightEngineDatabase";
         public const string TMESaveGameHeader = "MidnightEngineSaveGame";
-        public const uint TMESaveGameVersion = 14;
+        public const uint TMESaveGameVersion = 20; // 14;
         public const string TMEMapHeader = "MidnightEngineMap";
         public const uint TMEMapVersion = 2;
         public const string TMEDiscoveryHeader = "MidnightEngineDiscovery";

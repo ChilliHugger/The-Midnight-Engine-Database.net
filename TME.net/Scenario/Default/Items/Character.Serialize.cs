@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TME.Scenario.ddr;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Scenario;
@@ -68,6 +70,24 @@ namespace TME.Scenario.Default.Items
                 ? ctx.Reader.UInt32()
                 : 0;
             
+            // from Revenge
+            if (ctx.Scenario?.Info.Symbol == RevengeScenario.Tag || ctx.Version > 19)
+            {
+                LastLocation = ctx is {Version: > 10, IsSaveGame: true}
+                    ? ctx.Reader.Loc()
+                    : Loc.Zero;
+
+                HomeStronghold = ctx.ReadEntity<IStronghold>();
+                DesiredObject = ctx.ReadEntity<IObject>();
+                FightingAgainst = ctx.IsSaveGame
+                    ? ctx.ReadEntity<ICharacter>()
+                    : null;
+
+                BattleLost = ctx.IsSaveGame
+                    ? ctx.Reader.UInt32()
+                    : 0;
+            }
+
             return true;
         }
 
@@ -110,6 +130,23 @@ namespace TME.Scenario.Default.Items
             ctx.WriteEntity(Following);
             ctx.Writer.UInt32(Followers);
             
+            // revenge
+            if (ctx.Scenario?.Info.Symbol == RevengeScenario.Tag || ctx.Version > 19)
+            {
+                if (ctx.IsSaveGame)
+                {
+                    ctx.Writer.Loc(LastLocation);
+                }
+
+                ctx.WriteEntity(HomeStronghold);
+                ctx.WriteEntity(DesiredObject);
+
+                if (!ctx.IsSaveGame) return true;
+
+                ctx.WriteEntity(FightingAgainst);
+                ctx.Writer.UInt32(BattleLost);
+            }
+
             return true;
         }
         
@@ -147,6 +184,11 @@ namespace TME.Scenario.Default.Items
             Traits = bundle.Enum<LordTraits>(nameof(Traits));
             Following = bundle.Entity<ICharacter>(nameof(Following));
             Followers = 0;
+            
+            // revenge
+            HomeStronghold = bundle.Entity<IStronghold>(nameof(HomeStronghold));
+            DesiredObject = bundle.Entity<IObject>(nameof(DesiredObject));
+
             
             return true;
         }
