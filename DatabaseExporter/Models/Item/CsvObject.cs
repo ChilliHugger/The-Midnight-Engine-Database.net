@@ -46,8 +46,8 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Object.Description), Description},
                 {nameof(Object.UseDescription), converter.ToString(UseDescription)?.Id.RawId ?? 0}, 
                 {nameof(Object.CarriedBy), converter.ToEntity<IItem>(CarriedBy)},
-                {nameof(RevengeObject.ObjectType), converter.ToEnum<ObjectType>(ObjectType)},
-                {nameof(RevengeObject.ObjectPower), converter.ToEnum<ObjectPower>(ObjectPower)},
+                {nameof(Object.ObjectType), converter.ToEnum<ObjectType>(ObjectType)},
+                {nameof(Object.ObjectPower), converter.ToEnum<ObjectPower>(ObjectPower)},
             };
         }
     }
@@ -75,17 +75,9 @@ namespace DatabaseExporter.Models.Item
                 .Name("Use Description");
             Map(m => m.CarriedBy).Index(9).Name("Carried By");
 
-            if (typeof(T)==typeof(IRevengeThing))
-            {
-                Map<IRevengeThing>(m => m.ObjectType).Index(10).Name("Type");
-                Map<IRevengeThing>(m => m.ObjectPower).Index(11).Name("Power");
-            }
-            else
-            {
-                Map().Constant("").Index(10).Name("Type");
-                Map().Constant("").Index(11).Name("Power");
-            }
-
+            Map(m => m.ObjectType).Index(10).Name("Type");
+            Map(m => m.ObjectPower).Index(11).Name("Power");
+   
             Map(m => m.CanDrop).Ignore();
             Map(m => m.CanFight).Ignore();
             Map(m => m.CanPickup).Ignore();

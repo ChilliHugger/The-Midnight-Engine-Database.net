@@ -25,7 +25,6 @@ namespace TME
             { typeof(IRevengeStronghold), EntityType.Stronghold },
             { typeof(IWaypoint), EntityType.Waypoint },
             { typeof(IObject), EntityType.Object },
-            { typeof(IRevengeThing), EntityType.Object },
             { typeof(IMission), EntityType.Mission },
             { typeof(IVictory), EntityType.Victory },
             

@@ -130,23 +130,20 @@ namespace TME.Scenario.Default.Items
             ctx.WriteEntity(Following);
             ctx.Writer.UInt32(Followers);
             
-            // revenge
-            if (ctx.Scenario?.Info.Symbol == RevengeScenario.Tag || ctx.Version > 19)
+            // Revenge / Version 20
+            if (ctx.IsSaveGame)
             {
-                if (ctx.IsSaveGame)
-                {
-                    ctx.Writer.Loc(LastLocation);
-                }
-
-                ctx.WriteEntity(HomeStronghold);
-                ctx.WriteEntity(DesiredObject);
-
-                if (!ctx.IsSaveGame) return true;
-
-                ctx.WriteEntity(FightingAgainst);
-                ctx.Writer.UInt32(BattleLost);
+                ctx.Writer.Loc(LastLocation);
             }
 
+            ctx.WriteEntity(HomeStronghold);
+            ctx.WriteEntity(DesiredObject);
+
+            if (!ctx.IsSaveGame) return true;
+
+            ctx.WriteEntity(FightingAgainst);
+            ctx.Writer.UInt32(BattleLost);
+ 
             return true;
         }
         

@@ -11,6 +11,9 @@ namespace TME.Scenario.Default.Interfaces
         string Description { get; }
         uint UseDescription { get; }
         IItem? CarriedBy { get; }
+        
+        ObjectPower ObjectPower { get; }
+        ObjectType ObjectType { get; }
 
         #region Flags
         bool CanDrop { get; }

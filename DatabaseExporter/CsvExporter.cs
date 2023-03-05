@@ -142,15 +142,7 @@ namespace DatabaseExporter
         
         private void Objects()
         {
-            if (_scenario == RevengeScenario.Tag)
-            {
-                Export<IRevengeThing,OutObjectMap<IRevengeThing>>
-                    (FileNames.Objects, _entityContainer.Things.Cast<IRevengeThing>());
-            }
-            else
-            {
-                Export<IObject,OutObjectMap<IObject>>(FileNames.Objects, _entityContainer.Things);
-            }
+            Export<IObject,OutObjectMap<IObject>>(FileNames.Objects, _entityContainer.Things);
         }
         
         private void Characters()

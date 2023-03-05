@@ -1,4 +1,7 @@
 using System;
+using TME.Scenario.ddr;
+using TME.Scenario.Default.Enums;
+using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
@@ -18,6 +21,19 @@ namespace TME.Scenario.Default.Items
             Description = ctx.Reader.String();
             Kills = ctx.Reader.ThingType();
             UseDescription = ctx.Reader.UInt32();
+            
+            if (ctx.Scenario?.Info.Symbol == RevengeScenario.Tag || ctx.Version > 19)
+            {
+                ObjectType = (ctx.Version > 10)
+                    ? ctx.Reader.Enum<ObjectType>()
+                    : ObjectType.None;
+                ObjectPower = (ctx.Version > 10)
+                    ? ctx.Reader.Enum<ObjectPower>()
+                    : ObjectPower.None;
+
+                // TODO: This should be actual entry in the database
+                // SetFlags(ObjectFlags.Special, CheckIsSpecial());
+            }
 
             return true;
         }
@@ -32,7 +48,11 @@ namespace TME.Scenario.Default.Items
              ctx.Writer.Enum(Kills);
              ctx.Writer.UInt32(UseDescription);
 
-            return true;
+             // Revenge / Version 20
+             ctx.Writer.Enum(ObjectType);
+             ctx.Writer.Enum(ObjectPower);
+   
+             return true;
         }
         
         public override bool Load(IBundleReader bundle)
@@ -44,9 +64,21 @@ namespace TME.Scenario.Default.Items
             Description = bundle.String(nameof(Description));
             Kills = bundle.ThingType(nameof(Kills));
             UseDescription = bundle.UInt32(nameof(UseDescription));
+            
+            ObjectType = bundle.Enum<ObjectType>(nameof(ObjectType));
+            ObjectPower = bundle.Enum<ObjectPower>(nameof(ObjectPower));
 
             return true;
         }
+        
+        // private bool CheckIsSpecial()
+        // {
+        //     return IsSymbol("OB_CROWN_VARENAND") ||
+        //            IsSymbol("OB_CROWN_CARUDRIUM") ||
+        //            IsSymbol("OB_SPELL_THIGRORN") ||
+        //            IsSymbol("OB_RUNES_FINORN") ||
+        //            IsSymbol("OB_CROWN_IMIRIEL");
+        // }
         
         #endregion
     }

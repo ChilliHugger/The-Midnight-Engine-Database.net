@@ -18,6 +18,9 @@ namespace TME.Scenario.Default.Items
         public string Description { get; internal set; } = "";
         public uint UseDescription { get; internal set;  }
         public IItem? CarriedBy { get; internal set; }
+
+        public ObjectPower ObjectPower { get; internal set; } = ObjectPower.None;
+        public ObjectType ObjectType { get; internal set; } = ObjectType.None; 
         
         #region Flags
         public bool CanDrop => IsFlags(ObjectFlags.Drop);
