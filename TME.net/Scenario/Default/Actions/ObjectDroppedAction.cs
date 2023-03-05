@@ -41,7 +41,7 @@ namespace TME.Scenario.Default.Actions
             if (thing.IsUnique() && thing is IMappableInternal mappable)
             {
                 loc.HasObject = true;
-                mappable.UpdateLocation(currentLocation);
+                mappable.Location = currentLocation;
             }
 
             _map.SetAt(currentLocation, ref loc);

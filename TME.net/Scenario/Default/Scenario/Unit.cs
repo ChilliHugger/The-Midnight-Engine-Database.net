@@ -1,14 +1,10 @@
-﻿using System;
-using System.Diagnostics.CodeAnalysis;
-using TME.Scenario.Default.Enums;
+﻿using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 
 namespace TME.Scenario.Default.Scenario
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    [SuppressMessage("ReSharper", "MemberCanBeProtected.Global")]
-    public class Unit : IUnitInternal
+    public class Unit : IUnit
     {
 
         #region Properties
@@ -33,29 +29,6 @@ namespace TME.Scenario.Default.Scenario
             Type = type;
             Total = total;
         }
-        
-        #region Internal Helpers
-        void IUnitInternal.AddLoses(uint value)
-        {
-            Lost += value;
-            Total = Math.Max(Total - value, 0);
-        }
-
-        void IUnitInternal.SetKilled(uint value)
-        {
-            Killed = value;
-        }
-
-        void IUnitInternal.SetLost(uint value)
-        {
-            Lost = value;
-        }
-
-        void IUnitInternal.SetTotal(uint value)
-        {
-            Total = value;
-        }
-        #endregion
         
         #region Serialize
         public bool Load(ISerializeContext ctx)

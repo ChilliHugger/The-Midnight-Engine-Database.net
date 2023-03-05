@@ -11,16 +11,16 @@ namespace TME.Scenario.Default.Base
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedAutoPropertyAccessor.Global")]
-    public partial class Entity : IEntityInternal, ISerializable, IBundle
+    public partial class Entity : IEntity, ISerializable, IBundle
     {
         public uint RawFlags { get; internal set; }
         public EntityType Type { get; internal set; }
-        public string Symbol { get; internal set; } = "";
+        public string Symbol { get; internal set; }
         public MXId Id { get; internal set; }
         public object? UserData { get; internal set; }
         
         #region Helpers
-        public uint RawId => (uint)Id.RawId;
+        public uint RawId => Id.RawId;
         public bool IsFlags<T>(T mask) where T : Enum => HasFlags(mask.Raw());
         public bool HasFlags(uint mask) => (RawFlags & mask) == mask;
         public bool IsSymbol(string value) => Symbol.Equals(value, StringComparison.OrdinalIgnoreCase);

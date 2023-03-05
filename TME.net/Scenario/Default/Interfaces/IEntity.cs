@@ -5,12 +5,6 @@ using TME.Types;
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IEntityInternal : IEntity
-    {
-        void SetFlags<T>(T flags, bool value)  where T : Enum;
-        void SetId(MXId id);
-    }
-    
     public interface IEntity
     {
         uint RawFlags { get; }

@@ -2,10 +2,6 @@
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IArmyInternal
-    {
-    }
-    
     public interface IArmy
     {
         IItem? Parent { get; }

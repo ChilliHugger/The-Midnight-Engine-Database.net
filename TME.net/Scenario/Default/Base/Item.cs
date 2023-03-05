@@ -4,10 +4,17 @@ using TME.Serialize;
 
 namespace TME.Scenario.Default.Base
 {
-    public class Item : Entity, IMappableInternal
+    public class Item : Entity, IMappable, IMappableInternal
     {
+        private Loc _loc;
+        
         #region Properties
-        public Loc Location { get; internal set; } = Loc.Zero;
+        public Loc Location => _loc;
+
+        Loc IMappableInternal.Location {
+            set => _loc = value;
+        }
+
         #endregion
 
         internal Item(EntityType type) : base(type)
@@ -19,7 +26,7 @@ namespace TME.Scenario.Default.Base
         {
             if (!base.Load(ctx)) return false;
             
-            Location = ctx.Reader.Loc();
+            _loc = ctx.Reader.Loc();
 
             return true;
         }
@@ -37,7 +44,7 @@ namespace TME.Scenario.Default.Base
         {
             if (!base.Load(bundle)) return false;
             
-            Location = bundle.Loc(nameof(Location));
+            _loc = bundle.Loc(nameof(Location));
 
             return true;
         }
@@ -45,7 +52,7 @@ namespace TME.Scenario.Default.Base
         #endregion
 
         #region Internal Helpers
-        void IMappableInternal.UpdateLocation(Loc location) => Location = location;
+        //void IMappableInternal.Location => Location = value;
         #endregion
     }
 }

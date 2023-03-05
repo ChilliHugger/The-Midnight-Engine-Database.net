@@ -138,7 +138,7 @@ namespace TME
             if (thing.IsUnique() && thing is IMappableInternal mappable )
             {
                 loc.HasObject = true;
-                mappable.UpdateLocation(location);
+                mappable.Location = location;
             }
         }
 

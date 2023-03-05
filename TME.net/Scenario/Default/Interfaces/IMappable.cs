@@ -2,9 +2,9 @@
 
 namespace TME.Scenario.Default.Interfaces
 {
-    internal interface IMappableInternal : IMappable
+    internal interface IMappableInternal
     {
-        void UpdateLocation(Loc location);
+        Loc Location { set; }
     }
     
     public interface IMappable

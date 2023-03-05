@@ -4,7 +4,7 @@ using TME.Scenario.Default.Interfaces;
 
 namespace TME.Scenario.Default.Items
 {
-    public class Waypoint : Item, IWaypointInternal
+    public class Waypoint : Item, IWaypoint
     {
         public Waypoint() : base(EntityType.Waypoint)
         {

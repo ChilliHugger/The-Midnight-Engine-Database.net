@@ -44,12 +44,12 @@ namespace TME.Scenario.Default.Items
         public uint Riders
         {
             get => Units[1].Total;
-            internal set => ((IUnitInternal)Units[1]).SetTotal(value);
+            internal set => ((Unit)Units[1]).Total = value;
         }
         public uint Warriors
         {
             get => Units[0].Total;
-            internal set => ((IUnitInternal)Units[0]).SetTotal(value);
+            internal set => ((Unit)Units[0]).Total = value;
         }
         public Orders Orders { get; internal set; } = Orders.None;
         public Race Loyalty { get; internal set; } = Race.None;

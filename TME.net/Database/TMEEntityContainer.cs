@@ -5,13 +5,14 @@ using System.Linq;
 using Autofac;
 using TME.Interfaces;
 using TME.Scenario.ddr;
+using TME.Scenario.Default.Base;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.info;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
 
-namespace TME
+namespace TME.Database
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     public class TMEEntityContainer : IEntityContainer, ISerializableLoad
@@ -175,9 +176,9 @@ namespace TME
                     ? _container.CurrentScope.Resolve<T>()
                     : _container.CurrentContainer.Resolve<T>();
 
-                if (entity is IEntityInternal entityInternal)
+                if (entity is Entity entityInternal)
                 {
-                    entityInternal.SetId( new MXId(entityInternal.Type, (uint)ii + 1));
+                    entityInternal.Id = new MXId(entityInternal.Type, (uint)ii + 1);
                 }
                 
                 result[ii] = entity;
