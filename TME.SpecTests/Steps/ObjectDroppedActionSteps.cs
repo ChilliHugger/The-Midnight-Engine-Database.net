@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using Autofac;
 using NUnit.Framework;
 using TechTalk.SpecFlow;
+using TME.Extensions;
 using TME.Scenario.Default.Actions;
 using TME.Scenario.Default.Actions.Interfaces;
 using TME.Scenario.Default.Enums;
@@ -70,7 +71,7 @@ namespace TME.SpecTests.Steps
             var loc = _mapContext.CurrentLocation;
             Assert.AreEqual((ThingType)thing.RawId, loc.Thing, "Location has correct object type");
             
-            if (thing.IsUnique)
+            if (thing.IsUnique())
             {
                 Assert.True(loc.HasObject, "Location has object");
             }
