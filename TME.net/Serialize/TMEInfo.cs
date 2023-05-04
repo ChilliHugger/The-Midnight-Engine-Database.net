@@ -11,7 +11,7 @@ namespace TME.Serialize
         public const string TMESaveGameHeader = "MidnightEngineSaveGame";
         public const uint TMESaveGameVersion = 20; // 14;
         public const string TMEMapHeader = "MidnightEngineMap";
-        public const uint TMEMapVersion = 2;
+        public const uint TMEMapVersion = 3;
         public const string TMEDiscoveryHeader = "MidnightEngineDiscovery";
         public const uint TMEDiscoveryVersion = 1;
         

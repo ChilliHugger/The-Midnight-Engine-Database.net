@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LandscapePNG", "LandscapePN
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TME.UnitTests", "TME.UnitTests\TME.UnitTests.csproj", "{3D5450F0-2CDF-4814-8AFB-5E2045399873}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TMXMapExporter", "TMXMapExporter\TMXMapExporter.csproj", "{ED4CD307-6D6D-40CA-A6C4-96337CC5A272}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,5 +51,9 @@ Global
 		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3D5450F0-2CDF-4814-8AFB-5E2045399873}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED4CD307-6D6D-40CA-A6C4-96337CC5A272}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED4CD307-6D6D-40CA-A6C4-96337CC5A272}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED4CD307-6D6D-40CA-A6C4-96337CC5A272}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED4CD307-6D6D-40CA-A6C4-96337CC5A272}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

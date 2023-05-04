@@ -7,6 +7,7 @@ using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
 using TME.Serialize;
 using TME.Types;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TME
 {
@@ -14,20 +15,24 @@ namespace TME
     {
         private static readonly ID_4CC TMEMagicNo = ID_4CC.FromSig('T', 'M', 'E', '!');
         private const string MapHeader = "MidnightEngineMap";
-        private const uint MapVersion = 2;
+        private const uint MapVersion = 3;
 
         public static MapLoc Zero = new();
 
-        private MapLoc[]? _data;
-        private Size _size;
-        private int _totalSize;
+        public MapLoc[] Data { get; private set; } = Array.Empty<MapLoc>();
+        public Size Dimensions { get; private set; }
+        private int _size;
+        private uint _version;
+        private MapFlags _flags;
 
         private Loc _topVisible;
         private Loc _bottomVisible;
     
         public bool TunnelsEnabled { get; internal set; }
         public bool MistEnabled { get; internal set; }
-        
+
+        //public MapLoc[] Data => _data;
+
         public bool LoadFullMapFromStream(TMEBinaryReader stream)
         {
             var magicNo = stream.UInt32();
@@ -43,32 +48,32 @@ namespace TME
                 return false;
             }
 
-            var version = stream.UInt32();
-            if (version != MapVersion)
-            {
-                return false;
-            }
-
+            _version = stream.UInt32();
+            
             var header = stream.String();
             if (header != MapHeader)
             {
                 return false;
             }
-
+            
             return LoadSaveMapFromStream(stream);
         }
 
 
         public bool LoadSaveMapFromStream(TMEBinaryReader stream)
         {
-            _size = stream.Size();
-            _totalSize = _size.Width * _size.Height;
-
-            _data = new MapLoc[_totalSize];
-
-            for (var ii = 0; ii < _totalSize; ii++)
+            Dimensions = stream.Size();
+            _size = Dimensions.Width * Dimensions.Height;
+            Data = new MapLoc[_size];
+            
+            if (_version >= 3)
             {
-                _data[ii].Bits = stream.UInt64();
+                _flags = (MapFlags) stream.UInt32();
+            }
+
+            for (var ii = 0; ii < _size; ii++)
+            {
+                Data[ii].Bits = stream.UInt64();
             }
 
             CalculateVisibleArea();
@@ -79,14 +84,14 @@ namespace TME
 
         private void CalculateVisibleArea()
         {
-            _topVisible = new Loc(_size.Width, _size.Height);
+            _topVisible = new Loc(Dimensions.Width, Dimensions.Height);
             _bottomVisible = new Loc(0,0);
 
             var loc = new Loc();
 
-            for (var y = 0; y < _size.Height; y++)
+            for (var y = 0; y < Dimensions.Height; y++)
             {
-                for (var x = 0; x < _size.Width; x++)
+                for (var x = 0; x < Dimensions.Width; x++)
                 {
                     loc.X = x;
                     loc.Y = y;
@@ -106,7 +111,7 @@ namespace TME
             }
             if (l.X >= _bottomVisible.X)
             {
-                _bottomVisible.X = Math.Min(l.X, _size.Width);
+                _bottomVisible.X = Math.Min(l.X, Dimensions.Width);
             }
             if (l.Y <= _topVisible.Y)
             {
@@ -114,7 +119,7 @@ namespace TME
             }
             if (l.Y >= _bottomVisible.Y)
             {
-                _bottomVisible.Y = Math.Min(l.Y, _size.Height);
+                _bottomVisible.Y = Math.Min(l.Y, Dimensions.Height);
             }
         }
 
@@ -125,8 +130,8 @@ namespace TME
 
         public bool IsLocOnMap(Loc loc)
         {
-            return loc.X >= 0 && loc.X < _size.Width 
-                && loc.Y >= 0 && loc.Y < _size.Height;
+            return loc.X >= 0 && loc.X < Dimensions.Width 
+                && loc.Y >= 0 && loc.Y < Dimensions.Height;
         }
 
         public void SetThing(Loc location, IObject thing)
@@ -144,7 +149,7 @@ namespace TME
 
         public MapLoc GetAt(Loc loc)
         {
-            if (_data == null)
+            if (Data == null)
             {
                 return Zero;
             }
@@ -155,14 +160,14 @@ namespace TME
                 return Zero;
             }
 
-            var offset = loc.Y * _size.Width + loc.X;
+            var offset = loc.Y * Dimensions.Width + loc.X;
 
-            return _data[offset];
+            return Data[offset];
         }
         
         public void SetAt(Loc loc, ref MapLoc mapLoc)
         {
-            if (_data == null)
+            if (Data == null)
             {
                 return;
             }
@@ -173,37 +178,44 @@ namespace TME
                 return ;
             }
 
-            var offset = loc.Y * _size.Width + loc.X;
+            var offset = loc.Y * Dimensions.Width + loc.X;
 
-            _data[offset] = mapLoc;
+            Data[offset] = mapLoc;
         }
 
         private void UpdateTunnelsAndMist()
         {           
-            if (_data == null)
+            if (Data == null)
             {
                 return;
             }
 
-            for (var y = 0; y < _size.Height; y++)
+            for (var y = 0; y < Dimensions.Height; y++)
             {
-                for (var x = 0; x < _size.Width; x++)
+                for (var x = 0; x < Dimensions.Width; x++)
                 {
-                    var offset = y * _size.Width + x;
-                    var terrain = _data[offset].Terrain;
+                    var offset = y * Dimensions.Width + x;
+                    var terrain = Data[offset].Terrain;
+                    
+                    if (Data[offset].HasTunnel)
+                    {
+                        if (!_flags.HasFlag(MapFlags.TunnelEndpoints))
+                        {
+                            if (terrain.IsTunnelExit())
+                            {
+                                Data[offset].SetFlags(LocationFlags.TunnelExit, true);
+                            }
 
-                    var tunnel = _data[offset].HasTunnel;
-                    if (tunnel && terrain.IsTunnelExit())
-                    {
-                        _data[offset].SetFlags(LocationFlags.TunnelExit,true);
-                    }
-                    if (tunnel && terrain.IsTunnelEntrance())
-                    {
-                        _data[offset].SetFlags(LocationFlags.TunnelEntrance,true);
-                    }
-                    if (tunnel && terrain.IsTunnelPassage())
-                    {
-                        _data[offset].SetFlags(LocationFlags.TunnelPassageway,true);
+                            if (terrain.IsTunnelEntrance())
+                            {
+                                Data[offset].SetFlags(LocationFlags.TunnelEntrance, true);
+                            }
+                        }
+
+                        if (terrain.IsTunnelPassage())
+                        {
+                            Data[offset].SetFlags(LocationFlags.TunnelPassageway, true);
+                        }
                     }
                 }
             }

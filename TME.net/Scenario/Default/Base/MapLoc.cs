@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
+// ReSharper disable MemberCanBePrivate.Global
 
 namespace TME.Scenario.Default.Base
 {
     public struct MapLoc
     {
+        [SuppressMessage("Usage", "CA2211:Non-constant fields should not be visible")] 
         public static MapLoc None = new MapLoc
         {
             Terrain = Terrain.None,
@@ -44,37 +47,37 @@ namespace TME.Scenario.Default.Base
         public Terrain Terrain
         {
             get => (Terrain) (Bits & TerrainMask); 
-            internal set => Bits = (Bits & ~TerrainMask) | (ulong)value;
+            set => Bits = (Bits & ~TerrainMask) | (ulong)value;
         }
         
         public byte Variant
         {
             get => (byte)((Bits&VariantMask) >> VariantPos); 
-            internal set => Bits = (Bits & ~VariantMask) | (ulong)value << VariantPos;
+            set => Bits = (Bits & ~VariantMask) | (ulong)value << VariantPos;
         }
         
         public byte Climate
         {
             get => (byte)((Bits&ClimateMask) >> ClimatePos); 
-            internal set => Bits = (Bits & ~ClimateMask) | (ulong)value << ClimatePos;
+            set => Bits = (Bits & ~ClimateMask) | (ulong)value << ClimatePos;
         }
 
         public ThingType Thing
         {
             get => (ThingType)((Bits&ThingMask) >> ThingPos);
-            internal set => Bits = (Bits & ~ThingMask) | (ulong)value << ThingPos;
+            set => Bits = (Bits & ~ThingMask) | (ulong)value << ThingPos;
         }
 
         public ushort Area
         {
-            get => (UInt16)((Bits&AreaMask) >> AreaPos); 
-            internal set => Bits = (Bits & ~AreaMask) | (ulong)value << AreaPos;
+            get => (ushort)((Bits&AreaMask) >> AreaPos); 
+            set => Bits = (Bits & ~AreaMask) | (ulong)value << AreaPos;
         }
         
         public LocationFlags Flags
         {
-            get => (LocationFlags)((UInt32)(Bits >> 36) & (UInt32)0xFFFFFFF);
-            internal set => Bits = (Bits & ~FlagsMask) | (ulong)value << FlagsPos;
+            get => (LocationFlags)((uint)(Bits >> 36) & 0xFFFFFFF);
+            set => Bits = (Bits & ~FlagsMask) | (ulong)value << FlagsPos;
         }
 
         internal void RemoveObject() { Thing = ThingType.None; }
@@ -82,7 +85,6 @@ namespace TME.Scenario.Default.Base
         public bool IsVisible => Flags.HasFlag(LocationFlags.Seen);
         public bool IsInDomain => Flags.HasFlag(LocationFlags.Domain);
         public bool IsSpecial => Flags.HasFlag(LocationFlags.Special);
-        public bool IsInteresting => Flags.HasFlag(LocationFlags.Interesting);
         public bool IsMisty => Flags.HasFlag(LocationFlags.Mist);
         public bool IsStronghold => Flags.HasFlag(LocationFlags.Stronghold);
         public bool IsRouteNode => Flags.HasFlag(LocationFlags.RouteNode);
@@ -93,10 +95,10 @@ namespace TME.Scenario.Default.Base
         
         public bool HasTunnelExit => Flags.HasFlag(LocationFlags.TunnelExit);
         public bool HasTunnelEntrance => Flags.HasFlag(LocationFlags.TunnelEntrance);
-        public bool HasTunnelPassage => Flags.HasFlag(LocationFlags.TunnelPassageway);
+        public bool HasTunnelPassage => Flags.HasFlag(LocationFlags.Tunnel) && !Flags.HasFlag(LocationFlags.TunnelEntrance|LocationFlags.TunnelExit);
 
 
-        internal void SetFlags(LocationFlags flags,bool value)
+        public void SetFlags(LocationFlags flags,bool value)
         {
             if (value)
             {
@@ -111,7 +113,7 @@ namespace TME.Scenario.Default.Base
         public bool HasObject
         {
             get => Flags.HasFlag(LocationFlags.Object);
-            internal set => SetFlags(LocationFlags.Object, value);
+            set => SetFlags(LocationFlags.Object, value);
         }
     }
 }
