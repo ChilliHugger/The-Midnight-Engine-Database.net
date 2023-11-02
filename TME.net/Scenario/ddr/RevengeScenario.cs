@@ -3,14 +3,18 @@ using Autofac.Features.AttributeFilters;
 using TME.Interfaces;
 using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.ddr.Items;
+using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Flags;
 using TME.Scenario.Default.Interfaces;
+using TME.Scenario.Default.Items;
 
 namespace TME.Scenario.ddr
 {
     public class RevengeScenario : IScenario, IScenarioInfo
     {
         private readonly IVariables _variables;
+        private readonly IEntityResolver _entityResolver;
+        
         public static string Tag => "ddr";
         public uint Id =>  17;
         public uint Version => 200;
@@ -32,9 +36,11 @@ namespace TME.Scenario.ddr
         public IScenarioInfo Info => this;
         
         public RevengeScenario(
+            IEntityResolver entityResolver,
             IVariables variables)
         {
             _variables = variables;
+            _entityResolver = entityResolver;
         }
         
         public void Register(ContainerBuilder containerBuilder)
@@ -52,8 +58,18 @@ namespace TME.Scenario.ddr
             _variables.sv_max_friend_armies_in_location = 32;
             _variables.sv_max_strongholds_in_location = 1;
             _variables.sv_max_routenodes_in_location = 1;
-            _variables.sv_max_armies_in_location = 
+            _variables.sv_max_armies_in_location =
                 _variables.sv_max_foe_armies_in_location + _variables.sv_max_friend_armies_in_location ;
+            
+            // 118 | OB_SWORD_THORTHAK > should be a SPEAR ?
+            // 124 | OB_HAMMER_TORORTHANE > should be a BOW ?
+            var item1 = _entityResolver.EntityBySymbol<Object>("OB_SWORD_THORTHAK");
+            item1.ObjectType = ObjectType.Spear;
+            item1.Symbol = "OB_SPEAR_THORTHAK";
+
+            var item2 = _entityResolver.EntityBySymbol<Object>("OB_HAMMER_TORORTHANE");
+            item2.ObjectType = ObjectType.Bow;
+            item2.Symbol = "OB_BOW_TORORTHANE";
         }
     }
 }
