@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using Autofac;
 using Autofac.Features.AttributeFilters;
+using TME.Extensions;
 using TME.Interfaces;
 using TME.Scenario.ddr.Interfaces;
 using TME.Scenario.ddr.Items;
@@ -82,7 +85,18 @@ namespace TME.Scenario.ddr
             {
                 imgorarg.Loyalty = Race.Dwarf;
             }
+            
+            var objects = new List<string> { 
+                "OB_CROWN_VARENAND",
+                "OB_CROWN_CARUDRIUM",
+                "OB_SPELL_THIGRORN",
+                "OB_RUNES_FINORN",
+                "OB_CROWN_IMIRIEL" };
 
+            foreach (var item in objects.Select(name => _entityResolver.EntityBySymbol<Object>(name)))
+            {
+                item?.SetFlags(ObjectFlags.Recruitment, true);
+            }
         }
     }
 }
