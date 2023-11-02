@@ -63,13 +63,26 @@ namespace TME.Scenario.ddr
             
             // 118 | OB_SWORD_THORTHAK > should be a SPEAR ?
             // 124 | OB_HAMMER_TORORTHANE > should be a BOW ?
-            var item1 = _entityResolver.EntityBySymbol<Object>("OB_SWORD_THORTHAK");
-            item1.ObjectType = ObjectType.Spear;
-            item1.Symbol = "OB_SPEAR_THORTHAK";
+            var sword = _entityResolver.EntityBySymbol<Object>("OB_SWORD_THORTHAK");
+            if (sword != null)
+            {
+                sword.ObjectType = ObjectType.Spear;
+                sword.Symbol = "OB_SPEAR_THORTHAK";
+            }
 
-            var item2 = _entityResolver.EntityBySymbol<Object>("OB_HAMMER_TORORTHANE");
-            item2.ObjectType = ObjectType.Bow;
-            item2.Symbol = "OB_BOW_TORORTHANE";
+            var hammer = _entityResolver.EntityBySymbol<Object>("OB_HAMMER_TORORTHANE");
+            if (hammer != null)
+            {
+                hammer.ObjectType = ObjectType.Bow;
+                hammer.Symbol = "OB_BOW_TORORTHANE";
+            }
+            
+            var imgorarg = _entityResolver.EntityBySymbol<Character>("CH_IMGORARG");
+            if (imgorarg != null)
+            {
+                imgorarg.Loyalty = Race.Dwarf;
+            }
+
         }
     }
 }
