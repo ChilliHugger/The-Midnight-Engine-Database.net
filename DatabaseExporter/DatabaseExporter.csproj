@@ -6,9 +6,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Autofac" Version="6.3.0" />
-      <PackageReference Include="AutoMapper" Version="10.1.1" />
-      <PackageReference Include="CsvHelper" Version="30.0.1" />
+      <PackageReference Include="Autofac" Version="9.3.2" />
+      <PackageReference Include="AutoMapper" Version="16.2.0" />
+      <PackageReference Include="CsvHelper" Version="33.1.0" />
     </ItemGroup>
 
     <ItemGroup>
