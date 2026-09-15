@@ -1,18 +1,14 @@
 using AutoMapper;
-using AutoMapper.Configuration;
 using Castle.DynamicProxy.Internal;
+using Microsoft.Extensions.Logging.Abstractions;
 
 namespace TME.SpecTests.Mapping
 {
     public static class MapperProvider
     {
-        public static IMapper GetMapper(params MapperConfigurationExpression[] configs)
+        public static IMapper GetMapper(params Profile[] configs)
         {
-            var mce = new MapperConfigurationExpression();
-            mce.AddProfiles(configs);
-            mce.Advanced.AllowAdditiveTypeMapCreation = true;
-          
-            var mc = new MapperConfiguration(mce);
+            var mc = new MapperConfiguration(cfg => cfg.AddProfiles(configs), NullLoggerFactory.Instance);
             mc.AssertConfigurationIsValid();
             return new Mapper(mc);
         }

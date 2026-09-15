@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using AutoMapper;
-using AutoMapper.Configuration;
 using TME.Scenario.Default.Enums;
 using TME.Scenario.Default.Interfaces;
 using TME.Scenario.Default.Items;
@@ -10,7 +9,7 @@ using TME.SpecTests.Mapping.Models;
 
 namespace TME.SpecTests.Mapping
 {
-    public class MappingConfiguration : MapperConfigurationExpression
+    public class MappingConfiguration : Profile
     {
         public MappingConfiguration()
         {
