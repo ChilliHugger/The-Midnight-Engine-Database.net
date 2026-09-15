@@ -10,8 +10,11 @@ namespace DatabaseExporter
     {
         static void Main()
         {
-            ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
-            ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
+            ExportTmx(MidnightScenario.Tag,"../../../../data/lom","../../../../data");
+            ExportTmx(RevengeScenario.Tag,"../../../../data/ddr","../../../../data");
+
+            //ExportDatabase(MidnightScenario.Tag,"../../../../data/lom","../../../../data/csv_lom");
+            //ExportDatabase(RevengeScenario.Tag,"../../../../data/ddr","../../../../data/csv_ddr");
 
             //ImportDatabase(MidnightScenario.Tag, "../../../../data/csv_lom", "../../../../data/lom2");
             //ImportDatabase(RevengeScenario.Tag, "../../../../data/csv_ddr", "../../../../data/ddr2");
@@ -59,6 +62,28 @@ namespace DatabaseExporter
             database.Load();
 
             var exporter = container.Resolve<CsvExporter>();
+            exporter.Process(output,scenarioTag);
+        }
+        
+        private static void ExportTmx(string scenarioTag,string directory, string output)
+        {
+            var builder = new ContainerBuilder();
+            
+            builder.RegisterType<TmxExporter>();
+
+            var dependencyContainer = new TMEDependencyContainer(builder);
+            dependencyContainer.Build();
+
+            var container = dependencyContainer.CurrentContainer;
+
+            var engine = container.Resolve<IEngine>();
+            var database = container.Resolve<IDatabase>();
+
+            engine.SetScenario(scenarioTag);
+            database.Directory = directory;
+            database.Load();
+
+            var exporter = container.Resolve<TmxExporter>();
             exporter.Process(output,scenarioTag);
         }
     }

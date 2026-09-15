@@ -6,21 +6,20 @@ using TME.Scenario.Default.Flags;
 
 internal enum Flags
 {
-    Domain,
-    Tunnel,
-    Mist,
-    Creature,
-    Unused1,
-    Unused2,
-    Unused3,
-    Unused4,
-    Path,
-    Impassable,
-    Respawn,
-    TunnelEntrance,
-    TunnelExit,
-    TunnelEntranceExit,
-    TunnelSmall,
+    Domain,             // 137
+    Tunnel,             // 138
+    Mist,               // 139
+    Creature,           // 140
+    Unused1,            // 141
+    Unused2,            // 142
+    Unused3,            // 143
+    Path,               // 144
+    Impassable,         // 145
+    Respawn,            // 146
+    TunnelEntrance,     // 147
+    TunnelExit,         // 148
+    TunnelEntranceExit, // 149
+    TunnelSmall,        // 150
 }
 
 public class MapProcessor
@@ -65,6 +64,7 @@ public class MapProcessor
         var creature = map.Layers.First(l => l.name == "Creature");
         var thing = map.Layers.First(l => l.name == "Things");
         var area = map.Layers.First(l => l.name == "Area");
+        var impassable = map.Layers.First(l => l.name == "Impassable");
 
         var terrainGId = map.Tilesets[0].firstgid;
         var areaGId = map.Tilesets[3].firstgid;
@@ -74,6 +74,7 @@ public class MapProcessor
         CheckFlags(tunnel);
         CheckFlags(creature);
         CheckFlags(mist);
+        CheckFlags(impassable);
 
         var index = 0;
         // read terrain
@@ -125,6 +126,9 @@ public class MapProcessor
                 // ReSharper disable once SwitchStatementHandlesSomeKnownEnumValuesWithDefault
                 switch (flags)
                 {
+                    //case Flags.Path:
+                    //    break;
+                    
                     case Flags.Domain:
                         _outputMap.Data[index].SetFlags(LocationFlags.Domain, true);
                         break;
@@ -136,6 +140,7 @@ public class MapProcessor
                         break;
                     case Flags.Impassable:
                         _outputMap.Data[index].SetFlags(LocationFlags.Impassable, true);
+                        _outputMap.Flags |= MapFlags.ImpassableLocations;
                         break;
                     case Flags.Respawn:
                         _outputMap.Data[index].SetFlags(LocationFlags.Respawn, true);
