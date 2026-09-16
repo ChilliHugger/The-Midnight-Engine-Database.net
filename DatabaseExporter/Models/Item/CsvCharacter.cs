@@ -51,7 +51,17 @@ namespace DatabaseExporter.Models.Item
         public string Home { get; set; }
         [Name("Desired Object"), Optional]
         public string DesiredObject { get; set; }
-        
+
+        // citadel
+        [Optional]
+        public Quest Quest { get; set; }
+        [Optional]
+        public Purpose Purpose { get; set; }
+        [Optional]
+        public Reaction Reaction { get; set; }
+        [Optional]
+        public string Qualities { get; set; }
+
         public override Bundle ToBundle(CsvImportConverter converter)
         {
             return new Bundle {
@@ -87,6 +97,10 @@ namespace DatabaseExporter.Models.Item
                 {nameof(Character.Recruitment.By), RecruitmentBy},
                 {nameof(Character.HomeStronghold), converter.ToEntity<IStronghold>(Home)},
                 {nameof(Character.DesiredObject), converter.ToEntity<IObject>(DesiredObject)},
+                {nameof(Character.Quest), Quest},
+                {nameof(Character.Purpose), Purpose},
+                {nameof(Character.Reaction), Reaction},
+                {nameof(Character.Qualities), converter.ToFlags<LordQualities>(Qualities)},
             };
         }
     }
@@ -137,7 +151,13 @@ namespace DatabaseExporter.Models.Item
             // ddr
             Map(m => m.HomeStronghold).Index(29).Name("Home");
             Map(m => m.DesiredObject).Index(30).Name("Desired Object");
-            
+
+            // citadel
+            Map(m => m.Quest).Index(31);
+            Map(m => m.Purpose).Index(32);
+            Map(m => m.Reaction).Index(33);
+            Map(m => m.Qualities).Index(34);
+
             //Map(m => m.KilledBy.Symbol).Index(12).Name("KilledBy");
             //Map(m => m.LastCommandId.Symbol).Index(14).Name("KilledBy");
             //Map(m => m.Followers).Index(15);

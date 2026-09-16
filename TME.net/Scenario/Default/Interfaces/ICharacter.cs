@@ -64,5 +64,13 @@ namespace TME.Scenario.Default.Interfaces
         MXId TargetId { get; }
         Loc TargetLocation { get; }
         //
+
+        // These are only initially used for citadel but are
+        // supported in default characters
+        Quest Quest { get; }
+        Purpose Purpose { get; }
+        Reaction Reaction { get; }
+        LordQualities Qualities { get; }
+        //
     }
 }

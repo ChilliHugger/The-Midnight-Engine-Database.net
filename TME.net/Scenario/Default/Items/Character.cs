@@ -70,7 +70,14 @@ namespace TME.Scenario.Default.Items
         public MXId TargetId { get; internal set; } = MXId.None;
         public Loc TargetLocation { get; internal set; } = Loc.Zero;
         //
-        
+
+        // citadel
+        public Quest Quest { get; internal set; } = Quest.None;
+        public Purpose Purpose { get; internal set; } = Purpose.None;
+        public Reaction Reaction { get; internal set; } = Reaction.None;
+        public LordQualities Qualities { get; internal set; }
+        //
+
         internal Character() : base(EntityType.Character)
         {
             BattleInfo = new BattleInfo();

@@ -25,17 +25,19 @@ namespace DatabaseExporter.Converters
             {
                 case Enum enumValue:
                 {
-                    var temp = Convert.ToUInt32(enumValue, CultureInfo.InvariantCulture);
+                    var temp = Convert.ToUInt64(enumValue, CultureInfo.InvariantCulture);
                     return ConvertToString(temp);
                 }
-                case uint value:
-                    return ConvertToString(value);
+                case ulong ulongValue:
+                    return ConvertToString(ulongValue);
+                case uint uintValue:
+                    return ConvertToString(uintValue);
                 default:
                     return "";
             }
         }
 
-        private string ConvertToString(uint value)
+        private string ConvertToString(ulong value)
         {
             if (value == 0) return "";
             var results = GetAllSelectedItems<TEnum>(value);
@@ -43,12 +45,12 @@ namespace DatabaseExporter.Converters
             return output.ToUpper();
         }
 
-        private IEnumerable<T> GetAllSelectedItems<T>(uint value)
+        private IEnumerable<T> GetAllSelectedItems<T>(ulong value)
         {
-            return from object item in Enum.GetValues(typeof(T)) 
-                let itemAsInt = Convert.ToUInt32(item, CultureInfo.InvariantCulture) 
-                where itemAsInt != 0 
-                where itemAsInt == (value & itemAsInt) 
+            return from object item in Enum.GetValues(typeof(T))
+                let itemAsLong = Convert.ToUInt64(item, CultureInfo.InvariantCulture)
+                where itemAsLong != 0
+                where itemAsLong == (value & itemAsLong)
                 select (T) item;
         }
         
