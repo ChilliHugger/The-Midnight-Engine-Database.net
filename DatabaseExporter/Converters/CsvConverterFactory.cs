@@ -50,6 +50,7 @@ public class CsvConverterFactory
             cache.AddConverter<IReadOnlyList<IObject>>(new EntityListConverter<IReadOnlyList<IObject>,IObject>());
             
             cache.AddConverter<LordTraits>(new FlagConverter<LordTraits>());
+            cache.AddConverter<LordQualities>(new FlagConverter<LordQualities>());
             cache.AddConverter<EntityFlags>(new FlagConverter<EntityFlags>());
             cache.AddConverter<LordFlags>(new FlagConverter<LordFlags>());
             cache.AddConverter<RegimentFlags>(new FlagConverter<RegimentFlags>());

@@ -36,7 +36,17 @@ namespace TME.Scenario.Default.Flags
         HasFollowers        = 1 << 21,  // has followers
         PreparesBattle      = 1 << 22,  // prepares to do battle
         Approaching         = 1 << 23,  // we are approaching a lord (DDR)
-        
+
+        // citadel
+        Knowledge           = 1 << 14,  // has special knowledge
+        Watch               = 1 << 15,  // is being watched
+        Friendly            = 1 << 25,  // is friendly
+        Rescue              = 1 << 26,  // is to be rescued / needs rescuing
+        Interest            = 1 << 27,  // is of interest
+        Major               = 1 << 28,  // is a major character
+        Control             = 1 << 29,  // is under control
+        Location            = 1 << 30,  // has a fixed location
+
         // Entity
         None                = EntityFlags.None,
         Disabled            = EntityFlags.Disabled

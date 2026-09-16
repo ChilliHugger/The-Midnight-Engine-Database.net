@@ -1,0 +1,8 @@
+name	id	type	char_flags_txt	char_flags_txt_value	flags_txt	flags_txt_value	x	y	direction	shield	portrait	owner	weapon_type	details
+the sword stormblade	0	object	+knowledge	2	+height+static+obstacle	7	148	125	NORTH	shield_1	head_1	-1	sword	0
+the sword bloodbringer	1	object	+knowledge	2	+height+static+obstacle	7	7	14	NORTH	shield_1	head_2	-1	sword	0
+the axe widowmaker	2	object	+knowledge	2	+height+static+obstacle	7	72	200	NORTH	shield_1	head_3	-1	axe	0
+the sword aranath	3	object	+knowledge	2	+height+static+obstacle	7	32	80	NORTH	shield_1	head_4	-1	sword	0
+the axe persuader	4	object	+knowledge	2	+height+static+obstacle	7	25	160	NORTH	shield_1	head_5	-1	axe	0
+the axe skullcrusher	5	object	+knowledge	2	+height+static+obstacle	7	233	205	NORTH	shield_1	head_6	-1	axe	0
+the sword swiftwing	6	object	+knowledge	2	+height+static+obstacle	7	241	10	NORTH	shield_1	head_7	-1	sword	0
